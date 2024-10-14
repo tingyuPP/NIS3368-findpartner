@@ -1,14 +1,22 @@
 from function_class import *
-
+from database import *
 # 注册函数，输入密码，创建新账户，返回用户id
 def register(password):
-    user_id = 0
+    user_id = create_user()
+    user = User(user_id, password)
+    change_user_database(user_id, user)
     return user_id
 
-# 登陆函数，输入用户id和密码，返回是否成功登录
-def login(id, password):
-
-    if_success = id
+# 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：账号不存在}
+def login(id, passwords):
+    user = check_user(id)
+    if user:
+        if user.passwords == passwords:
+            if_success = 0  # 登录成功
+        else:
+            if_success = 1  # 密码错误
+    else:
+        if_success = 2  # 账号不存在
     return if_success
 
 # 更改账号密码，输入用户id、当前密码和新密码，返回修改是否成功

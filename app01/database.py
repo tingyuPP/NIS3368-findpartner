@@ -10,12 +10,12 @@ def create_notice():
     id = 0
     return id
 
-# 查看用户，输入用户id，返回用户类，没有查询到则返回-1
+# 查看用户，输入用户id，返回用户类，没有查询到则返回None
 def check_user_database(id):
-    user = 0
+    user = User()
     return user
 
-# 查看需求，输入需求id，返回需求类，没有查询到则返回-1
+# 查看需求，输入需求id，返回需求类，没有查询到则返回None
 def check_notice_database(id):
     notice = 0
     return notice

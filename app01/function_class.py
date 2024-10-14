@@ -15,9 +15,8 @@ class Request:
         self.answer_state = answer_state    # 申请是否被通过{0:未知, 1:通过, 2:不通过}
 
 class User:
-    def __init__(self, passwords, nickname = "user%d" % id, sex = "unknown", hobby = "unknown", introduction = "unknown", my_notice_id_list = None,  request_notice_id_list = None):
-        id = 0  # 后续会调用数据库相关函数生成id
-        self.id = id                        # 用户id，自动生成
+    def __init__(self, id, passwords, nickname = "user%d" % id, sex = "unknown", hobby = "unknown", introduction = "unknown", my_notice_id_list = None,  request_notice_id_list = None):
+        self.id = id                        # 用户id，不能缺省且唯一
         self.passwords = passwords          # 用户密码，不能缺省
 
         # 用户个人信息
@@ -40,9 +39,8 @@ class User:
 
 
 class Notice:
-    def __init__(self, owner_id, owner_contact, basic_type, detail_type = "unknown", time = "unknown", location = "unknown", description = "unknown", current_places = "1", max_places = "2", if_disabled = False, request_n = 0, request_list = None):
-        id = 0  # 后续会调用数据库相关函数生成id
-        self.id = id                        # 需求id，自动生成
+    def __init__(self, id, owner_id, owner_contact, basic_type, detail_type = "unknown", time = "unknown", location = "unknown", description = "unknown", current_places = "1", max_places = "2", if_disabled = False, request_n = 0, request_list = None):
+        self.id = id                        # 需求id，不能缺省且唯一
         self.owner_id = owner_id            # 需求所有者的用户id，不能缺省
         self.owner_contact = owner_contact  # 需求所有者的联系方式，不能缺省
 
