@@ -6,3 +6,10 @@ def home(request):
 
 def login(request):
     return render(request, "home/login.html")
+
+
+def mainpage(request):
+    context = {
+        "user": request.user,
+    }
+    return render(request, "mainpage/mainpage.html", context)
