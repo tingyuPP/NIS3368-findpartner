@@ -9,7 +9,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css"
     />
     <link rel="stylesheet" href="{% static 'css/home.css'%}" />
-    <title>Document</title>
+    <script type="text/javascript" src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <title>交我伴</title>
   </head>
   <body>
     <header class="header" id="header">
@@ -24,7 +26,7 @@
               <a href="#" class="nav__link">开发人员</a>
             </li>
             <li class="nav__item">
-              <a href="#" class="nav__link">登录/注册</a>
+              <a href="/login/" class="nav__link">登录/注册</a>
             </li>
           </ul>
         </div>
@@ -39,7 +41,7 @@
       />
       <div class="main__content">
         <h1>在这里与志同道合的搭子相遇</h1>
-        <button class="cssbuttons-io-button">
+        <button id= "startButton" class="cssbuttons-io-button">
           立刻开始
           <div class="icon">
             <svg

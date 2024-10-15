@@ -21,4 +21,5 @@ from app01 import views
 
 urlpatterns = [
     path('home/', views.home),
+    path('login/', views.login),
 ]
