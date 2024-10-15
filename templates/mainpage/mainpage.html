@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
     <link rel="stylesheet" href="{% static 'css/mainpage.css'%}" />
     <!-- 引入js文件 -->
-    <script src="{% static 'js/mainpage.js'%}"></script>
+    <!-- <script src="{% static 'js/mainpage.js'%}"></script> -->
 
     
 </head>
@@ -18,7 +18,7 @@
     <div class="top">
         <header class="mask-paper">
             <a style="display: flex">
-                <img src="{% static 'images/logo.png'%}" style="width: 120px" alt="logo"/>
+                <img src="{% static 'images/logo.png'%}" style="width: 200px;margin-top: 20px;" alt="logo" />
             </a>
             <div class="tool-box"></div>
             <div class="input-box" id="sujContainer">
@@ -179,6 +179,7 @@
                         </div>
                     
                         <div class="information-wrapper" onclick="showmenu()">
+                            <script src="{% static 'js/mainpage.js' %}"></script>
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                                 <path fill="currentColor" fill-rule="evenodd"
                                     d="M19.75 12a.75.75 0 0 0-.75-.75H5a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 .75-.75m0-5a.75.75 0 0 0-.75-.75H5a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 .75-.75m0 10a.75.75 0 0 0-.75-.75H5a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 .75-.75"
@@ -194,6 +195,12 @@
                     </div>
                     </div>
 
-    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+                var x = document.getElementById("menuinformation");
+                x.style.display = "none"; // 初始化为隐藏
+                console.log("mainpage.js loaded");
+            });
+    </script>
 </body>
 </html>
