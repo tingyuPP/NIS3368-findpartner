@@ -1,1 +1,50 @@
-<h1>123</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/login.css'%}" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <nav class="nav">
+        <a href="/home/">
+          <img
+            src="{% static 'images/logo.png' %}"
+            alt="logo"
+            class="nav__logo"
+            style="width: 200px"
+          />
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="login-container">
+          <h2 class="login-title">登录</h2>
+          <form class="login-form">
+            <input type="email" class="login-input" placeholder="邮箱地址" />
+            <input type="password" class="login-input" placeholder="密码" />
+            <div class="login-options">
+              <div class="login-row">
+                <label for="remember-me" class="login-remember">
+                  <input type="checkbox" id="remember-me" class="mr-2" />
+                  记住我
+                </label>
+                <a href="#" class="login-forgot">忘记密码？</a>
+              </div>
+              <p class="login-signup">
+                还没有账号？
+                <a href="#" class="signup-link">注册</a>
+              </p>
+            </div>
+            <button type="submit" class="login-button">登录</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
