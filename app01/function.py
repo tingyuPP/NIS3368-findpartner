@@ -40,26 +40,58 @@ def check_user(id):
 # 查看拥有需求，输入用户id，返回需求列表
 def check_my_notice(id):
     user = check_user_database(id)
-
+    notice_list = user.my_notice_id_list
     my_notice = []
+    for i in notice_list:
+        my_notice.append(check_notice_database(i))
     return my_notice
 
 # 查看申请需求，输入用户id，返回申请的需求
 def check_request_notice(id):
+    user = check_user_database(id)
+    notice_list = user.request_notice_id_list
     request_notice = []
+    for i in notice_list:
+        request_notice.append(check_notice_database(i))
     return request_notice
 
-# 更改用户信息，输入用户id，更改过后的全部用户信息（应该是一个User类），返回是否成功
+# 更改用户信息，输入用户id，更改过后的全部用户信息（除了passwords，passwords应该使用change_passwords)（应该是一个User类），返回是否成功{0：修改成功，1：修改失败}
 def change_user_info(id, new_user_info):
-    if_success = id
+    user = check_user_database(id)
+    if user:
+        user.nick_name = new_user_info.nick_name
+        user.sex = new_user_info.sex
+        user.hobby = new_user_info.hobby
+        user.introduction = new_user_info.introduction
+        if_success = 0
+    else:
+        if_success = 1
     return if_success
 
-# 检索需求，输入检测type，检测的内容（应该是一个Notice类，但是其中只需要检测type对应的位置有数值即可），返回检索到的需求列表
-def search_notice(type, notice_content):
+# 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（没有则为空）
+def search_notice_all(type, notice_content):
     # type{0:大类，1:小类，2:时间，3:地点}
+    result_id = search_notice_all_database(type, notice_content)
     result = []
-    if type == 0:
-        result = []
+    for i in result_id:
+        result.append(check_notice_database(i))
+    return result
+
+
+# 按照大类检索需求，输入大类，返回检索到的需求列表（没有则为空）
+def search_notice_type(type):
+    result_id = search_notice_type(type)
+    result = []
+    for i in result_id:
+        result.append(check_notice_database(i))
+    return result
+
+# # 按照内容检索需求，输入具体内容（应该是一个字符串），返回检索到的需求列表（没有则为空）
+def search_notice_content(notice_content):
+    result_id = search_notice_content(notice_content)
+    result = []
+    for i in result_id:
+        result.append(check_notice_database(i))
     return result
 
 # 发布需求，输入需求内容（Notice类）
