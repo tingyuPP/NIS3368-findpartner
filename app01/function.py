@@ -1,4 +1,4 @@
-from function_class import *
+# from function_class import *
 from database import *
 # 注册函数，输入密码，创建新账户，返回用户id
 def register(password):
@@ -7,30 +7,40 @@ def register(password):
     change_user_database(user_id, user)
     return user_id
 
-# 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：账号不存在}
+# 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：id不存在}
 def login(id, passwords):
-    user = check_user(id)
+    user = check_user_database(id)
     if user:
         if user.passwords == passwords:
             if_success = 0  # 登录成功
         else:
             if_success = 1  # 密码错误
     else:
-        if_success = 2  # 账号不存在
+        if_success = 2  # id不存在
     return if_success
 
-# 更改账号密码，输入用户id、当前密码和新密码，返回修改是否成功
-def change_password(id, password, new_password):
-    if_success = id
+# 更改账号密码，输入用户id、当前密码和新密码，返回修改是否成功{0：修改成功，1：当前密码错误，2：id不存在}
+def change_password(id, password, new_passwords):
+    user = check_user(id)
+    if user:
+        if user.passwords == password:  # 用户存在且密码正确
+            user.passwords = new_passwords
+            if_success = 0  # 更改密码成功
+        else:
+            if_success = 1  # 密码错误
+    else:
+        if_success = 2  # id不存在
     return if_success
 
 # 查看个人信息，输入用户id，返回用户类
 def check_user(id):
-    user = User("123")
+    user = check_user_database(id)
     return user
 
 # 查看拥有需求，输入用户id，返回需求列表
 def check_my_notice(id):
+    user = check_user_database(id)
+
     my_notice = []
     return my_notice
 

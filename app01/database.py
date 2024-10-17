@@ -20,9 +20,18 @@ def check_notice_database(id):
     notice = 0
     return notice
 
-# 检索需求，输入检索type，检索内容，返回检索结果（需求列表）
-# 这部分可以和check_user_database一起实现，但是通过id检索需求会经常调用，所以最好分开实现
-def search_notice_database(type, notice_content):
+# 全字段检索需求，输入索内容，在全字段检索，返回检索结果（需求id列表）
+def search_notice_database(notice_content):
+    notice_list = []
+    return notice_list
+
+# 按照大类检索需求，输入搜索内容（某个大类Basic_Type，大类是是现在function_class.py的枚举型），返回需求id列表
+def search_notice_type_database(notice_type):
+    notice_list = []
+    return notice_list
+
+# 按照大类和关键字检索，关键字在除大类以外的4个用户自定义字段（小类、时间、地点、活动描述）中检索，返回需求列表
+def search_notice_all_database(notice_type, notice_content):
     notice_list = []
     return notice_list
 
