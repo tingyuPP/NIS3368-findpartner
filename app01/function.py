@@ -94,18 +94,43 @@ def search_notice_content(notice_content):
         result.append(check_notice_database(i))
     return result
 
-# 发布需求，输入需求内容（Notice类）
-def add_notice(notice_content):
-    if_success = 0
+# 发布需求，输入发布者id，需求内容（Notice类）
+def add_notice(user_id,notice_content):
+    notice_id = create_notice()
+
+    # 在notice中记录拥有用户的id
+    notice_content.owner_id = user_id
+
+    # 在notice拥有者下加入notice的id
+    user = check_user_database(user_id)
+    user.my_notice_id_list.append(notice_id)
+    if_user_success = change_user_database(user_id, user)
+
+    if_notice_success = change_notice_database(notice_id, notice_content)
+    if_success = if_user_success and if_notice_success
     return if_success
 
-# 对某个需求发起请求，输入需求id，返回是否成功
-def request_notice(id):
-    if_success = 0
+# 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功
+def request_notice(notice_id, user_id, contact):
+    user = check_user_database(user_id)
+    notice = check_notice_database(notice_id)
+
+    # 在用户中记录申请
+    user.request_notice_id_list.append(notice_id)
+
+    # 在需求中记录request
+    request = Request(user_id, contact, 0)
+    notice.request_list.append(request)
+
+    if_user_success = change_user_database(user_id, user)
+    if_notice_success = change_notice_database(notice_id, notice)
+    if_success = if_user_success and if_notice_success
+
     return if_success
 
 # 应答某个需求的请求，输入需求id，申请人id，是否接收，返回是否成功
-def anwser_rquest(notice_id, request_id, if_anwser):
+def answer_request(notice_id, request_id, if_answer):
+    
     if_success = 0
     return if_success
 
