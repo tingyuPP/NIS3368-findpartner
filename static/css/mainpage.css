@@ -165,6 +165,7 @@ header {
     caret-color: #ff2442;
     background: rgba(0, 0, 0, 0.03);
     border-radius: 999px;
+    /* bottom: none; */
 }
 
 .input-button {
@@ -430,6 +431,7 @@ header {
 
 .main-content {
     width: 100%;
+    /* padding-left:110px; */
 }
 
 @media screen and (min-width: 960px) and (max-width: 1191px) {
@@ -455,3 +457,4 @@ header {
         padding-left: 282.66667px;
     }
 }
+

@@ -1,30 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>交我伴 - 你的搭子部落</title>
-    <link rel="stylesheet" href="{% static 'css/dashboard.css'%}">
-</head>
-
-<body>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css'%}">
     <div class="feeds-page">
         <div class="channel-container">
             <div class="scroll-container channel-scroll-container">
                 <div class="content-container">
                     <div class="channel active">推荐</div>
-                    <div class="channel">穿搭</div>
-                    <div class="channel">美食</div>
-                    <div class="channel">彩妆</div>
-                    <div class="channel">影视</div>
-                    <div class="channel">职场</div>
-                    <div class="channel">情感</div>
-                    <div class="channel">家居</div>
+                    <div class="channel">体育</div>
+                    <div class="channel">学习</div>
+                    <div class="channel">吃饭</div>
                     <div class="channel">游戏</div>
-                    <div class="channel">旅行</div>
-                    <div class="channel">动漫</div>
-                    <div class="channel">健身</div>
+                    <div class="channel">出行</div>
+                    <div class="channel">情感</div>
+
                 </div>
             </div>
         </div>
@@ -60,6 +47,3 @@
             window.location.href = "/main";
         }
     </script>
-</body>
-
-</html>
