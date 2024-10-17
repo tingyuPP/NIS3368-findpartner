@@ -5,7 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/login.css'%}" />
-    <title>Document</title>
+    <script type="text/javascript" src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
+    <title>登录</title>
   </head>
   <body>
     <header class="header" id="header">
@@ -23,26 +25,55 @@
 
     <main>
       <div class="container">
-        <div class="login-container">
-          <h2 class="login-title">登录</h2>
-          <form class="login-form">
-            <input type="email" class="login-input" placeholder="邮箱地址" />
-            <input type="password" class="login-input" placeholder="密码" />
-            <div class="login-options">
-              <div class="login-row">
-                <label for="remember-me" class="login-remember">
-                  <input type="checkbox" id="remember-me" class="mr-2" />
-                  记住我
-                </label>
-                <a href="#" class="login-forgot">忘记密码？</a>
-              </div>
-              <p class="login-signup">
-                还没有账号？
-                <a href="#" class="signup-link">注册</a>
-              </p>
+        <div class="welcome">
+          <div class="pinkbox">
+            <div class="signup nodisplay">
+              <h1>register</h1>
+              <form autocomplete="off">
+                <input type="text" placeholder="username" />
+                <input type="email" placeholder="email" />
+                <input type="password" placeholder="password" />
+                <input type="password" placeholder="confirm password" />
+                <button class="button submit">create account</button>
+              </form>
             </div>
-            <button type="submit" class="login-button">登录</button>
-          </form>
+            <div class="signin">
+              <h1>sign in</h1>
+              <form class="more-padding" autocomplete="off">
+                <input type="text" placeholder="username" />
+                <input type="password" placeholder="password" />
+                <div class="checkbox">
+                  <input type="checkbox" id="remember" /><label for="remember"
+                    >remember me</label
+                  >
+                </div>
+
+                <button class="button submit">login</button>
+              </form>
+            </div>
+          </div>
+          <div class="leftbox">
+            <h2 class="title"><span>BLOOM</span>&<br />BOUQUET</h2>
+            <p class="desc">pick your perfect <span>bouquet</span></p>
+            <img
+              class="flower smaller"
+              src="https://image.ibb.co/d5X6pn/1357d638624297b.jpg"
+              alt="1357d638624297b"
+              border="0"
+            />
+            <p class="account">have an account?</p>
+            <button class="button" id="signin">login</button>
+          </div>
+          <div class="rightbox">
+            <h2 class="title"><span>BLOOM</span>&<br />BOUQUET</h2>
+            <p class="desc">pick your perfect <span>bouquet</span></p>
+            <img
+              class="flower"
+              src="https://preview.ibb.co/jvu2Un/0057c1c1bab51a0.jpg"
+            />
+            <p class="account">don't have an account?</p>
+            <button class="button" id="signup">sign up</button>
+          </div>
         </div>
       </div>
     </main>
