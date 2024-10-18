@@ -98,7 +98,12 @@ document.addEventListener("DOMContentLoaded", function () {
       document.removeEventListener('scroll', lazyLoad);
       window.removeEventListener('resize', lazyLoad);
       window.removeEventListener('orientationchange', lazyLoad);
+      showEndOfContent();
     }
+  };
+
+  const showEndOfContent = () => {
+    document.querySelector('.end-of-content').style.display = 'block';
   };
 
   document.addEventListener('scroll', lazyLoad);
