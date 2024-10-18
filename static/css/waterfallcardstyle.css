@@ -9,8 +9,7 @@
     max-width: 1230px;
     column-count: 3;
     column-gap: 10px;
-    left: 0px;
-    /* 向左移动10个像素 */
+
 }
 
 .card {
@@ -43,6 +42,9 @@
     font-size: 14px;
     line-height: 140%;
     color: #333;
+    /* 字体为黑体 */
+    font-family: '黑体', 'Heiti SC', 'Arial', sans-serif;
+        /* 设置字体 */
 }
 
 .author-wrapper {
@@ -65,12 +67,20 @@
     margin-right: 12px;
 }
 
-.author-avatar {
+.card .author-avatar {
     margin-right: 6px;
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    width: 30px;
+    /* 增加宽度 */
+    height: 30px;
+    /* 增加高度 */
+    border-radius: 50%;
+    /* 将边框半径设置为50%，使其成为圆形 */
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    /* 增加边框厚度并调整颜色 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加阴影效果 */
+    object-fit: cover;
+    /* 确保图片覆盖整个容器 */
     flex-shrink: 0;
 }
 
