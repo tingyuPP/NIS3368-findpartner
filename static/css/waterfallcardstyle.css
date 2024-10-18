@@ -1,72 +1,15 @@
-body {
-    font-family: Arial, sans-serif;
-}
 
 
-
-.channel-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.channel-scroll-container {
-    backdrop-filter: blur(20px);
-    background-color: transparent;
-    width: calc(100vw - 24px);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    user-select: none;
-    -webkit-user-select: none;
-    align-items: center;
-    font-size: 16px;
-    color: rgba(51, 51, 51, 0.8);
-    height: 72px;
-    white-space: nowrap;
-}
-
-.content-container {
-    display: flex;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-    color: rgba(51, 51, 51, 0.8);
-}
-
-.content-container::-webkit-scrollbar {
-    display: none;
-}
-
-.channel {
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 16px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-.channel.active {
-    font-weight: 600;
-    background: rgba(0, 0, 0, 0.03);
-    border-radius: 999px;
-    color: #333;
-}
 
 .feeds-container {
     position: relative;
     transition: width 0.5s, left 0.5s;
     /* 添加 left 属性的过渡效果 */
     margin: 0 auto;
-    max-width: 1260px;
+    max-width: 1230px;
     column-count: 3;
     column-gap: 10px;
-    left: -100px;
+    left: 0px;
     /* 向左移动10个像素 */
 }
 

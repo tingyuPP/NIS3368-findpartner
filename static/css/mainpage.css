@@ -1,15 +1,18 @@
-
+/* 
 body::-webkit-scrollbar-horizontal {
     height: 0.5em;
 }
 
 body::-webkit-scrollbar-thumb-horizontal {
     background: transparent;
-}
+} */
 
 
 /* 其他样式保持不变 */
-
+body {
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
 a {
     text-decoration: none;
     color: rgba(51, 51, 51, 0.8);
@@ -227,45 +230,7 @@ header {
     overflow: visible;
 }
 
-@media screen and (max-width: 695px) {
-    .side-bar {
-        display: none;
-    }
-}
 
-@media screen and (min-width: 696px) and (max-width: 959px) {
-    .side-bar {
-        display: none;
-    }
-}
-
-@media screen and (min-width: 960px) and (max-width: 1191px) {
-    .side-bar {
-        width: calc(-18px + 25vw);
-        margin-left: 12px;
-    }
-}
-
-@media screen and (min-width: 1192px) and (max-width: 1423px) {
-    .side-bar {
-        width: calc(-16.8px + 20vw);
-        margin-left: 12px;
-    }
-}
-
-@media screen and (min-width: 1424px) and (max-width: 1727px) {
-    .side-bar {
-        width: calc(-21.33333px + 16.66667vw);
-        margin-left: 16px;
-    }
-}
-
-@media screen and (min-width: 1728px) {
-    .side-bar {
-        width: 266.66667px;
-        margin-left: 16px;
-    }
-}
 
 .channel-list {
     min-height: auto;
@@ -444,10 +409,11 @@ header {
 
 .main-content {
     width: 100%;
-    /* padding-left:110px; */
+    
+
 }
 
-@media screen and (min-width: 960px) and (max-width: 1191px) {
+/* @media screen and (min-width: 960px) and (max-width: 1191px) {
     .main-content {
         padding-left: calc(-6px + 25vw);
     }
@@ -469,5 +435,5 @@ header {
     .main-content {
         padding-left: 282.66667px;
     }
-}
+} */
 
