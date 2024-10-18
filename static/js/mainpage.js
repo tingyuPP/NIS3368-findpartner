@@ -1,4 +1,5 @@
 
+
 function showmenu() {
     var x = document.getElementById("menuinformation");
 

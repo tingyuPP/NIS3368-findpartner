@@ -1,44 +1,22 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css'%}">
+<script src={% static "js/getchannelcontent.js" %}></script>
     <div class="feeds-page">
         <div class="channel-container">
             <div class="scroll-container channel-scroll-container">
                 <div class="content-container">
-                    <div class="channel active">推荐</div>
-                    <div class="channel">体育</div>
-                    <div class="channel">学习</div>
-                    <div class="channel">吃饭</div>
-                    <div class="channel">游戏</div>
-                    <div class="channel">出行</div>
-                    <div class="channel">情感</div>
-
+                    <div class="channel active" id="channel-recommend" onclick="handleChannelClick('recommend')">推荐</div>
+                    <div class="channel" id="channel-sports" onclick="handleChannelClick('sports')">体育</div>
+                    <div class="channel" id="channel-study" onclick="handleChannelClick('study')">学习</div>
+                    <div class="channel" id="channel-food" onclick="handleChannelClick('food')">吃饭</div>
+                    <div class="channel" id="channel-games" onclick="handleChannelClick('games')">游戏</div>
+                    <div class="channel" id="channel-travel" onclick="handleChannelClick('travel')">出行</div>
+                    <div class="channel" id="channel-emotion" onclick="handleChannelClick('emotion')">情感</div>
                 </div>
             </div>
         </div>
         <div class="loading-container"></div>
-        <div class="feeds-container">
-            <div class="card">
-                <img class="lazy-img"
-                    src="https://tse1-mm.cn.bing.net/th/id/OIP-C.Zte3ljd4g6kqrWWyg-8fhAHaEo?w=264&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                    style="border-radius: 8px" onclick="toMain()" />
-                <div class="footer">
-                    <a class="title"><span>这是具体内容</span></a>
-                    <div class="author-wrapper">
-                        <a class="author">
-                            <img class="author-avatar"
-                                src="https://tse1-mm.cn.bing.net/th/id/OIP-C.Zte3ljd4g6kqrWWyg-8fhAHaEo?w=264&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" />
-                            <span class="name">这是名字</span>
-                        </a>
-                        <span class="like-wrapper like-active">
-                            <svg style="width: 1em; height: 1em">
-                                <use xlink:href="#search-icon"></use>
-                            </svg>
-                            <span class="count">12</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% include 'mainpage/waterfallshowcard.html' %}
         <div class="feeds-loading"></div>
     </div>
 
