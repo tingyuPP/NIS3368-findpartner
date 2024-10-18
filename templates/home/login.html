@@ -5,7 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/login.css'%}" />
-    <script type="text/javascript" src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script
+      type="text/javascript"
+      src="{% static 'js/jquery-3.7.1.min.js' %}"
+    ></script>
     <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
     <title>登录</title>
   </head>
@@ -30,49 +33,49 @@
             <div class="signup nodisplay">
               <h1>register</h1>
               <form autocomplete="off">
-                <input type="text" placeholder="username" />
-                <input type="email" placeholder="email" />
-                <input type="password" placeholder="password" />
-                <input type="password" placeholder="confirm password" />
-                <button class="button submit">create account</button>
+                <input type="text" placeholder="用户名" />
+                <input type="email" placeholder="邮箱" />
+                <input type="password" placeholder="密码" />
+                <input type="password" placeholder="确认密码" />
+                <button class="button submit">创建账号</button>
               </form>
             </div>
             <div class="signin">
-              <h1>sign in</h1>
+              <h1>login</h1>
               <form class="more-padding" autocomplete="off">
-                <input type="text" placeholder="username" />
-                <input type="password" placeholder="password" />
+                <input type="text" placeholder="用户名" />
+                <input type="password" placeholder="密码" />
                 <div class="checkbox">
                   <input type="checkbox" id="remember" /><label for="remember"
-                    >remember me</label
+                    >记住我</label
                   >
                 </div>
 
-                <button class="button submit">login</button>
+                <button class="button submit">登录</button>
               </form>
             </div>
           </div>
           <div class="leftbox">
-            <h2 class="title"><span>BLOOM</span>&<br />BOUQUET</h2>
-            <p class="desc">pick your perfect <span>bouquet</span></p>
+            <h2 class="title">欢迎来到<span>交我伴</span></h2>
+            <p class="desc">快来找到你的<span>搭子</span></p>
             <img
-              class="flower smaller"
-              src="https://image.ibb.co/d5X6pn/1357d638624297b.jpg"
+              class="boy"
+              src="{% static 'images/等待状态.png'%}"
               alt="1357d638624297b"
               border="0"
             />
-            <p class="account">have an account?</p>
-            <button class="button" id="signin">login</button>
+            <p class="account">已有账号？</p>
+            <button class="button" id="signin">登录</button>
           </div>
           <div class="rightbox">
-            <h2 class="title"><span>BLOOM</span>&<br />BOUQUET</h2>
-            <p class="desc">pick your perfect <span>bouquet</span></p>
+            <h2 class="title">欢迎来到<span>交我伴</span></h2>
+            <p class="desc">快来找到你的<span>搭子</span></p>
             <img
-              class="flower"
-              src="https://preview.ibb.co/jvu2Un/0057c1c1bab51a0.jpg"
+              class="boy"
+              src="{% static 'images/等待状态.png'%}"
             />
-            <p class="account">don't have an account?</p>
-            <button class="button" id="signup">sign up</button>
+            <p class="account">还没有账号？</p>
+            <button class="button" id="signup">注册</button>
           </div>
         </div>
       </div>
