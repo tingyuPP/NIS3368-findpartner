@@ -1,4 +1,14 @@
 from function_class import *
+import mysql_connector
+
+# 创建python和MySQL连接
+def create_connection():
+    connection = mysql.connector.connect(
+            host="localhost",       # 根据你的数据库主机设置
+            user="root",    # MySQL用户名
+            password="daerwen",# MySQL密码
+            database="findpartner"  # 数据库名称
+        )
 
 # 创建用户，无输入，返回user id
 def create_user():
