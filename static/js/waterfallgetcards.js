@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const card = document.createElement('div');
     card.className = 'card';
 
+    card.dataset.id = item.id; // 设置帖子ID
+
     const img = document.createElement('img');
     img.setAttribute('data-src', item.src);
     img.className = 'lazy';
@@ -61,16 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const likeWrapper = document.createElement('span');
     likeWrapper.className = 'like-wrapper like-active';
 
-    const likeIcon = document.createElement('span');
-    likeIcon.className = 'like-icon';
-    likeIcon.innerHTML = '❤️';
+    
 
-    const count = document.createElement('span');
-    count.className = 'count';
-    count.textContent = '12';
 
-    likeWrapper.appendChild(likeIcon);
-    likeWrapper.appendChild(count);
 
     authorWrapper.appendChild(author);
     authorWrapper.appendChild(likeWrapper);
@@ -80,6 +75,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     card.appendChild(img);
     card.appendChild(footer);
+
+    card.addEventListener('click', function() {
+      openNoteDetail(item.id);
+    });
 
     feedsContainer.appendChild(card);
   });
@@ -98,11 +97,24 @@ document.addEventListener("DOMContentLoaded", function () {
       document.removeEventListener('scroll', lazyLoad);
       window.removeEventListener('resize', lazyLoad);
       window.removeEventListener('orientationchange', lazyLoad);
+   
     }
   };
+
+
 
   document.addEventListener('scroll', lazyLoad);
   window.addEventListener('resize', lazyLoad);
   window.addEventListener('orientationchange', lazyLoad);
   lazyLoad();
 });
+
+function openNoteDetail(id) {
+  // 更新浏览器地址栏
+  history.pushState(null, null, `/main/`);
+
+  //刷新页面
+  location.reload();
+
+
+}

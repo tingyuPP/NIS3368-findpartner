@@ -1,0 +1,54 @@
+.invite-button {
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    top: 80%;
+    /* 向下移动按钮 */
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    /* 调整字体大小 */
+    background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+    background-size: 400%;
+    width: 150px;
+    /* 调整宽度 */
+    height: 40px;
+    /* 调整高度 */
+    color: #fff;
+    line-height: 40px;
+    /* 调整行高 */
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 20px;
+    /* 调整边框半径 */
+    z-index: 1;
+}
+
+.invite-button::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    right: -5px;
+    top: -5px;
+    bottom: -5px;
+    background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+    background-size: 400%;
+    border-radius: 25px;
+    /* 调整边框半径 */
+    filter: blur(10px);
+    /* 调整模糊效果 */
+    z-index: -1;
+}
+
+.invite-button:hover::before {
+    animation: sun 8s infinite;
+}
+
+.invite-button:hover {
+    animation: sun 8s infinite;
+}
+
+@keyframes sun {
+    100% {
+        background-position: -400% 0;
+    }
+}

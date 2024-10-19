@@ -23,4 +23,5 @@ urlpatterns = [
     path("home/", views.home),
     path("login/", views.log),
     path("dashboard/", views.mainpage),
+    path("main/", views.main),
 ]

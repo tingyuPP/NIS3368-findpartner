@@ -1,6 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css'%}">
 <script src={% static "js/getchannelcontent.js" %}></script>
+
     <div class="feeds-page">
         <div class="channel-container">
             <div class="scroll-container channel-scroll-container">
@@ -18,10 +19,22 @@
         <div class="loading-container"></div>
         {% include 'mainpage/waterfallshowcard.html' %}
         <div class="feeds-loading"></div>
+        
+    </div>
+    <div class="end-of-content" style="display: block; text-align: center; padding: 20px; color: #999;">已经到底啦</div>
+
+    <!-- 悬浮窗容器 -->
+    <div class="note-detail-mask" id="note-detail-mask" style="display: none;">
+    <div class="note-container" id="note-container">
+        <!-- 悬浮窗内容将由JavaScript动态生成 -->
     </div>
 
+</div>
     <script>
         function toMain() {
             window.location.href = "/main";
         }
+
+
+
     </script>
