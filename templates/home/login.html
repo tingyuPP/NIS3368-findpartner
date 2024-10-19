@@ -32,26 +32,31 @@
           <div class="pinkbox">
             <div class="signup nodisplay">
               <h1>register</h1>
-              <form autocomplete="off">
-                <input type="text" placeholder="用户名" />
-                <input type="email" placeholder="邮箱" />
-                <input type="password" placeholder="密码" />
-                <input type="password" placeholder="确认密码" />
-                <button class="button submit">创建账号</button>
+              <form id="register-form" autocomplete="off">
+                <input type="text" placeholder="用户名" id="reg__username" />
+                <input type="email" placeholder="邮箱" id="reg__email" />
+                <input type="password" placeholder="密码" id="reg__password" />
+                <input
+                  type="password"
+                  placeholder="确认密码"
+                  id="repeat__password"
+                />
+                <button type="submit" class="button submit" id="register">创建账号</button>
               </form>
             </div>
             <div class="signin">
               <h1>login</h1>
-              <form class="more-padding" autocomplete="off">
-                <input type="text" placeholder="用户名" />
-                <input type="password" placeholder="密码" />
+              <form class="more-padding" id="login-form" autocomplete="off">
+                <input type="text" placeholder="用户名" id="log__username"/>
+                <input type="password" placeholder="密码" id="log__password"/>
+                <!--
                 <div class="checkbox">
                   <input type="checkbox" id="remember" /><label for="remember"
                     >记住我</label
                   >
                 </div>
-
-                <button class="button submit">登录</button>
+                -->
+                <button type="submit" class="button submit" id="login">登录</button>
               </form>
             </div>
           </div>
@@ -70,10 +75,7 @@
           <div class="rightbox">
             <h2 class="title">欢迎来到<span>交我伴</span></h2>
             <p class="desc">快来找到你的<span>搭子</span></p>
-            <img
-              class="boy"
-              src="{% static 'images/等待状态.png'%}"
-            />
+            <img class="boy" src="{% static 'images/等待状态.png'%}" />
             <p class="account">还没有账号？</p>
             <button class="button" id="signup">注册</button>
           </div>
