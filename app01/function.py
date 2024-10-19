@@ -2,15 +2,18 @@
 from django.db.models.expressions import result
 
 from database import *
-# 注册函数，输入密码，创建新账户，返回用户id
-def register(password):
-    user_id = create_user()
-    user = User(user_id, password)
+# 注册函数，输入用户名、密码，创建新账户，返回用户id
+def register(user_name, passwords):
+    user_id = create_user(user_name)
+    if user_id == -1:
+        return None
+    user = User(user_id, passwords)
     change_user_database(user_id, user)
     return user_id
 
 # 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：id不存在}
-def login(user_id, passwords):
+def login(user_name, passwords):
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     if user:
         if user.passwords == passwords:
@@ -22,7 +25,8 @@ def login(user_id, passwords):
     return if_success
 
 # 更改账号密码，输入用户id、当前密码和新密码，返回修改是否成功{0：修改成功，1：当前密码错误，2：id不存在}
-def change_password(user_id, password, new_passwords):
+def change_password(user_name, password, new_passwords):
+    user_id = user_name_to_id(user_name)
     user = check_user(user_id)
     if user:
         if user.passwords == password:  # 用户存在且密码正确
@@ -35,12 +39,14 @@ def change_password(user_id, password, new_passwords):
     return if_success
 
 # 查看个人信息，输入用户id，返回用户类
-def check_user(user_id)->User:
+def check_user(user_name)->User:
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     return user
 
 # 查看拥有需求，输入用户id，返回需求列表
-def check_my_notice(user_id)->list[Notice]:
+def check_my_notice(user_name)->list[Notice]:
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     notice_list = user.my_notice_id_list
     my_notice = []
@@ -49,7 +55,8 @@ def check_my_notice(user_id)->list[Notice]:
     return my_notice
 
 # 查看拥有的处于唤醒态的需求，输入用户id，返回需求列表
-def check_my_enabled_notice(user_id)->list[Notice]:
+def check_my_enabled_notice(user_name)->list[Notice]:
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     notice_list = user.my_notice_id_list
     my_notice = []
@@ -60,7 +67,8 @@ def check_my_enabled_notice(user_id)->list[Notice]:
     return my_notice
 
 # 查看拥有的处于挂起态的需求，输入用户id，返回需求列表
-def check_my_disabled_notice(user_id)->list[Notice]:
+def check_my_disabled_notice(user_name)->list[Notice]:
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     notice_list = user.my_notice_id_list
     my_notice = []
@@ -71,7 +79,8 @@ def check_my_disabled_notice(user_id)->list[Notice]:
     return my_notice
 
 # 查看申请需求，输入用户id，返回申请的需求（所有状态的）
-def check_request_notice(user_id)->list[Notice]:
+def check_request_notice(user_name)->list[Notice]:
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     notice_list = user.request_notice_id_list
     result_request_notice = []
@@ -81,7 +90,8 @@ def check_request_notice(user_id)->list[Notice]:
     return result_request_notice
 
 # 查看通过的申请需求，输入用户id，返回通过的申请需求（所有状态）
-def check_request_answered_notice(user_id)->list[Notice]:
+def check_request_answered_notice(user_name)->list[Notice]:
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     notice_list = user.request_notice_id_list
     result_request_notice = []
@@ -93,7 +103,8 @@ def check_request_answered_notice(user_id)->list[Notice]:
     return result_request_notice
 
 # 查看被拒绝的申请需求，输入用户id，返回被拒绝的申请需求（所有状态）
-def check_request_refused_notice(user_id)->list[Notice]:
+def check_request_refused_notice(user_name)->list[Notice]:
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     notice_list = user.request_notice_id_list
     result_request_notice = []
@@ -105,7 +116,8 @@ def check_request_refused_notice(user_id)->list[Notice]:
     return result_request_notice
 
 # 更改用户信息，输入用户id，更改过后的全部用户信息（除了passwords，passwords应该使用change_passwords)（应该是一个User类），返回是否成功{0：修改成功，1：修改失败}
-def change_user_info(user_id, new_user_info):
+def change_user_info(user_name, new_user_info):
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     if user:
         change_user_database(user_id, new_user_info)
@@ -124,7 +136,6 @@ def search_notice_all(notice_type:Basic_Type, notice_content:Notice)->list[Notic
         if not notice.if_disabled:  # 如果需求处于唤醒态
             result_notice.append(notice)
     return result_notice
-
 
 # 按照大类检索需求，输入大类，返回检索到的需求列表（唤醒的）（没有则为空）
 def search_notice_type(notice_type:Basic_Type)->list[Notice]:
@@ -147,7 +158,8 @@ def search_notice_content(notice_content:Notice)->list[Notice]:
     return result_notice
 
 # 发布需求，输入发布者id，需求内容（Notice类）
-def add_notice(user_id:int,notice_content:Notice):
+def add_notice(user_name:str,notice_content:Notice):
+    user_id = user_name_to_id(user_name)
     notice_id = create_notice()
 
     # 在notice中记录拥有用户的id
@@ -163,7 +175,8 @@ def add_notice(user_id:int,notice_content:Notice):
     return if_success
 
 # 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功
-def request_notice(notice_id:int, user_id:int, contact:str):
+def request_notice(notice_id:int, user_name:str, contact:str):
+    user_id = user_name_to_id(user_name)
     user = check_user_database(user_id)
     notice = check_notice_database(notice_id)
 
@@ -181,7 +194,8 @@ def request_notice(notice_id:int, user_id:int, contact:str):
     return if_success
 
 # 应答某个需求的请求，输入需求id，申请人id，是否接收{1：接收，2：拒绝}，返回是否成功
-def answer_request(notice_id, user_id, if_answer):
+def answer_request(notice_id, user_name, if_answer):
+    user_id = user_name_to_id(user_name)
     notice = check_notice_database(notice_id)
     if_success = 1
     for request in notice.request_list:
@@ -214,8 +228,9 @@ def change_notice(notice_id:int, notice_content:Notice):
     return if_success
 
 # 判断是否本人需求，输入用户id和需求id，返回是否为user拥有的需求{0：是，1：否，2：用户不存在，3：需求不存在}
-def is_my_notice(uer_id, notice_id):
-    user = check_user_database(uer_id)
+def is_my_notice(user_name, notice_id):
+    user_id = user_name_to_id(user_name)
+    user = check_user_database(user_id)
     notice = check_notice_database(notice_id)
     if user:
         if notice:
@@ -230,3 +245,12 @@ def is_my_notice(uer_id, notice_id):
         if_owner = 2  # 用户不存在
     return if_owner
 
+# 通过user_id查看user_name
+def id_to_name(user_id):
+    user_name = user_id_to_name(user_id)
+    return user_name
+
+# 通过user_name查看user_id
+def user_name_to_id(user_name):
+    user_id = user_name_to_id(user_name)
+    return user_id
