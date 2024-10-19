@@ -15,3 +15,6 @@ def mainpage(request):
 
 def main(request):
     return render(request, "mainpage/main.html")
+
+def publish(request):
+    return render(request, "user/push.html")
