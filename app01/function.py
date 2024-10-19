@@ -1,4 +1,6 @@
 # from function_class import *
+from django.db.models.expressions import result
+
 from database import *
 # 注册函数，输入密码，创建新账户，返回用户id
 def register(password):
@@ -50,52 +52,49 @@ def check_my_notice(user_id)->list[Notice]:
 def check_request_notice(user_id)->list[Notice]:
     user = check_user_database(user_id)
     notice_list = user.request_notice_id_list
-    request_notice = []
+    result_request_notice = []
     for i in notice_list:
-        request_notice.append(check_notice_database(i))
-    return request_notice
+        result_request_notice.append(check_notice_database(i))
+    return result_request_notice
 
 # 更改用户信息，输入用户id，更改过后的全部用户信息（除了passwords，passwords应该使用change_passwords)（应该是一个User类），返回是否成功{0：修改成功，1：修改失败}
 def change_user_info(user_id, new_user_info):
     user = check_user_database(user_id)
     if user:
-        user.nick_name = new_user_info.nick_name
-        user.sex = new_user_info.sex
-        user.hobby = new_user_info.hobby
-        user.introduction = new_user_info.introduction
+        change_user_database(user_id, new_user_info)
         if_success = 0
     else:
         if_success = 1
     return if_success
 
 # 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（没有则为空）
-def search_notice_all(type, notice_content):
+def search_notice_all(notice_type:Basic_Type, notice_content:Notice)->list[Notice]:
     # type{0:大类，1:小类，2:时间，3:地点}
-    result_id = search_notice_all_database(type, notice_content)
-    result = []
+    result_id = search_notice_all_database(notice_type, notice_content)
+    result_notice = []
     for i in result_id:
-        result.append(check_notice_database(i))
-    return result
+        result_notice.append(check_notice_database(i))
+    return result_notice
 
 
 # 按照大类检索需求，输入大类，返回检索到的需求列表（没有则为空）
-def search_notice_type(notice_type):
+def search_notice_type(notice_type:Basic_Type)->list[Notice]:
     result_id = search_notice_type_database(notice_type)
-    result = []
+    result_notice = []
     for i in result_id:
-        result.append(check_notice_database(i))
-    return result
+        result_notice.append(check_notice_database(i))
+    return result_notice
 
 # # 按照内容检索需求，输入具体内容（应该是一个字符串），返回检索到的需求列表（没有则为空）
-def search_notice_content(notice_content):
+def search_notice_content(notice_content:Notice)->list[Notice]:
     result_id = search_notice_content_database(notice_content)
-    result = []
+    result_notice = []
     for i in result_id:
-        result.append(check_notice_database(i))
-    return result
+        result_notice.append(check_notice_database(i))
+    return result_notice
 
 # 发布需求，输入发布者id，需求内容（Notice类）
-def add_notice(user_id,notice_content):
+def add_notice(user_id:int,notice_content:Notice):
     notice_id = create_notice()
 
     # 在notice中记录拥有用户的id
@@ -111,7 +110,7 @@ def add_notice(user_id,notice_content):
     return if_success
 
 # 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功
-def request_notice(notice_id, user_id, contact):
+def request_notice(notice_id:int, user_id:int, contact:str):
     user = check_user_database(user_id)
     notice = check_notice_database(notice_id)
 
@@ -133,32 +132,48 @@ def answer_request(notice_id, user_id, if_answer):
     notice = check_notice_database(notice_id)
     if_success = 1
     for request in notice.request_list:
-        if request.id == user_id:
+        if request.id == user_id:   # 找到user_id的request
             request.answer = if_answer
             if_success = 0
     return if_success
 
 # 挂起需求，输入需求id，返回是否成功
-def disable_notice(id):
-    notice = check_notice_database(id)
+def disable_notice(notice_id):
+    notice = check_notice_database(notice_id)
     if_success = 1
     if notice:
-        notice.if_disabled = True
+        notice.if_disabled = True   # 挂起
         if_success = 0
     return if_success
 
 # 唤醒需求，输入需求id，返回是否成功
-def enable_notice(id):
-    if_success = 0
+def enable_notice(notice_id):
+    notice = check_notice_database(notice_id)
+    if_success = 1
+    if notice:
+        notice.if_enabled = False   # 唤醒
+        if_success = 0
     return if_success
 
 # 更改需求内容，输入需求id，更改后的需求（全部内容，应该为Notice类），返回是否成功
-def change_notice(id, notice_content):
-    if_success = 0
+def change_notice(notice_id:int, notice_content:Notice):
+    if_success = change_notice_database(notice_id, notice_content)
     return if_success
 
-# 判断是否本人需求，输入用户id和需求id，返回是否为user拥有的需求
+# 判断是否本人需求，输入用户id和需求id，返回是否为user拥有的需求{0：是，1：否，2：用户不存在，3：需求不存在}
 def is_my_notice(uer_id, notice_id):
-    result = 0
-    return result
+    user = check_user_database(uer_id)
+    notice = check_notice_database(notice_id)
+    if user:
+        if notice:
+            if_owner = 1
+            for i in user.my_notice_id_list:    # 遍历用户拥有的需求id列表
+                if i == notice_id:
+                    if_owner = 0  # 成功找到
+                    break
+        else:
+            if_owner = 3  # 需求不存在
+    else:
+        if_owner = 2  # 用户不存在
+    return if_owner
 
