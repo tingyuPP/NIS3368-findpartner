@@ -251,6 +251,6 @@ def id_to_name(user_id):
     return user_name
 
 # 通过user_name查看user_id
-def user_name_to_id(user_name):
+def name_to_id(user_name):
     user_id = user_name_to_id(user_name)
     return user_id
