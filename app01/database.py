@@ -1,4 +1,4 @@
-from function_class import *
+from app01.function_class import *
 import _mysql_connector
 
 # 创建python和MySQL连接

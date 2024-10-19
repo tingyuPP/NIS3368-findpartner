@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpRequest
 from .forms import LoginForm, RegisterForm
 from django.contrib import messages
-from function import *
+from app01.function import *
 
 # Create your views here.
 def home(request: HttpRequest):

@@ -1,7 +1,7 @@
 # from function_class import *
 from django.db.models.expressions import result
 
-from database import *
+from app01.database import *
 # 注册函数，输入用户名、密码，创建新账户，返回是否修改成功{0：成功，1：失败}
 def register(user_name, passwords):
     user_id = create_user(user_name)
