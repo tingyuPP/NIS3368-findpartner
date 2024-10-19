@@ -12,3 +12,6 @@ def mainpage(request):
         "user": request.user,
     }
     return render(request, "mainpage/mainpage.html", context)
+
+def main(request):
+    return render(request, "mainpage/main.html")
