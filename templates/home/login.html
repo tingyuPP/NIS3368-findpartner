@@ -32,7 +32,7 @@
           <div class="pinkbox">
             <div class="signup nodisplay">
               <h1>register</h1>
-              <form autocomplete="off">
+              <form id="register-form" autocomplete="off">
                 <input type="text" placeholder="用户名" id="reg__username" />
                 <input type="email" placeholder="邮箱" id="reg__email" />
                 <input type="password" placeholder="密码" id="reg__password" />
@@ -41,20 +41,22 @@
                   placeholder="确认密码"
                   id="repeat__password"
                 />
-                <button type="button" class="button submit" id="register">创建账号</button>
+                <button type="submit" class="button submit" id="register">创建账号</button>
               </form>
             </div>
             <div class="signin">
               <h1>login</h1>
-              <form class="more-padding" autocomplete="off">
+              <form class="more-padding" id="login-form" autocomplete="off">
                 <input type="text" placeholder="用户名" id="log__username"/>
                 <input type="password" placeholder="密码" id="log__password"/>
+                <!--
                 <div class="checkbox">
                   <input type="checkbox" id="remember" /><label for="remember"
                     >记住我</label
                   >
                 </div>
-                <button type="button" class="button submit" id="login">登录</button>
+                -->
+                <button type="submit" class="button submit" id="login">登录</button>
               </form>
             </div>
           </div>
