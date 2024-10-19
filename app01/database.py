@@ -1,5 +1,5 @@
 from function_class import *
-import mysql_connector
+import _mysql_connector
 
 # 创建python和MySQL连接
 def create_connection():
@@ -10,8 +10,8 @@ def create_connection():
             database="findpartner"  # 数据库名称
         )
 
-# 创建用户，无输入，返回user id
-def create_user():
+# 创建用户，输入用户名，返回user id
+def create_user(name): # 出问题返回-1
     id = 0
     return id
 
@@ -55,3 +55,9 @@ def change_user_database(user_id:int, user_content:User):
 def change_notice_database(id:int, notice_content:Notice):
     if_success = 0
     return if_success
+
+def user_id_to_name(id):
+    return name
+
+def user_name_to_id(name):
+    return id

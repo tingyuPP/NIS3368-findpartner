@@ -3,7 +3,7 @@ use findpartner;
 CREATE TABLE Users (
 	-- 用户id
     user_id INT AUTO_INCREMENT PRIMARY KEY,
-    -- 用户昵称/用户名
+    -- 用户昵称
     user_nickname VARCHAR(100) NOT NULL,
     -- 用户密码
     user_psword VARCHAR(100) NOT NULL,
@@ -62,3 +62,9 @@ CREATE TABLE Requests (
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (notice_id) REFERENCES Notice(notice_id)
 );
+
+CREATE TABLE User_Name (
+    user_id INT PRIMARY,
+    user_name VARCHAR(100)
+    FOREIGN KEY (user_id)
+)
