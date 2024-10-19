@@ -58,6 +58,8 @@ $(document).ready(function () {
       alert("请填入所有字段！");
       return;
     }
+
+    $("#login-form").submit();
   });
 
   $("#reg__username").change(function (event) {

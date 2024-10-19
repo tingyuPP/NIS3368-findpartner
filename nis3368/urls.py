@@ -21,6 +21,6 @@ from app01 import views
 
 urlpatterns = [
     path("home/", views.home),
-    path("login/", views.login),
+    path("login/", views.log),
     path("dashboard/", views.mainpage),
 ]
