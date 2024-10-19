@@ -38,8 +38,16 @@ def log(request: HttpRequest):
             email = register_form.cleaned_data["reg_email"]
             password = register_form.cleaned_data["reg_password"]
             password2 = register_form.cleaned_data["reg_password2"]
+
+            reg_result = register(username, password)
+
+            if reg_result == 0:
+                messages.success(request, "注册成功！")
+                return redirect("/login/")
+            elif reg_result == 1:
+                messages.error(request, "用户已存在！")
             
-    return render(request, "home/login.html")
+            return render(request, "home/login.html", locals())
 
 def mainpage(request):
     context = {
