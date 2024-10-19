@@ -24,4 +24,5 @@ urlpatterns = [
     path("login/", views.log),
     path("dashboard/", views.mainpage),
     path("main/", views.main),
+    path("publish/",views.publish),
 ]
