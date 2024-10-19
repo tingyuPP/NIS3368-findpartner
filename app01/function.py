@@ -2,14 +2,14 @@
 from django.db.models.expressions import result
 
 from database import *
-# 注册函数，输入用户名、密码，创建新账户，返回用户id
+# 注册函数，输入用户名、密码，创建新账户，返回是否修改成功{0：成功，1：失败}
 def register(user_name, passwords):
     user_id = create_user(user_name)
     if user_id == -1:
-        return None
+        return 1
     user = User(user_id, passwords)
-    change_user_database(user_id, user)
-    return user_id
+    if_success = change_user_database(user_id, user)
+    return if_success
 
 # 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：id不存在}
 def login(user_name, passwords):
