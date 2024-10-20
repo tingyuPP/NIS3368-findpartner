@@ -11,6 +11,9 @@ def home(request: HttpRequest):
 def log(request: HttpRequest):
     if request.session.get("is_login", None):
         return redirect("/dashboard/")
+    
+    if request.method == "GET" :
+        return render(request, "home/login.html")
 
     if request.method == "POST":
         login_form = LoginForm(request.POST)
