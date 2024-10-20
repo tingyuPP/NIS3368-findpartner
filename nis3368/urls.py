@@ -25,4 +25,5 @@ urlpatterns = [
     path("dashboard/", views.mainpage),
     path("main/", views.main),
     path("publish/",views.publish),
+    path("my/",views.my),
 ]

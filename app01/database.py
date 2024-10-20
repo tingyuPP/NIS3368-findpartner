@@ -1,5 +1,5 @@
 from app01.function_class import *
-import _mysql_connector
+import mysql.connector
 
 # 创建python和MySQL连接
 def create_connection():

@@ -63,3 +63,6 @@ def main(request):
 
 def publish(request):
     return render(request, "user/push.html")
+
+def my(request):
+    return render(request, "user/my.html")
