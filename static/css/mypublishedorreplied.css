@@ -1,28 +1,43 @@
 .message-container {
-    width: 40rem;
+    width: 60rem;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .message-item {
     display: flex;
     flex-direction: row;
-    padding-top: 24px;
+    padding: 24px;
+    margin-bottom: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .user-avatar {
     margin-right: 24px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .avatar-item {
-    width: 48px;
-    height: 48px;
+    width: 160px;
+    /* 增加图片宽度 */
+    height: 120px;
+    /* 增加图片高度 */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-radius: 100%;
+    border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .main {
@@ -51,6 +66,11 @@
     color: #333;
     font-size: 16px;
     font-weight: 600;
+    text-decoration: none;
+}
+
+.user-info a:hover {
+    color: #007bff;
 }
 
 .interaction-hint {
@@ -77,4 +97,5 @@
     background-color: red;
     text-align: center;
     border-radius: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
