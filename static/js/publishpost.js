@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const fileInput = document.getElementById('fileInput');
-  const titleInput = document.getElementById('titleInput');
-  const contentInput = document.getElementById('contentInput');
-  const tagInput = document.getElementById('tagInput');
-  const addTagBtn = document.getElementById('addTagBtn');
-  const tagsContainer = document.getElementById('tagsContainer');
-  const hotTagsContainer = document.getElementById('hotTagsContainer');
-  const categorySelect = document.getElementById('categorySelect');
-  const publishBtn = document.getElementById('publishBtn');
-  const cancelBtn = document.getElementById('cancelBtn');
+  const fileInput = document.getElementById('file-input');
+  const filePreview = document.getElementById('file-preview');
+  const uploadProgress = document.getElementById('upload-progress');
+  const titleInput = document.getElementById('title-input');
+  const contentInput = document.getElementById('content-input');
+  const tagInput = document.getElementById('tag-input');
+  const addTagBtn = document.getElementById('add-tag-btn');
+  const tagsContainer = document.getElementById('tag-list');
+  const categorySelect = document.getElementById('category-select');
+  const publishBtn = document.getElementById('publish-btn');
+  const cancelBtn = document.getElementById('cancel-btn');
 
   const tags = [];
-  const hotTags = ['标签1', '标签2', '标签3'];
 
   addTagBtn.addEventListener('click', () => {
     const tag = tagInput.value.trim();
@@ -20,17 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
       renderTags();
       tagInput.value = '';
     }
-  });
-
-  hotTags.forEach(tag => {
-    const tagElement = document.createElement('span');
-    tagElement.textContent = tag;
-    tagElement.classList.add('hot-tag-item');
-    tagElement.addEventListener('click', () => {
-      tags.push(tag);
-      renderTags();
-    });
-    hotTagsContainer.appendChild(tagElement);
   });
 
   publishBtn.addEventListener('click', () => {
@@ -63,5 +52,38 @@ document.addEventListener('DOMContentLoaded', () => {
     tagInput.value = '';
     tags.length = 0;
     renderTags();
+    filePreview.innerHTML = '';
+    fileInput.value = '';
+    fileInput.style.display = 'block';
+    document.querySelector('label[for="file-input"]').style.display = 'block';
+    uploadProgress.style.display = 'none';
+    uploadProgress.value = 0;
   }
+
+  fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadstart = () => {
+        uploadProgress.style.display = 'block';
+      };
+      reader.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const percentLoaded = Math.round((e.loaded / e.total) * 100);
+          uploadProgress.value = percentLoaded;
+        }
+      };
+      reader.onload = (e) => {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.classList.add('preview-img');
+        filePreview.innerHTML = '';
+        filePreview.appendChild(img);
+        fileInput.style.display = 'none';
+        document.querySelector('label[for="file-input"]').style.display = 'none';
+        uploadProgress.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 });

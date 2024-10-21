@@ -77,3 +77,5 @@ def replied(request):
 
 def info(request):
     return render(request, "user/myoptions/mychangeinfo.html")
+def message(request):
+    return render(request, "user/message.html")
