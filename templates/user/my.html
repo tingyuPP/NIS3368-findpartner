@@ -59,7 +59,27 @@
             </div>
         </div>
         <div class="feeds-tab-container" id="feeds-tab-container">
-            <!-- 内容展示区域 -->
+            <div class="info-container">
+                <div class="change-avatar">
+                    <div class="change-avatar-title">
+                    修改头像：
+                    </div>
+                    <div class="change-avatar-button">
+                    </div>
+                </div>
+                <div class="change-username">
+                    <div class="change-username-title">
+                    修改用户名：
+                    </div>
+                    <input type="text" class="change-username-input">
+                </div>
+                <div class="change-desc">
+                    <div class="change-desc-title">
+                    修改个人简介：
+                    </div>
+                    <input type="text" class="change-desc-input">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -75,12 +95,16 @@
 
             // 根据选中的选项更新内容
             const container = document.getElementById('feeds-tab-container');
+            const infoContainer = document.querySelector('.info-container');
+            
             if (tab === 'published') {
                 container.innerHTML = "";
             } else if (tab === 'replied') {
                 container.innerHTML = '<p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p>';
             } else if (tab === 'info') {
-                container.innerHTML = '<p>这里显示我的个人信息</p>';
+                // info-container默认不可见，点击修改我的个人信息时显示
+                container.innerHTML = "";
+                infoContainer.classList.toggle('visible');
             }
         }
 
