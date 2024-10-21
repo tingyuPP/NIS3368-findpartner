@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to right, #d2f7ff, #fcb69f);
-    /* 添加渐变背景 */
     margin: 0;
     padding: 0;
     display: flex;
@@ -21,9 +20,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     background-color: #fff;
-    /* 添加白色背景 */
     backdrop-filter: blur(10px);
-    /* 添加模糊效果 */
 }
 
 .header {
@@ -44,10 +41,8 @@ body {
     margin: 20px 0;
 }
 
-/* 美化文件输入框 */
 #file-input {
     display: none;
-    /* 隐藏默认的文件输入框 */
 }
 
 #file-input+label {
@@ -69,7 +64,6 @@ body {
     margin: 20px 0;
 }
 
-/* 美化文本区域 */
 #content-input {
     width: 95%;
     padding: 15px;
@@ -184,4 +178,24 @@ button:hover {
     border: 1px solid #d9d9d9;
     border-radius: 4px;
     font-size: 15px;
+}
+
+.preview-img {
+    max-width: 50%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #d9d9d9;
+}
+
+#file-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-progress {
+    width: 100%;
+    margin-top: 10px;
 }
