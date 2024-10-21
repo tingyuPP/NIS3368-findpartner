@@ -116,8 +116,8 @@ def check_request_refused_notice(user_name)->list[Notice]:
     return result_request_notice
 
 # 更改用户信息，输入用户id，更改过后的全部用户信息（除了passwords，passwords应该使用change_passwords)（应该是一个User类），返回是否成功{0：修改成功，1：修改失败}
-def change_user_info(user_name, new_user_info):
-    user_id = user_name_to_id(user_name)
+def change_user_info(new_user_info:User):
+    user_id = new_user_info.id
     user = check_user_database(user_id)
     if user:
         change_user_database(user_id, new_user_info)
@@ -223,7 +223,8 @@ def enable_notice(notice_id):
     return if_success
 
 # 更改需求内容，输入需求id，更改后的需求（全部内容，应该为Notice类），返回是否成功
-def change_notice(notice_id:int, notice_content:Notice):
+def change_notice(notice_content:Notice):
+    notice_id = notice_content.id
     if_success = change_notice_database(notice_id, notice_content)
     return if_success
 
