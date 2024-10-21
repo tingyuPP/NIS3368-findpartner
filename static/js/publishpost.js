@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const uploadProgress = document.getElementById('upload-progress');
   const titleInput = document.getElementById('title-input');
   const contentInput = document.getElementById('content-input');
-  const tagInput = document.getElementById('tag-input');
   const addTagBtn = document.getElementById('add-tag-btn');
   const tagsContainer = document.getElementById('tag-list');
   const categorySelect = document.getElementById('category-select');
@@ -14,12 +13,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const tags = [];
 
   addTagBtn.addEventListener('click', () => {
-    const tag = tagInput.value.trim();
-    if (tag) {
-      tags.push(tag);
-      renderTags();
-      tagInput.value = '';
-    }
+    const newTagInput = document.createElement('input');
+    newTagInput.type = 'text';
+    newTagInput.classList.add('tag-input');
+    newTagInput.placeholder = '输入标签';
+    newTagInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        const tag = newTagInput.value.trim();
+        if (tag) {
+          tags.push(tag);
+          renderTags();
+        }
+      }
+    });
+    tagsContainer.appendChild(newTagInput);
+    newTagInput.focus();
+    addTagBtn.style.display = 'none';
   });
 
   publishBtn.addEventListener('click', () => {
@@ -34,7 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  cancelBtn.addEventListener('click', resetForm);
+  cancelBtn.addEventListener('click', () => {
+    window.location.href = '/dashboard/';
+  });
 
   function renderTags() {
     tagsContainer.innerHTML = '';
@@ -44,12 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
       tagElement.classList.add('tag-item');
       tagsContainer.appendChild(tagElement);
     });
+    tagsContainer.appendChild(addTagBtn);
+    addTagBtn.style.display = 'inline-block';
   }
 
   function resetForm() {
     titleInput.value = '';
     contentInput.value = '';
-    tagInput.value = '';
     tags.length = 0;
     renderTags();
     filePreview.innerHTML = '';

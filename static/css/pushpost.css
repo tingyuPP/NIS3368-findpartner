@@ -94,6 +94,8 @@ body {
 
 .submit {
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 button {
@@ -101,21 +103,21 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 button:hover {
     transform: scale(1.05);
 }
 
-#publishBtn {
+#publish-btn {
     background-color: #2491ff;
     color: white;
 }
 
-#cancelBtn {
+#cancel-btn {
     background-color: #f0f0f0;
-    margin-left: 10px;
+    color: #333;
 }
 
 .input-title,
@@ -135,16 +137,25 @@ button:hover {
 }
 
 .tag-list input {
-    width: 200px;
+    width: 60px;
     padding: 5px;
     margin-right: 10px;
     border: 1px solid #d9d9d9;
     border-radius: 4px;
+    font-size: 14px;
+    margin-top: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.tag-list input:focus {
+    border-color: #2491ff;
+    box-shadow: 0 0 5px rgba(36, 145, 255, 0.5);
 }
 
 .tag-list button {
     background-color: #2491ff;
     color: white;
+    margin-top: 5px;
 }
 
 .tag-list .tag-item {
