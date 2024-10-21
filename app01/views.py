@@ -74,3 +74,6 @@ def published(request):
 
 def replied(request):
     return render(request, "user/myoptions/myreplied.html")
+
+def message(request):
+    return render(request, "user/message.html")

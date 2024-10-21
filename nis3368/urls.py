@@ -20,6 +20,7 @@ from django.urls import path
 from app01 import views
 
 urlpatterns = [
+    path("", views.home),
     path("home/", views.home),
     path("login/", views.log),
     path("dashboard/", views.mainpage),
@@ -28,4 +29,5 @@ urlpatterns = [
     path("my/",views.my),
     path("my/published/",views.published),
     path("my/replied/",views.replied),
+    path("message/",views.message),
 ]
