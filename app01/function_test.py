@@ -29,3 +29,27 @@ elif action_type == '4':
     user_name = input()
     result = check_user(user_name)
     print(result)
+
+elif action_type == '5':
+    print("check_my_notice(user_name)->list[Notice]")
+    user_name = input()
+    result = check_my_notice(user_name)
+    print(result)
+
+elif action_type == '6':
+    print("check_my_enabled_notice(user_name)->list[Notice]")
+    user_name = input()
+    result = check_my_enabled_notice(user_name)
+    print(result)
+
+elif action_type == '7':
+    print("check_my_disabled_notice(user_name)->list[Notice]")
+    user_name = input()
+    result = check_my_disabled_notice(user_name)
+    print(result)
+
+elif action_type == '8':
+    print("check_request_notice(user_name)->list[Notice]")
+    user_name = input()
+    result = check_request_notice(user_name)
+    print(result)
