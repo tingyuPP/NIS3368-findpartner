@@ -63,30 +63,46 @@
         </div>
     </div>
 
-    <script>
-        function selectTab(tab) {
-            // 移除所有选项的 active 类
-            document.querySelectorAll('.reds-tab-item').forEach(item => {
-                item.classList.remove('active');
-            });
+<script>
+    function selectTab(tab) {
+        // 移除所有选项的 active 类
+        document.querySelectorAll('.reds-tab-item').forEach(item => {
+            item.classList.remove('active');
+        });
 
-            // 为选中的选项添加 active 类
-            document.getElementById(`tab-${tab}`).classList.add('active');
+        // 为选中的选项添加 active 类
+        document.getElementById(`tab-${tab}`).classList.add('active');
 
-            // 根据选中的选项更新内容
-            const container = document.getElementById('feeds-tab-container');
-            if (tab === 'published') {
-                container.innerHTML = "";
-            } else if (tab === 'replied') {
-                container.innerHTML = '<p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p><p>这里显示我回复的内容</p>';
-            } else if (tab === 'info') {
-                container.innerHTML = '<p>这里显示我的个人信息</p>';
-            }
+        // 根据选中的选项更新内容
+        const container = document.getElementById('feeds-tab-container');
+        container.innerHTML = ''; // 清空内容
+
+        let url = '';
+        if (tab === 'published') {
+            url = '/my/published/';
+        } else if (tab === 'replied') {
+            url = '/my/replied/';
+        } else if (tab === 'info') {
+            container.innerHTML = '<p>这里显示我的个人信息</p>';
+            return;
         }
 
-        // 初始化默认选项
+        // 使用 fetch API 加载 HTML 内容
+        if (url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    container.innerHTML = data;
+                })
+                .catch(error => console.error('Error loading content:', error));
+        }
+    }
+
+    // 初始化默认选项
+    document.addEventListener('DOMContentLoaded', function () {
         selectTab('published');
-    </script>
+    });
+</script>
 </body>
 
 </html>

@@ -66,3 +66,11 @@ def publish(request):
 
 def my(request):
     return render(request, "user/my.html")
+
+
+def published(request):
+    return render(request, "user/myoptions/mypublished.html")
+
+
+def replied(request):
+    return render(request, "user/myoptions/myreplied.html")
