@@ -53,3 +53,41 @@ elif action_type == '8':
     user_name = input()
     result = check_request_notice(user_name)
     print(result)
+
+elif action_type == '9':
+    print("check_request_answered_notice(user_name)->list[Notice]")
+    user_name = input()
+    result = check_request_answered_notice(user_name)
+    print(result)
+
+elif action_type == '10':
+    print("check_request_refused_notice(user_name)->list[Notice]")
+    user_name = input()
+    result = check_request_refused_notice(user_name)
+    print(result)
+
+elif action_type == '11':
+    print("change_user_info(new_user_info:User)")
+
+elif action_type == '12':
+    print("search_notice_all(notice_type:Basic_Type, notice_content:Notice)->list[Notice]")
+    notice_type_str = input()
+    notice_type = Basic_Type(notice_type_str)
+    notice_content = input()
+    result = search_notice_all(notice_type, notice_content)
+    print(result)
+
+elif action_type == '13':
+    print("search_notice_type(notice_type: Basic_Type)->list[Notice]")
+    notice_type_str = input()
+    notice_type = Basic_Type(notice_type_str)
+    result = search_notice_type(notice_type)
+    print(result)
+
+elif action_type == '14':
+    print("search_notice_content(notice_content:str)->list[Notice]")
+    notice_content = input()
+    result = search_notice_content(notice_content)
+    print(result)
+
+
