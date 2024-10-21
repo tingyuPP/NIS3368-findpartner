@@ -49,12 +49,12 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.info {
+.info-tiezi {
     flex-grow: 1;
     flex-shrink: 1;
 }
 
-.user-info {
+.tiezi-info {
     display: flex;
     flex-direction: row;
     align-items: center;
