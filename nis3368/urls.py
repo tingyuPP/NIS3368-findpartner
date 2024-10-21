@@ -26,4 +26,7 @@ urlpatterns = [
     path("main/", views.main),
     path("publish/",views.publish),
     path("my/",views.my),
+    path("my/published/",views.published),
+    path("my/replied/",views.replied),
+    path("my/info/", views.info),
 ]
