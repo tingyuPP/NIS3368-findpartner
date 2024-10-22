@@ -66,11 +66,11 @@ def create_notice(user_id: int):
 
     return id
 
-# 查看用户，输入用户id，返回用户类，没有查询到则返回None
+# 查看用户基本信息，输入用户id，返回用户类，没有查询到则返回None
 # def check_user_database(id: int)->User:
 #     user = User()
 #     return user
-def check_user_database(id: int):
+def check_user_basic_database(id: int):
     user = User()
     conn = create_connection()
     cur = conn.cursor()
@@ -99,11 +99,20 @@ def check_user_database(id: int):
 
     return user
 
-# 查看需求，输入需求id，返回需求类，没有查询到则返回None
+# 查看用户拥有的需求
+def check_user_own_list(id:int)->list[int]:
+
+# 查看用户申请的需求
+def check_user_request_list(id:int)->list[int]:
+
+# 查看某个request的应答状态
+def check_request(user_id:int, notice_id:int)->int:
+
+# 查看需求基本信息，输入需求id，返回需求类，没有查询到则返回None
 # def check_notice_database(id: int) -> Notice:
 #     notice = Notice()
 #     return notice
-def check_notice_database(id: int):
+def check_notice_basic_database(id: int):
     notice = Notice()
     conn = create_connection()
     cur = conn.cursor()
@@ -225,11 +234,11 @@ def search_notice_all_database(notice_type:Basic_Type, notice_content:Notice):
 
     return notice_list
 
-# 修改用户信息，输入用户id、用户修改后的内容，把该id下的非空内容全部用user_content的内容替换，返回是否修改成功
+# 修改用户基本信息，输入用户id、用户修改后的内容，把该id下的非空内容全部用user_content的内容替换，返回是否修改成功
 # def change_user_database(user_id:int, user_content:User):
 #     if_success = 0
 #     return if_success
-def change_user_database(user_content : User):
+def change_user_basic_database(user_content : User):
     if_success = False
     conn = create_connection()
     cur = conn.cursor()
@@ -249,11 +258,11 @@ def change_user_database(user_content : User):
 
     return if_success
 
-# 修改需求信息，基本同上
+# 修改需求基本信息，基本同上
 # def change_notice_database(id:int, notice_content:Notice):
 #     if_success = 0
 #     return if_success
-def change_notice_database(notice_content:Notice):
+def change_notice_basic_database(notice_content:Notice):
     if_success = False
     conn = create_connection()
     cur = conn.cursor()
@@ -271,6 +280,15 @@ def change_notice_database(notice_content:Notice):
     conn.close()
 
     return if_success
+
+# 增加request
+def add_request(notice_id:int, request_to_add:Request):
+
+# 删除request
+def delete_request(notice_id:int, user_id:int):
+
+# 更改reqeust状态
+def change_request_state(notice_id:int, request_to_change:Request):
 
 # 根据用户id查找用户名 找不到返回 None
 def user_id_to_name(id: int):
