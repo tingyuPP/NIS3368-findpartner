@@ -61,6 +61,15 @@ def mainpage(request):
 def main(request):
     return render(request, "mainpage/main.html")
 
+
+def yinsixieyi(request):
+    return render(request, "mainpage/yinsixieyi.html")
+
+
+def kefu(request):
+    return render(request, "mainpage/kefu.html")
+
+
 def publish(request):
     return render(request, "user/push.html")
 

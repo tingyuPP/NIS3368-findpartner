@@ -31,4 +31,6 @@ urlpatterns = [
     path("my/replied/",views.replied),
     path("my/info/", views.info),
     path("message/",views.message),
+    path("yinsixieyi/",views.yinsixieyi),
+    path("kefu/",views.kefu),
 ]
