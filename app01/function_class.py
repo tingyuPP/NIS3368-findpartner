@@ -15,12 +15,13 @@ class Request:
         self.answer_state = answer_state    # 申请是否被通过{0:未知, 1:通过, 2:不通过}
 
 class User:
-    def __init__(self, user_id, passwords, nickname = "user%d" % id, sex = "unknown", hobby = "unknown", introduction = "unknown", my_notice_id_list = None,  request_notice_id_list = None):
+    def __init__(self, user_id, passwords, nickname = "user%s" % id, image = None, sex = "unknown", hobby = "unknown", introduction = "unknown", my_notice_id_list = None,  request_notice_id_list = None):
         self.id = user_id                   # 用户id，不能缺省且唯一
         self.passwords = passwords          # 用户密码，不能缺省
 
         # 用户个人信息
         self.nickname = nickname            # 用户昵称，缺省值为“user+用户id”
+        self.image = image                  # 用户头像，为图片url，缺省值为空
         self.sex = sex                      # 性别，缺省值为“unknown”
         self.hobby = hobby                  # 爱好，缺省值为“unknown”
         self.introduction = introduction    # 签名，缺省值为“unknown”
@@ -39,14 +40,15 @@ class User:
 
 
 class Notice:
-    def __init__(self, notice_id, owner_id, owner_contact, basic_type, detail_type = "unknown", time = "unknown", location = "unknown", description = "unknown", current_places = "1", max_places = "2", if_disabled = False, request_n = 0, request_list = None):
+    def __init__(self, notice_id, owner_id, owner_contact, basic_type, image = None, detail_type = "unknown", time = "unknown", location = "unknown", description = "unknown", current_places = "1", max_places = "2", if_disabled = False, request_n = 0, request_list = None):
         self.id = notice_id                 # 需求id，不能缺省且唯一
         self.owner_id = owner_id            # 需求所有者的用户id，不能缺省
         self.owner_contact = owner_contact  # 需求所有者的联系方式，不能缺省
 
         # 需求的基本信息
         self.basic_type = basic_type        # 大类（这里应当传入一个Basic_Type类的参数，但是并未做检查）
-        self.detail_type = detail_type  # 小类
+        self.image = image                  # 需求图片
+        self.detail_type = detail_type      # 小类
         self.time = time                    # 时间
         self.location = location            # 地点
         self.description = description      # 活动描述（备注）

@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布笔记</title>
+    <link rel="stylesheet" href="{% static 'css/pushpost.css'%}">
+    <script src={% static "js/publishpost.js" %}></script>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div id="push-container" class="push-container">
+            <div class="header"><span class="header-icon"></span><span class="header-title">发布搭子需求</span></div>
+            <div class="img-list">
+                <input type="file" id="file-input" multiple>
+                <label for="file-input">选择封面图</label>
+                <div id="file-preview"></div>
+                <progress id="upload-progress" value="0" max="100" style="display: none;"></progress>
+            </div>
+            <hr>
+            <div class="push-content">
+                <input type="text" id="title-input" maxlength="20" placeholder="请输入标题" class="input-title">
+                <textarea id="content-input" maxlength="250" placeholder="填写更全面的描述信息，让更多的人看到你的搭子需求吧❤️"></textarea>
+                <div class="tag-list" id="tag-list">
+                    <!-- 动态标签将会插入这里 -->
+                    <button id="add-tag-btn">+ 标签</button>
+                </div>
+
+            </div>
+            <hr>
+            <div class="categorys">
+                <select id="category-select">
+                    <option value="">请选择分类</option>
+                    <option value="1">体育</option>
+                    <option value="2">学习</option>
+                    <option value="3">吃饭</option>
+                    <option value="4">游戏</option>
+                    <option value="5">出行</option>
+                    <option value="6">情感</option>
+                </select>
+            </div>
+            <div class="submit">
+                <button id="publish-btn">发布</button>
+                <button id="cancel-btn">取消</button>
+            </div>
+        </div>
+        <div id="login-message" style="display: none;">
+            <p>用户未登录</p>
+        </div>
+    </div>
+</body>
+
+</html>

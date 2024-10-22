@@ -1,0 +1,104 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <link rel="stylesheet" href="{% static 'css/my.css'%}">
+</head>
+
+<body>
+
+    <div class="user-page">
+
+        <div class="user">
+
+            <div class="user-info">
+                <div class="avatar">
+                    <div class="avatar-wrapper">
+                        <img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.cGc4c8dVlqnfV3uwcS1IogHaE8?w=260&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                            class="user-image" alt="用户头像">
+                    </div>
+                </div>
+                <div class="info-part">
+                    <div class="info">
+                        <div class="basic-info">
+                            <div class="user-basic">
+                                <div class="user-nickname">
+                                    <div class="user-name">三块给你买麻吉</div>
+                                </div>
+                                <div class="user-content">
+                                    <span class="user-redId">小红书号：275592512</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-desc">
+                            永远爱蜡笔小新，哆啦A梦（只是哆啦A梦），柯南，银魂（后悔没有早点入坑），火影，小埋！。
+                        </div>
+
+                    </div>
+                    <div class="follow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="reds-sticky-box user-page-sticky">
+            <div class="reds-sticky">
+                <div class="reds-tabs-list">
+                    <div class="reds-tab-item active" id="tab-published" onclick="selectTab('published')">
+                        <span>我发布的</span>
+                    </div>
+                    <div class="reds-tab-item" id="tab-replied" onclick="selectTab('replied')"><span>我回复的</span></div>
+                    <div class="reds-tab-item" id="tab-info" onclick="selectTab('info')"><span>修改我的个人信息</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="feeds-tab-container" id="feeds-tab-container">
+            
+        </div>
+    </div>
+
+<script>
+    function selectTab(tab) {
+        // 移除所有选项的 active 类
+        document.querySelectorAll('.reds-tab-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // 为选中的选项添加 active 类
+        document.getElementById(`tab-${tab}`).classList.add('active');
+
+        // 根据选中的选项更新内容
+        const container = document.getElementById('feeds-tab-container');
+        container.innerHTML = ''; // 清空内容
+
+        let url = '';
+        if (tab === 'published') {
+            url = '/my/published/';
+        } else if (tab === 'replied') {
+            url = '/my/replied/';
+        } else if (tab === 'info') {
+            url = '/my/info/';
+        }
+
+        // 使用 fetch API 加载 HTML 内容
+        if (url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    container.innerHTML = data;
+                })
+                .catch(error => console.error('Error loading content:', error));
+        }
+    }
+
+    // 初始化默认选项
+    document.addEventListener('DOMContentLoaded', function () {
+        selectTab('published');
+    });
+</script>
+</body>
+
+</html>

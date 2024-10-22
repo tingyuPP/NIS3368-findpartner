@@ -17,7 +17,7 @@
       <nav class="nav">
         <a href="/home/">
           <img
-            src="{% static 'images/logo.png' %}"
+            src="{% static 'images/logo_nobackground.png' %}"
             alt="logo"
             class="nav__logo"
             style="width: 200px"
@@ -32,23 +32,26 @@
           <div class="pinkbox">
             <div class="signup nodisplay">
               <h1>register</h1>
-              <form id="register-form" autocomplete="off">
-                <input type="text" placeholder="用户名" id="reg__username" />
-                <input type="email" placeholder="邮箱" id="reg__email" />
-                <input type="password" placeholder="密码" id="reg__password" />
+              <form method="post" id="register-form" autocomplete="off">
+                {% csrf_token %}
+                <input type="text" placeholder="用户名" id="reg__username" name="reg_username"/>
+                <input type="email" placeholder="邮箱" id="reg__email" name="reg_email"/>
+                <input type="password" placeholder="密码" id="reg__password" name="reg_password"/>
                 <input
                   type="password"
                   placeholder="确认密码"
                   id="repeat__password"
+                  name="reg_password2"
                 />
                 <button type="submit" class="button submit" id="register">创建账号</button>
               </form>
             </div>
             <div class="signin">
               <h1>login</h1>
-              <form class="more-padding" id="login-form" autocomplete="off">
-                <input type="text" placeholder="用户名" id="log__username"/>
-                <input type="password" placeholder="密码" id="log__password"/>
+              <form method="post" class="more-padding" id="login-form" autocomplete="off">
+                {% csrf_token %}
+                <input type="text" placeholder="用户名" id="log__username" name="log_username"/>
+                <input type="password" placeholder="密码" id="log__password" name="log_password"/>
                 <!--
                 <div class="checkbox">
                   <input type="checkbox" id="remember" /><label for="remember"

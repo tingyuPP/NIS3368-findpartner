@@ -70,11 +70,13 @@ a {
 }
 
 a:hover {
-  color: #007BFF; /* 设置鼠标悬停时的颜色 */
+  color: #007BFF;
+  /* 设置鼠标悬停时的颜色 */
 }
 
 a:active {
-  color: #0056b3; /* 设置点击时的颜色 */
+  color: #0056b3;
+  /* 设置点击时的颜色 */
 }
 
 img {
@@ -91,6 +93,7 @@ img {
   position: relative;
   height: 100vh;
 }
+
 .main__bg {
   position: absolute;
   top: 0;
@@ -99,7 +102,6 @@ img {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: blur(5px);
   z-index: -1;
 }
 
@@ -109,14 +111,19 @@ img {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* 居中对齐 */
-  color: white; /* 设置文字颜色 */
-  text-align: center; /* 设置文字居中 */
-  z-index: 2; /* 确保文字在图片上方 */
+  transform: translate(-50%, -50%);
+  /* 居中对齐 */
+  color: white;
+  /* 设置文字颜色 */
+  text-align: center;
+  /* 设置文字居中 */
+  z-index: 2;
+  /* 确保文字在视频上方 */
 }
 
 .main__content h1 {
-  font-size: 3rem; /* 设置标题字体大小 */
+  font-size: 3rem;
+  /* 设置标题字体大小 */
   margin-bottom: 30px;
 }
 
@@ -142,24 +149,28 @@ img {
 /* 确保导航菜单使用 flexbox 布局 */
 .nav__menu {
   display: flex;
-  justify-content: flex-end; /* 水平居中 */
-  margin-right: 200px; /* 右侧留出 200px 的空间 */
+  justify-content: flex-end;
+  /* 水平居中 */
+  margin-right: 200px;
+  /* 右侧留出 200px 的空间 */
 }
 
 /* 确保导航列表使用 flexbox 布局 */
 .nav__list {
   display: flex;
-  list-style: none; /* 移除默认的列表样式 */
+  list-style: none;
+  /* 移除默认的列表样式 */
   padding: 0;
   margin: 0;
 }
 
 /* 确保导航项之间有间距 */
 .nav__item {
-  margin: 0 15px; /* 左右各 15px 的间距 */
+  margin: 0 15px;
+  /* 左右各 15px 的间距 */
 }
 
-/* From Uiverse.io by adamgiebl */ 
+/* From Uiverse.io by adamgiebl */
 .cssbuttons-io-button {
   width: auto;
   background: #000000;

@@ -19,7 +19,7 @@
     <div class="top">
         <header class="mask-paper">
             <a style="display: flex">
-                <img src="{% static 'images/logo.png'%}" style="width: 200px;margin-top: 20px;" alt="logo" />
+                <img src="{% static 'images/logo_nobackground.png'%}" style="width: 200px;margin-top: 20px;" alt="logo" />
             </a>
             <div class="tool-box"></div>
             <div class="input-box" id="sujContainer">
@@ -55,7 +55,8 @@
                 <img src="{% static 'svg/message.svg' %}" alt="SVG Image" width="20" height="20">
                 <span class="channel">消息</span>
             </li>
-            <li class="active-channel">
+            <li class="active-channel" onclick="window.location.href='/publish/'">
+                
                 <img src="{% static 'svg/postnew.svg' %}" alt="SVG Image" width="20" height="20">
                 <span class="channel">发布</span>
             </li>
@@ -127,7 +128,7 @@
                             <div class="container" id="menuinformation">
                                 <div class="group-wrapper">
                                     <a class="menu-item hover-effect links" target="_blank"
-                                        href="https://agree.xiaohongshu.com/h5/terms/ZXXY20220331001/-1">
+                                        href="https://github.com/tingyuPP/NIS3368-findpartner">
                                         <span>关于交我伴</span>
                                         <div class="icon">
                                             <svg style="width: 1em; height: 1em; margin-right: 8px">
@@ -136,7 +137,7 @@
                                         </div>
                                     </a>
                                     <a class="menu-item hover-effect links" target="_blank"
-                                        href="https://agree.xiaohongshu.com/h5/terms/ZXXY20220509001/-1">
+                                        href="../yinsixieyi.html">
                                         <span>隐私，协议</span>
                                         <div class="icon">
                                             <svg style="width: 1em; height: 1em; margin-right: 8px">
@@ -146,7 +147,7 @@
                                     </a>
 
                                     <div class="menu-item hover-effect">
-                                        <a href="#">
+                                        <a href="../kefu.html">
                                             <span> 帮助与客服 </span>
                                         </a>
                                     </div>
