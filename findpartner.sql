@@ -1,19 +1,11 @@
 use findpartner;
 
--- 创建用户名和用户id的对照表
-CREATE TABLE User_Name (
-    -- 用户id
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    -- 用户名 
-    user_name VARCHAR(100) UNIQUE,
-    -- 用户创建时间戳
-    user_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 -- 创建用户表
 CREATE TABLE Users (
 	-- 用户id
-    user_id INT PRIMARY KEY,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    -- 用户名 
+    user_name VARCHAR(100) UNIQUE,
     -- 用户昵称
     user_nickname VARCHAR(100),
     -- 用户密码
@@ -26,7 +18,8 @@ CREATE TABLE Users (
     user_image TEXT,
     -- 用户签名
     user_introduction TEXT,
-    FOREIGN KEY (user_id) REFERENCES User_Name(user_id)
+    -- 用户创建时间戳
+    user_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 创建需求表
@@ -69,11 +62,13 @@ CREATE TABLE Requests (
     user_id INT,
     -- 申请的需求id
     notice_id INT,
+    -- 申请人联系方式
+    request_contact TEXT,
     -- 申请状态 0-未知 1-通过 2-未通过
     answer_state INT NOT NULL,
     -- 申请时间戳
     request_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES User_Name(user_id),
+    FOREIGN KEY (user_id) REFERENCES User(user_id),
     FOREIGN KEY (notice_id) REFERENCES Notice(notice_id)
 );
 
