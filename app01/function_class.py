@@ -26,17 +26,17 @@ class User:
         self.hobby = hobby                  # 爱好，缺省值为“unknown”
         self.introduction = introduction    # 签名，缺省值为“unknown”
 
-        # 用户拥有的需求id表
-        if my_notice_id_list:
-            self.my_notice_id_list = my_notice_id_list    # 使用传入的数组（list）
-        else:
-            self.my_notice_id_list = []        # 如果缺省就创建空数组（list）
-
-        # 用户申请的需求id表
-        if request_notice_id_list:
-            self.request_notice_id_list = request_notice_id_list    # 使用传入的数组（list）
-        else:
-            self.request_notice_id_list = []        # 如果缺省就创建空数组（list）
+        # # 用户拥有的需求id表
+        # if my_notice_id_list:
+        #     self.my_notice_id_list = my_notice_id_list    # 使用传入的数组（list）
+        # else:
+        #     self.my_notice_id_list = []        # 如果缺省就创建空数组（list）
+        #
+        # # 用户申请的需求id表
+        # if request_notice_id_list:
+        #     self.request_notice_id_list = request_notice_id_list    # 使用传入的数组（list）
+        # else:
+        #     self.request_notice_id_list = []        # 如果缺省就创建空数组（list）
 
 
 class Notice:
@@ -59,11 +59,11 @@ class Notice:
 
         # 状态
         self.if_disabled = if_disabled      # 表示是否挂起（True表示挂起）
-
-        # 申请该需求的列表
-        self.request_n = request_n          # 申请总数
-        # 这里的request_list应是一个Request类型的数组
-        if request_list:
-            self.request_list = request_list    # 使用传入的数组（list）
-        else:
-            self.request_list = []          # 创建空数组（list）
+        #
+        # # 申请该需求的列表
+        # self.request_n = request_n          # 申请总数
+        # # 这里的request_list应是一个Request类型的数组
+        # if request_list:
+        #     self.request_list = request_list    # 使用传入的数组（list）
+        # else:
+        #     self.request_list = []          # 创建空数组（list）
