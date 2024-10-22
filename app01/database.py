@@ -6,7 +6,8 @@ def create_connection():
     conn = pymysql.connect(
             host="localhost",       # 根据你的数据库主机设置
             user="root",    # MySQL用户名# 
-            password="daerwen",# MySQL密码
+            # password="daerwen",# MySQL密码
+            password = "Cyf20040629",
             database="findpartner"  # 数据库名称
         )
     return conn
@@ -33,8 +34,9 @@ def create_user(name):
         INSERT INTO Users (user_name, user_nickname, user_psword, user_sex, user_hobby, user_image, user_introduction)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
     '''
-    val_2 = (name, "nickname", "psword", -1, "hobby", "image", "introduction")
+    val_2 = (name, "nickname", "psword", "unknown", "hobby", "image", "introduction")
     rtn_2 = cur.execute(sql_2, val_2)
+    conn.commit()
     id = cur.lastrowid
 
     cur.close()
@@ -54,6 +56,7 @@ def create_notice(user_id: int):
     '''
     val = (user_id, "image", -1, "detail_type", "owner_contact", "time", "location", "description", 2, 0, -1)
     rtn = cur.execute(sql, val)
+    conn.commit()
 
     if cur.rowcount == 0:
         cur.close()
@@ -85,7 +88,7 @@ def check_user_basic_database(id: int):
         conn.close()
         return None
 
-    res = cur.fetclone()
+    res = cur.fetchone()
     user = User(id, res[1], res[3])
     user.nickname = res[2]
     user.sex = res[4]
@@ -311,12 +314,13 @@ def change_user_basic_database(user_content: User):
     cur = conn.cursor()
 
     sql = '''
-        UPDATE User
-        SET user_nickname = (%s), user_psword = (%s), user_sex = (%s), user_hobby = (%s), user_image = (%s), user_introduction = (%s)
+        UPDATE Users
+        SET user_name = (%s), user_nickname = (%s), user_psword = (%s), user_sex = (%s), user_hobby = (%s), user_image = (%s), user_introduction = (%s)
         WHERE user_id = (%s);
     '''
-    val = (user_content.nickname, user_content.passwords, user_content.sex, user_content.hobby, user_content.image, user_content.introduction, user_content.id)
+    val = (user_content.user_name, user_content.nickname, user_content.passwords, user_content.sex, user_content.hobby, user_content.image, user_content.introduction, user_content.id)
     rtn = cur.execute(sql, val)
+    conn.commit()
 
     if cur.rowcount:
         if_success = True
