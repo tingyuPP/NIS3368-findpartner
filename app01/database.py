@@ -290,6 +290,7 @@ def delete_request(notice_id:int, user_id:int):
 # 更改reqeust状态
 def change_request_state(notice_id:int, request_to_change:Request):
 
+
 # 根据用户id查找用户名 找不到返回 None
 def user_id_to_name(id: int):
     name = None
