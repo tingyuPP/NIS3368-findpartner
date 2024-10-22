@@ -15,8 +15,9 @@ class Request:
         self.answer_state = answer_state    # 申请是否被通过{0:未知, 1:通过, 2:不通过}
 
 class User:
-    def __init__(self, user_id, passwords, nickname = "user%s" % id, image = None, sex = "unknown", hobby = "unknown", introduction = "unknown", my_notice_id_list = None,  request_notice_id_list = None):
+    def __init__(self, user_id, user_name, passwords, nickname = "user%s" % id, image = None, sex = "unknown", hobby = "unknown", introduction = "unknown", my_notice_id_list = None,  request_notice_id_list = None):
         self.id = user_id                   # 用户id，不能缺省且唯一
+        self.user_name = user_name          # 用户名，不能缺省且唯一
         self.passwords = passwords          # 用户密码，不能缺省
 
         # 用户个人信息

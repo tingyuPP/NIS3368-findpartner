@@ -2,19 +2,21 @@
 from django.db.models.expressions import result
 
 from app01.database import *
+
+
 # 注册函数，输入用户名、密码，创建新账户，返回是否修改成功{0：成功，1：失败}
 def register(user_name, passwords):
     user_id = create_user(user_name)
     if user_id == -1:
         return 1
-    user = User(user_id, passwords)
-    if_success = change_user_database(user_id, user)
+    user = User(user_id, user_name, passwords)
+    if_success = change_user_basic_database(user)
     return if_success
 
 # 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：id不存在}
 def login(user_name, passwords):
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
+    user = check_user_basic_database(user_id)
     if user:
         if user.passwords == passwords:
             if_success = 0  # 登录成功
@@ -27,7 +29,7 @@ def login(user_name, passwords):
 # 更改账号密码，输入用户id、当前密码和新密码，返回修改是否成功{0：修改成功，1：当前密码错误，2：id不存在}
 def change_password(user_name, password, new_passwords):
     user_id = user_name_to_id(user_name)
-    user = check_user(user_id)
+    user = check_user_basic_database(user_id)
     if user:
         if user.passwords == password:  # 用户存在且密码正确
             user.passwords = new_passwords
@@ -41,93 +43,84 @@ def change_password(user_name, password, new_passwords):
 # 查看个人信息，输入用户id，返回用户类
 def check_user(user_name)->User:
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
+    user = check_user_basic_database(user_id)
     return user
 
 # 查看拥有需求，输入用户id，返回需求列表
 def check_my_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
-    notice_list = user.my_notice_id_list
+    notice_list = check_user_own_list(user_id)
     my_notice = []
     for i in notice_list:
-        my_notice.append(check_notice_database(i))
+        my_notice.append(check_notice_basic_database(i))
     return my_notice
 
 # 查看拥有的处于唤醒态的需求，输入用户id，返回需求列表
 def check_my_enabled_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
-    notice_list = user.my_notice_id_list
+    notice_list = check_user_own_list(user_id)
     my_notice = []
     for i in notice_list:
-        notice =check_notice_database(i)
+        notice =check_notice_basic_database(i)
         if not notice.if_disabled:  # 如果处于唤醒态
-            my_notice.append(check_notice_database(i))
+            my_notice.append(notice)
     return my_notice
 
 # 查看拥有的处于挂起态的需求，输入用户id，返回需求列表
 def check_my_disabled_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
-    notice_list = user.my_notice_id_list
+    notice_list = check_user_own_list(user_id)
     my_notice = []
     for i in notice_list:
-        notice =check_notice_database(i)
-        if notice.if_disabled:  # 如果处于唤醒态
-            my_notice.append(check_notice_database(i))
+        notice =check_notice_basic_database(i)
+        if notice.if_disabled:  # 如果处于挂起态
+            my_notice.append(notice)
     return my_notice
 
 # 查看申请需求，输入用户id，返回申请的需求（所有状态的）
 def check_request_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
-    notice_list = user.request_notice_id_list
+    notice_list = check_user_request_list(user_id)
     result_request_notice = []
     for i in notice_list:
-        notice = check_notice_database(i)
+        notice = check_notice_basic_database(i)
         result_request_notice.append(notice)
     return result_request_notice
 
 # 查看通过的申请需求，输入用户id，返回通过的申请需求（所有状态）
 def check_request_answered_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
-    notice_list = user.request_notice_id_list
+    notice_list = check_user_request_list(user_id)
     result_request_notice = []
     for i in notice_list:
-        notice = check_notice_database(i)
-        for j in notice.request_list:
-            if j.id == user_id and j.answer_state == 1: # 如果处于被通过态
-                result_request_notice.append(notice)
+        answer_state = check_request(user_id,i)
+        if answer_state == 1: # 如果处于被通过态
+            result_request_notice.append(check_notice_basic_database(i))
     return result_request_notice
 
 # 查看被拒绝的申请需求，输入用户id，返回被拒绝的申请需求（所有状态）
 def check_request_refused_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
-    user = check_user_database(user_id)
-    notice_list = user.request_notice_id_list
+    notice_list = check_user_request_list(user_id)
     result_request_notice = []
     for i in notice_list:
-        notice = check_notice_database(i)
-        for j in notice.request_list:
-            if j.id == user_id and j.answer_state == 2: # 如果处于被拒绝态
-                result_request_notice.append(notice)
+        answer_state = check_request(user_id,i)
+        if answer_state == 2: # 如果处于被拒绝态
+            result_request_notice.append(check_notice_basic_database(i))
     return result_request_notice
 
-# 更改用户信息，输入用户id，更改过后的全部用户信息（除了passwords，passwords应该使用change_passwords)（应该是一个User类），返回是否成功{0：修改成功，1：修改失败}
-def change_user_info(new_user_info:User):
-    user_id = new_user_info.id
-    user = check_user_database(user_id)
-    if user:
-        change_user_database(user_id, new_user_info)
+# 更改用户信息，输入更改过后的全部用户信息（包括id）（应该是一个User类），返回是否成功{0：修改成功，1：修改失败}
+def change_user_info(user_name:str, new_user_info:User):
+    user_id = name_to_id(user_name)
+    if user_id == -1:
+        change_user_basic_database(new_user_info)
         if_success = 0
     else:
         if_success = 1
     return if_success
 
 # 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（唤醒的）（没有则为空）
-def search_notice_all(notice_type:Basic_Type, notice_content:Notice)->list[Notice]:
+def search_notice_all(notice_type:Basic_Type, notice_content:str)->list[Notice]:
     # type{0:大类，1:小类，2:时间，3:地点}
     result_id = search_notice_all_database(notice_type, notice_content)
     result_notice = []
@@ -148,7 +141,7 @@ def search_notice_type(notice_type:Basic_Type)->list[Notice]:
     return result_notice
 
 # # 按照内容检索需求，输入具体内容（应该是一个字符串），返回检索到的需求列表（唤醒的）（没有则为空）
-def search_notice_content(notice_content:Notice)->list[Notice]:
+def search_notice_content(notice_content:str)->list[Notice]:
     result_id = search_notice_content_database(notice_content)
     result_notice = []
     for i in result_id:
@@ -222,7 +215,7 @@ def enable_notice(notice_id):
         if_success = 0
     return if_success
 
-# 更改需求内容，输入需求id，更改后的需求（全部内容，应该为Notice类），返回是否成功
+# 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功
 def change_notice(notice_content:Notice):
     notice_id = notice_content.id
     if_success = change_notice_database(notice_id, notice_content)
