@@ -7,6 +7,7 @@ from app01.database import *
 # 注册函数，输入用户名、密码，创建新账户，返回是否修改成功{0：成功，1：失败}
 def register(user_name, passwords):
     user_id = create_user(user_name)
+    # print(user_id)
     if user_id == -1:
         return 1
     user = User(user_id, user_name, passwords)
@@ -33,7 +34,8 @@ def change_password(user_name, password, new_passwords):
     if user:
         if user.passwords == password:  # 用户存在且密码正确
             user.passwords = new_passwords
-            if_success = 0  # 更改密码成功
+            if change_user_basic_database(user):
+                if_success = 0  # 更改密码成功
         else:
             if_success = 1  # 密码错误
     else:
@@ -51,8 +53,9 @@ def check_my_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
     notice_list = check_user_own_list(user_id)
     my_notice = []
-    for i in notice_list:
-        my_notice.append(check_notice_basic_database(i))
+    if notice_list:
+        for i in notice_list:
+            my_notice.append(check_notice_basic_database(i))
     return my_notice
 
 # 查看拥有的处于唤醒态的需求，输入用户id，返回需求列表
@@ -150,13 +153,12 @@ def search_notice_content(notice_content:str)->list[Notice]:
             result_notice.append(notice)
     return result_notice
 
-# 发布需求，输入发布者id，需求内容（Notice类）
-def add_notice(user_name:str,notice_content:Notice):
+# 发布需求，输入发布者id（需求内容可以调用change_notice）
+def add_notice(user_name:str):
     user_id = user_name_to_id(user_name)
     if_success = False
     if user_id == -1:
-        notice_id = create_notice(user_id)
-        if_success = change_notice_basic_database(notice_content)
+        if_success = create_notice(user_id)
 
     return if_success
 
