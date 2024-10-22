@@ -136,10 +136,10 @@ def check_notice_database(id: int):
     return notice
 
 # 全字段检索需求，输入搜索内容，在全字段检索，返回检索结果（需求id列表）, 未查询到返回None
-# def search_notice_content_database(notice_content:Notice)->list[int]:
+# def search_notice_content_database(notice_content: str)->list[int]:
 #     notice_list = []
 #     return notice_list
-def search_notice_content_database(notice_content:Notice):
+def search_notice_content_database(notice_content):
     notice_list = []
     conn = create_connection()
     cur = conn.cursor()
@@ -166,10 +166,10 @@ def search_notice_content_database(notice_content:Notice):
     return notice_list
 
 # 按照大类检索需求，输入搜索内容（某个大类Basic_Type，大类是是现在function_class.py的枚举型），返回需求id列表, 未查询到返回None
-# def search_notice_type_database(notice_type:Basic_Type)->list[int]:
+# def search_notice_type_database(notice_type: Basic_Type)->list[int]:
 #     notice_list = []
 #     return notice_list
-def search_notice_type_database(notice_type:Basic_Type):
+def search_notice_type_database(notice_type: Basic_Type):
     notice_list = []
     conn = create_connection()
     cur = conn.cursor()
@@ -196,10 +196,10 @@ def search_notice_type_database(notice_type:Basic_Type):
     return notice_list
 
 # 按照大类和关键字检索，关键字在除大类以外的4个用户自定义字段（小类、时间、地点、活动描述）中检索，返回需求列表, 未查询到返回None
-# def search_notice_all_database(notice_type:Basic_Type, notice_content:Notice)->list[int]:
+# def search_notice_all_database(notice_type: Basic_Type, notice_content: str)->list[int]:
 #     notice_list = []
 #     return notice_list
-def search_notice_all_database(notice_type:Basic_Type, notice_content:Notice):
+def search_notice_all_database(notice_type: Basic_Type, notice_content):
     notice_list = []
     conn = create_connection()
     cur = conn.cursor()
@@ -225,11 +225,11 @@ def search_notice_all_database(notice_type:Basic_Type, notice_content:Notice):
 
     return notice_list
 
-# 修改用户信息，输入用户id、用户修改后的内容，把该id下的非空内容全部用user_content的内容替换，返回是否修改成功
-# def change_user_database(user_id:int, user_content:User):
+# 修改用户信息，输入用户修改后的内容，把该id下的非空内容全部用user_content的内容替换，返回是否修改成功
+# def change_user_database(user_content: User):
 #     if_success = 0
 #     return if_success
-def change_user_database(user_content : User):
+def change_user_database(user_content: User):
     if_success = False
     conn = create_connection()
     cur = conn.cursor()
@@ -250,10 +250,10 @@ def change_user_database(user_content : User):
     return if_success
 
 # 修改需求信息，基本同上
-# def change_notice_database(id:int, notice_content:Notice):
+# def change_notice_database(notice_content: Notice):
 #     if_success = 0
 #     return if_success
-def change_notice_database(notice_content:Notice):
+def change_notice_database(notice_content: Notice):
     if_success = False
     conn = create_connection()
     cur = conn.cursor()
