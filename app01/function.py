@@ -11,6 +11,8 @@ def register(user_name, passwords):
         return 1
     user = User(user_id, user_name, passwords)
     if_success = change_user_basic_database(user)
+    if if_success:
+        if_success = 0
     return if_success
 
 # 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：id不存在}
