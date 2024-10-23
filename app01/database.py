@@ -8,7 +8,7 @@ def create_connection():
             user="root",    # MySQL用户名# 
             # password="daerwen",# MySQL密码
             password = "Cyf20040629",
-            database="findparter_2"  # 数据库名称
+            database="findpartner"  # 数据库名称
         )
     return conn
 
