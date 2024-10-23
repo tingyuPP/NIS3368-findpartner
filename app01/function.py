@@ -192,6 +192,8 @@ def request_notice(notice_id:int, user_name:str, contact:str):
     if user_id:
         request = Request(user_id, contact, 0)
         if_success = add_request(notice_id,request)
+        if if_success:
+            if_success = 0
     else:
         return -1  # user不存在
     return if_success
@@ -203,6 +205,8 @@ def answer_request(notice_id, user_name, if_answer):
     if user_id:
         request = Request(user_id, None, if_answer)
         if_success = change_request_state(notice_id, request)
+        if if_success:
+            if_success = 0
     else:
         return -1  # user不存在
     return if_success
@@ -210,24 +214,26 @@ def answer_request(notice_id, user_name, if_answer):
 # 挂起需求，输入需求id，返回是否成功
 def disable_notice(notice_id):
     notice = check_notice_basic_database(notice_id)
-    if_success = False
+    if_success = -1
     if notice:
         notice.if_disabled = True   # 挂起
-        if_success = True
+        if_success = 0
     return if_success
 
 # 唤醒需求，输入需求id，返回是否成功
 def enable_notice(notice_id):
     notice = check_notice_basic_database(notice_id)
-    if_success = False
+    if_success = -1
     if notice:
         notice.if_enabled = False   # 唤醒
-        if_success = True
+        if_success = 0
     return if_success
 
 # 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功
 def change_notice(notice_content:Notice):
     if_success = change_notice_basic_database(notice_content)
+    if if_success:
+        if_success = 0
     return if_success
 
 # 判断是否本人需求，输入用户id和需求id，返回是否为user拥有的需求{0：是，1：否，2：用户不存在，3：需求不存在}
