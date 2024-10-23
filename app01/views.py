@@ -69,7 +69,6 @@ def yinsixieyi(request):
 def kefu(request):
     return render(request, "mainpage/kefu.html")
 
-
 def publish(request):
     return render(request, "user/push.html")
 
