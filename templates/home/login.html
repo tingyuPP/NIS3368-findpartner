@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'css/login.css'%}" />
@@ -35,24 +35,56 @@
               <h1>register</h1>
               <form method="post" id="register-form" autocomplete="off">
                 {% csrf_token %}
-                <input type="text" placeholder="用户名" id="reg__username" name="reg_username"/>
-                <input type="email" placeholder="邮箱" id="reg__email" name="reg_email"/>
-                <input type="password" placeholder="密码" id="reg__password" name="reg_password"/>
+                <input
+                  type="text"
+                  placeholder="用户名"
+                  id="reg__username"
+                  name="reg_username"
+                />
+                <input
+                  type="email"
+                  placeholder="邮箱"
+                  id="reg__email"
+                  name="reg_email"
+                />
+                <input
+                  type="password"
+                  placeholder="密码"
+                  id="reg__password"
+                  name="reg_password"
+                />
                 <input
                   type="password"
                   placeholder="确认密码"
                   id="repeat__password"
                   name="reg_password2"
                 />
-                <button type="submit" class="button submit" id="register">创建账号</button>
+                <button type="submit" class="button submit" id="register">
+                  创建账号
+                </button>
               </form>
             </div>
             <div class="signin">
               <h1>login</h1>
-              <form method="post" class="more-padding" id="login-form" autocomplete="off">
+              <form
+                method="post"
+                class="more-padding"
+                id="login-form"
+                autocomplete="off"
+              >
                 {% csrf_token %}
-                <input type="text" placeholder="用户名" id="log__username" name="log_username"/>
-                <input type="password" placeholder="密码" id="log__password" name="log_password"/>
+                <input
+                  type="text"
+                  placeholder="用户名"
+                  id="log__username"
+                  name="log_username"
+                />
+                <input
+                  type="password"
+                  placeholder="密码"
+                  id="log__password"
+                  name="log_password"
+                />
                 <!--
                 <div class="checkbox">
                   <input type="checkbox" id="remember" /><label for="remember"
@@ -60,7 +92,9 @@
                   >
                 </div>
                 -->
-                <button type="submit" class="button submit" id="login">登录</button>
+                <button type="submit" class="button submit" id="login">
+                  登录
+                </button>
               </form>
             </div>
           </div>
@@ -85,6 +119,13 @@
           </div>
         </div>
       </div>
+      {% if messages %}
+      <script>
+        {% for msg in messages %}
+            alert('{{ msg.message }}');
+        {% endfor %}
+      </script>
+      {% endif %}
     </main>
   </body>
 </html>

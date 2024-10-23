@@ -31,7 +31,7 @@ def log(request: HttpRequest):
                 return redirect("/dashboard/")
             elif login_result == 1:
                 messages.error(request, "密码错误！")
-            elif login_result == 2:
+            elif login_result == -1:
                 messages.error(request, "用户不存在！")
 
             return render(request, "home/login.html", locals())
