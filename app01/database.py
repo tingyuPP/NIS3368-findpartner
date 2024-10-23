@@ -54,7 +54,7 @@ def create_notice(user_id: int):
         INSERT INTO Notice (user_id, notice_image, notice_basic_type, notice_detail_type, notice_owner_contact, notice_time, notice_location, notice_description, notice_max_places, notice_current_places, notice_if_disabled)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     '''
-    val = (user_id, "image", -1, "detail_type", "owner_contact", "time", "location", "description", 2, 0, -1)
+    val = (user_id, "image", -1, "detail_type", "owner_contact", "time", "location", "description", 2, 0, 0)
     rtn = cur.execute(sql, val)
     conn.commit()
 
@@ -122,8 +122,7 @@ def check_user_own_list(id: int):
 
     i = 0
     for line in cur.fetchall():
-        notice_list[i] = line[0]
-        i = i + 1
+        notice_list.append(line[0])
 
     cur.close()
     conn.close()
@@ -151,8 +150,7 @@ def check_user_request_list(id: int):
 
     i = 0
     for line in cur.fetchall():
-        request_list[i] = line[0]
-        i = i + 1
+        request_list.append(line[0])
 
     cur.close()
     conn.close()
@@ -180,7 +178,6 @@ def check_request(user_id: int, notice_id: int):
         return None
 
     ans = cur.fetchone()
-
     cur.close()
     conn.close()
     
@@ -238,11 +235,9 @@ def search_notice_content_database(notice_content):
         cur.close()
         conn.close()
         return None
-    
-    i = 0
+
     for row in cur.fetchall():
-        notice_list[i] = row[0] 
-        i = i + 1
+        notice_list.append(row[0])
 
     cur.close()
     conn.close()
@@ -268,10 +263,8 @@ def search_notice_type_database(notice_type: Basic_Type):
         conn.close()
         return None
 
-    i = 0
     for row in cur.fetchall():
-        notice_list[i] = row[0] 
-        i = i + 1
+        notice_list.append(row[0])
 
     cur.close()
     conn.close()
@@ -297,10 +290,8 @@ def search_notice_all_database(notice_type: Basic_Type, notice_content):
         conn.close()
         return None
 
-    i = 0
     for row in cur.fetchall():
-        notice_list[i] = row[0] 
-        i = i + 1
+        notice_list.append(row[0])
 
     cur.close()
     conn.close()
@@ -345,6 +336,7 @@ def change_notice_basic_database(notice_content: Notice):
     rtn = cur.execute(sql, val)
 
     if cur.rowcount:
+        conn.commit()
         if_success = True
     
     cur.close()
@@ -378,6 +370,7 @@ def add_request(notice_id: int, request_to_add: Request):
     rtn_2 = cur.execute(sql_2, val_2)
     
     if cur.rowcount:
+        conn.commit()
         if_success = True
 
     cur.close()
@@ -411,6 +404,7 @@ def delete_request(notice_id: int, user_id: int):
     rtn_2 = cur.execute(sql_2, val_2)
     
     if cur.rowcount:
+        conn.commit()
         if_success = True
 
     cur.close()
@@ -432,6 +426,7 @@ def change_request_state(notice_id: int, request_to_change: Request):
     rtn = cur.execute(sql, val)
 
     if cur.rowcount:
+        conn.commit()
         if_success = True
     
     cur.close()

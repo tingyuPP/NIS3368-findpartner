@@ -10,8 +10,8 @@ CREATE TABLE Users (
     user_nickname VARCHAR(100),
     -- 用户密码
     user_psword VARCHAR(100),
-    -- 用户信息
-    user_sex INT,
+    -- 用户性别
+    user_sex VARCHAR(100),
     -- 用户喜好
     user_hobby VARCHAR(255),
     -- 用户头像url
@@ -68,7 +68,7 @@ CREATE TABLE Requests (
     answer_state INT NOT NULL,
     -- 申请时间戳
     request_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (notice_id) REFERENCES Notice(notice_id)
 );
 
