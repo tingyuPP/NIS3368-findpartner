@@ -192,11 +192,19 @@
                         </div>
                     </div>
         </div>
-                    <div class="main-content ">
-                        {% include 'mainpage/dashboard.html' %}
-
-
-                    </div>
+<!-- 带登录检测的 -->
+<div class="main-content">
+    <!-- 登录的情况下显示dashboard -->
+    {% if user.is_authenticated %}
+    {% include 'mainpage/dashboard.html' %}
+    <!-- 没登录就加载 -->
+    {% else %}
+    <link rel="stylesheet" href="{% static 'css/loading.css'%}">
+    <div class="container-load">
+        <div class="loading"><i></i><i></i><i></i><i></i></div>
+    </div>
+    {% endif %}
+</div>
                     </div>
                     </div>
 
