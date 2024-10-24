@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "esdk-obs-browserjs": "^3.24.3"
+  }
+}

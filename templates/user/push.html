@@ -8,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>发布笔记</title>
     <link rel="stylesheet" href="{% static 'css/pushpost.css'%}">
-    <script src={% static "js/publishpost.js" %}></script>
+    <script
+        src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
+    <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
+    <script type="module" src="{% static 'js/publishpost.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
 </head>
 
@@ -25,12 +28,12 @@
             <hr>
             <div class="push-content">
                 <input type="text" id="title-input" maxlength="20" placeholder="请输入标题" class="input-title">
+                <input type="text" id="contact-input" maxlength="11" placeholder="请输入联系方式" class="input-title">
                 <textarea id="content-input" maxlength="250" placeholder="填写更全面的描述信息，让更多的人看到你的搭子需求吧❤️"></textarea>
                 <div class="tag-list" id="tag-list">
                     <!-- 动态标签将会插入这里 -->
                     <button id="add-tag-btn">+ 标签</button>
                 </div>
-
             </div>
             <hr>
             <div class="categorys">

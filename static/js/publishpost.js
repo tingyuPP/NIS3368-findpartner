@@ -1,14 +1,24 @@
+// 创建ObsClient实例
+var obsClient = new ObsClient({
+  access_key_id: 'FTCMA0RFFEFYAHZCTUNR',
+  secret_access_key: 'DtOPu5ExOARQuMZHAGewDVzryaH1ht7gSWlflsJ5',
+  server: 'https://obs.cn-east-3.myhuaweicloud.com',
+  timeout: 3000, // 设置超时时间
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('file-input');
   const filePreview = document.getElementById('file-preview');
   const uploadProgress = document.getElementById('upload-progress');
   const titleInput = document.getElementById('title-input');
+  const contactInput = document.getElementById('contact-input');
   const contentInput = document.getElementById('content-input');
   const addTagBtn = document.getElementById('add-tag-btn');
   const tagsContainer = document.getElementById('tag-list');
   const categorySelect = document.getElementById('category-select');
   const publishBtn = document.getElementById('publish-btn');
   const cancelBtn = document.getElementById('cancel-btn');
+  const fileInputLabel = document.querySelector('label[for="file-input"]');
 
   const tags = [];
 
@@ -31,16 +41,31 @@ document.addEventListener('DOMContentLoaded', () => {
     addTagBtn.style.display = 'none';
   });
 
-  publishBtn.addEventListener('click', () => {
+  publishBtn.addEventListener('click', async () => {
     const title = titleInput.value.trim();
+    const contact = contactInput.value.trim();
     const content = contentInput.value.trim();
     const category = categorySelect.value;
-    if (title && content && category) {
-      alert('发布成功');
-      resetForm();
-    } else {
+
+    if (!title || !content || !category || !contact) {
       alert('请填写完整信息');
+      return;
     }
+
+    if (!validatePhoneNumber(contact)) {
+      alert('请输入有效的手机号');
+      return;
+    }
+
+    const imageUrl = filePreview.querySelector('img')?.src;
+    if (!imageUrl) {
+      alert('请上传封面图');
+      return;
+    }
+
+    const currentDate = new Date().toISOString().split('T')[0]; // 获取当前日期
+
+    await sendToServer(imageUrl, currentDate);
   });
 
   cancelBtn.addEventListener('click', () => {
@@ -61,13 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resetForm() {
     titleInput.value = '';
+    contactInput.value = '';
     contentInput.value = '';
     tags.length = 0;
     renderTags();
     filePreview.innerHTML = '';
     fileInput.value = '';
     fileInput.style.display = 'block';
-    document.querySelector('label[for="file-input"]').style.display = 'block';
+    fileInputLabel.style.display = 'block';
     uploadProgress.style.display = 'none';
     uploadProgress.value = 0;
   }
@@ -76,108 +102,104 @@ document.addEventListener('DOMContentLoaded', () => {
     const file = event.target.files[0];
     if (file) {
       // 限制文件大小
-      const maxSize = 2 * 1024 * 1024; // 2MB
+      const maxSize = 5 * 1024 * 1024; // 5MB
       if (file.size > maxSize) {
-        alert('文件大小超过限制，请选择小于 2MB 的文件');
+        alert('文件大小超过限制，请选择小于 5MB 的文件');
         return;
       }
 
-      // 压缩图片
-      const compressedFile = await compressImage(file);
+      // 显示图片预览
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        filePreview.innerHTML = `<img src="${e.target.result}" alt="Image Preview" class="preview-img">`;
+      };
+      reader.readAsDataURL(file);
 
-      // 转换为 Base64
-      const base64String = await convertToBase64(compressedFile);
-      console.log(base64String);
+      // 隐藏“选择封面图”按钮
+      fileInput.style.display = 'none';
+      fileInputLabel.style.display = 'none';
 
-      // 发送至后端并更新进度条
-      await sendToServer(base64String);
+      // 上传图片到华为云OBS
+      const imageUrl = await uploadToOBS(file);
+
+      // 将图片URL设置为预览图的src
+      filePreview.querySelector('img').src = imageUrl;
     }
   });
 
-  function compressImage(file) {
+  async function uploadToOBS(file) {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          const maxWidth = 800;
-          const maxHeight = 800;
-          let width = img.width;
-          let height = img.height;
+      const fileName = `images/${Date.now()}_${file.name}`;
+      obsClient.putObject({
+        Bucket: 'findpartner',
+        Key: fileName,
+        SourceFile: file
+      }, (err, result) => {
+        if (err) {
+          alert('上传到OBS失败');
+          reject(err);
+        } else {
+          const imageUrl = `https://findpartner.obs.cn-east-3.myhuaweicloud.com/${fileName}`;
+          console.log('上传成功', imageUrl);
+          resolve(imageUrl);
+        }
+      });
+    });
+  }
 
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
-            }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
+  function sendToServer(imageUrl, currentDate) {
+    return new Promise((resolve, reject) => {
+      const title = titleInput.value.trim();
+      const contact = contactInput.value.trim();
+      const content = contentInput.value.trim();
+      const category = categorySelect.value;
+      const tags = getTags();
 
-          canvas.width = width;
-          canvas.height = height;
-          ctx.drawImage(img, 0, 0, width, height);
-          canvas.toBlob((blob) => {
-            resolve(blob);
-          }, 'image/jpeg', 0.9);
-        };
+      if (!title || !content || !category || !contact) {
+        alert('请填写完整信息');
+        return;
+      }
+
+      const postData = {
+        title,
+        contact,
+        content,
+        category,
+        tags,
+        imageUrl,
+        date: currentDate
       };
-      reader.onerror = (error) => reject(error);
-    });
-  }
 
-  function convertToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  }
-
-  function sendToServer(base64String) {
-    return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/upload', true);
+      xhr.open('POST', '/publish/', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
 
-      xhr.upload.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const percentLoaded = Math.round((event.loaded / event.total) * 100);
-          uploadProgress.value = percentLoaded;
-          uploadProgress.style.display = 'block';
-        }
-      };
-
-      xhr.onloadstart = () => {
-        uploadProgress.style.display = 'block';
-      };
-
-      xhr.onloadend = () => {
-        uploadProgress.style.display = 'none';
+      xhr.onload = () => {
         if (xhr.status === 200) {
-          alert('上传成功');
+          alert('发布成功');
+          resetForm();
           resolve();
         } else {
-          alert('上传失败');
+          alert('发布失败');
           reject();
         }
       };
 
       xhr.onerror = () => {
-        uploadProgress.style.display = 'none';
-        alert('上传失败');
+        alert('发布失败');
         reject();
       };
 
-      xhr.send(JSON.stringify({ image: base64String }));
+      xhr.send(JSON.stringify(postData));
     });
+  }
+
+  function getTags() {
+    return tags.map(tag => tag.trim()).filter(tag => tag);
+  }
+
+  function validatePhoneNumber(phoneNumber) {
+    const phoneRegex = /^1[3-9]\d{9}$/; // 简单的手机号格式验证
+    return phoneRegex.test(phoneNumber);
   }
 });
