@@ -101,6 +101,34 @@
                             <span class="desc">与搭子更好地互动、交流</span>
                         </div>
                     </div>
+                    {% else %}
+                                        <div class="floating-box visible">
+                                            <div class="title">欢迎来到交我伴</div>
+                                            <div class="line-container">
+                                                <svg class="reds-icon icon" width="16" height="16">
+                                                    <use xlink:href="#thumbUp"></use>
+                                                </svg>
+                                                <span class="desc">刷到更懂你的优质搭子内容</span>
+                                            </div>
+                                            <div class="line-container">
+                                                <svg class="reds-icon icon" width="16" height="16">
+                                                    <use xlink:href="#convention_b"></use>
+                                                </svg>
+                                                <span class="desc">搜索最新找搭子信息</span>
+                                            </div>
+                                            <div class="line-container">
+                                                <svg class="reds-icon icon" width="16" height="16">
+                                                    <use xlink:href="#collect"></use>
+                                                </svg>
+                                                <span class="desc">查看你的搭子信息</span>
+                                            </div>
+                                            <div class="line-container">
+                                                <svg class="reds-icon icon" width="16" height="16">
+                                                    <use xlink:href="#chat"></use>
+                                                </svg>
+                                                <span class="desc">与搭子更好地互动、交流</span>
+                                            </div>
+                                        </div>
                     {% endif %}
                     
                     <!-- 嵌入 SVG 图标定义 -->
@@ -193,6 +221,8 @@
                     </div>
         </div>
 <!-- 带登录检测的 -->
+
+
 <div class="main-content">
     <!-- 登录的情况下显示dashboard -->
     {% if login_result %}
@@ -204,7 +234,11 @@
         <div class="loading"><i></i><i></i><i></i><i></i></div>
     </div>
     {% endif %}
+
+
 </div>
+
+
                     </div>
                     </div>
 
