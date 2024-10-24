@@ -183,6 +183,14 @@ def add_notice(user_name:str):
         return -1  # user不存在
     return notice_id
 
+# 根据notice_id获得notice的内容（不存在则返回空值）
+def check_notice(notice_id:int)->Notice:
+    notice = check_notice_basic_database(notice_id)
+    if notice:
+        return notice
+    else:
+        return None
+
 # 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功{0：成功，-1：需求不存在}
 def change_notice(notice_content:Notice):
     if check_notice_basic_database(notice_content.id):
