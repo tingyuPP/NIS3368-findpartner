@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>发布笔记</title>
     <link rel="stylesheet" href="{% static 'css/pushpost.css'%}">
-    <script src={% static "js/publishpost.js" %}></script>
+    <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
+    <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
+    <script type="module" src={% static "js/publishpost.js" %}></script>
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
 </head>
 
