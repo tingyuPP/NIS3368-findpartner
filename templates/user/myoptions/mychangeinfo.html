@@ -34,27 +34,43 @@
     </button>
   </div>
   <div class="change-username-title">修改用户名：</div>
-  <div class="change-username">
-    <input
-      class="text-sm custom-input w-full"
-      placeholder="输入要修改的用户名"
-      type="text"
-      id="username-input"
-    />
-    <button>
-      <span>确认</span>
-    </button>
-  </div>
+  <form method="POST" action="{% url 'change_username' %}">
+    {% csrf_token %}
+    <div class="change-username">
+      <input
+        class="text-sm custom-input w-full"
+        placeholder="输入要修改的用户名"
+        type="text"
+        id="username-input"
+        name="username"
+      />
+      <button type="submit">
+        <span>确认</span>
+      </button>
+    </div>
+  </form>
   <div class="change-desc-title">修改个人简介：</div>
-  <div class="change-desc">
-    <textarea
-      class="text-sm custom-input w-full"
-      placeholder="输入个人简介"
-      type="text"
-      id="desc-input"
-    ></textarea>
-    <button>
-      <span>确认</span>
-    </button>
-  </div>
+  <form method="POST" action="{% url 'change_desc' %}">
+    {% csrf_token %}
+    <div class="change-desc">
+      <textarea
+        class="text-sm custom-input w-full"
+        placeholder="输入个人简介"
+        type="text"
+        id="desc-input"
+        name="desc"
+      ></textarea>
+      <button type="submit">
+        <span>确认</span>
+      </button>
+    </div>
+  </form>
+
+  {% if messages %}
+  <script>
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+    {% endfor %}
+  </script>
+  {% endif %}
 </div>

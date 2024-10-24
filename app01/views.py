@@ -3,9 +3,12 @@ from django.http import HttpResponse, HttpRequest
 from .forms import LoginForm, RegisterForm
 from django.contrib import messages
 from app01.function import *
+import re
 
 # Create your views here.
 def home(request: HttpRequest):
+    request.session["is_login"] = False
+    request.session["user_name"] = None
     return render(request, "home/home.html")
 
 def log(request: HttpRequest):
@@ -89,7 +92,54 @@ def my(request):
         else:
             messages.error(request, "请先登录！")
             return redirect("/login/")
+        
+def change_username(request):
+    if request.method == "POST":
+        new_username = request.POST.get("username")
+        username = request.session["user_name"]
+        if new_username == username:
+            messages.error(request, "新用户名不能与旧用户名相同！")
+            return redirect("/my/")
+        
+        if not re.match(r'^[a-zA-Z0-9]{6,18}$', new_username):
+            messages.error(request, "用户名必须为6-18位字母或数字！")
+            return redirect("/my/")
+        
+        user_info = check_user(username)
+        user_info.user_name = new_username
+        result = change_user_info(username,user_info) 
+        if result == 0:
+            messages.success(request, "修改成功！")
+            request.session["user_name"] = new_username
+            return redirect("/my/")
+        else:
+            messages.error(request, "修改失败！")
+            return redirect("/my/")
+        
+    return render(request, "user/myoptions/mychangeinfo.html")
 
+
+def change_desc(request):
+    if request.method == "POST":
+        new_desc = request.POST.get("desc")
+        username = request.session["user_name"]
+
+        if new_desc == "":
+            messages.error(request, "个人介绍不能为空！")
+            return redirect("/my/")
+        
+        user_info = check_user(username)
+        user_info.introduction = new_desc
+        result = change_user_info(username,user_info)
+
+        if result == 0:
+            messages.success(request, "修改成功！")
+            return redirect("/my/")
+        else:
+            messages.error(request, "修改失败！")
+            return redirect("/my/")
+        
+    return render(request, "user/myoptions/mychangeinfo.html")
 
 def published(request):
     return render(request, "user/myoptions/mypublished.html")

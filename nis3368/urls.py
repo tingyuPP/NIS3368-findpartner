@@ -33,4 +33,6 @@ urlpatterns = [
     path("message/",views.message),
     path("yinsixieyi/",views.yinsixieyi),
     path("kefu/",views.kefu),
+    path("change_username/",views.change_username, name="change_username"),
+    path("change_desc/",views.change_desc, name="change_desc"),
 ]

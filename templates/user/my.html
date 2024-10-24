@@ -61,6 +61,15 @@
         </div>
     </div>
 
+    
+    {% if messages %}
+    <script>
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+    {% endfor %}
+    </script>
+    {% endif %}
+
 <script>
     function selectTab(tab) {
         // 移除所有选项的 active 类
