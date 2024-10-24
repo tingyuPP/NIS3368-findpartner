@@ -164,8 +164,8 @@ def change_user_info(new_user_info:User):
 
 # 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（唤醒的）（没有则为空）
 def search_notice_all(notice_type:Basic_Type, notice_content:str)->list[Notice]:
-    # type{0:大类，1:小类，2:时间，3:地点}
     result_id = search_notice_all_database(notice_type, notice_content)
+    print(result_id)
     result_notice = []
     for i in result_id:
         notice = check_notice_basic_database(i)
@@ -240,7 +240,8 @@ def disable_notice(notice_id):
     notice = check_notice_basic_database(notice_id)
     if_success = -1
     if notice:
-        notice.if_disabled = True   # 挂起
+        notice.if_disabled = 1   # 挂起
+        change_notice_basic_database(notice)
         if_success = 0
     return if_success
 
@@ -249,7 +250,8 @@ def enable_notice(notice_id):
     notice = check_notice_basic_database(notice_id)
     if_success = -1
     if notice:
-        notice.if_enabled = False   # 唤醒
+        notice.if_disabled = 0   # 唤醒
+        change_notice_basic_database(notice)
         if_success = 0
     return if_success
 
