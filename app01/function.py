@@ -15,7 +15,7 @@ def register(user_name, passwords):
         if_success = 0
     return if_success
 
-# 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，2：id不存在}
+# 登陆函数，输入用户id和密码，返回是否成功登录{0：登录成功，1：密码错误，-1：id不存在}
 def login(user_name, passwords):
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -28,7 +28,7 @@ def login(user_name, passwords):
         if_success = -1  # user不存在
     return if_success
 
-# 更改账号密码，输入用户id、当前密码和新密码，返回修改是否成功{0：修改成功，1：当前密码错误，2：id不存在}
+# 更改账号密码，输入用户id、当前密码和新密码，返回修改是否成功{0：修改成功，1：当前密码错误，-1：id不存在}
 def change_password(user_name, password, new_passwords):
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -43,7 +43,7 @@ def change_password(user_name, password, new_passwords):
         if_success = -1  # user不存在
     return if_success
 
-# 查看个人信息，输入用户id，返回用户类
+# 查看个人信息，输入用户id，返回用户类{-1：用户不存在，user类：正常返回}
 def check_user(user_name)->User:
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -52,7 +52,7 @@ def check_user(user_name)->User:
         return -1   # user不存在
     return user
 
-# 查看拥有需求，输入用户id，返回需求列表
+# 查看拥有需求，输入用户id，返回需求列表{-1：用户不存在，notice类list：正常返回}
 def check_my_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -65,7 +65,7 @@ def check_my_notice(user_name)->list[Notice]:
         return -1   # user不存在
     return my_notice    # 没有则返回None
 
-# 查看拥有的处于唤醒态的需求，输入用户id，返回需求列表
+# 查看拥有的处于唤醒态的需求，输入用户id，返回需求列表{-1：用户不存在，notice类list：正常返回}
 def check_my_enabled_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -79,7 +79,7 @@ def check_my_enabled_notice(user_name)->list[Notice]:
         return -1   # user不存在
     return my_notice
 
-# 查看拥有的处于挂起态的需求，输入用户id，返回需求列表
+# 查看拥有的处于挂起态的需求，输入用户id，返回需求列表{-1：用户不存在，notice类list：正常返回}
 def check_my_disabled_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -93,7 +93,7 @@ def check_my_disabled_notice(user_name)->list[Notice]:
         return -1   # user不存在
     return my_notice
 
-# 查看申请需求，输入用户id，返回申请的需求（所有状态的）
+# 查看申请需求，输入用户id，返回申请的需求（所有状态的）{-1：用户不存在，request类list：正常返回}
 def check_request_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -106,7 +106,7 @@ def check_request_notice(user_name)->list[Notice]:
         return -1   # user不存在
     return result_request_notice
 
-# 查看通过的申请需求，输入用户id，返回通过的申请需求（所有状态）
+# 查看通过的申请需求，输入用户id，返回通过的申请需求（所有状态）{-1：用户不存在，request类list：正常返回}
 def check_request_answered_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -120,7 +120,7 @@ def check_request_answered_notice(user_name)->list[Notice]:
         return -1   # user不存在
     return result_request_notice
 
-# 查看被拒绝的申请需求，输入用户id，返回被拒绝的申请需求（所有状态）
+# 查看被拒绝的申请需求，输入用户id，返回被拒绝的申请需求（所有状态）{-1：用户不存在，request类list：正常返回}
 def check_request_refused_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)
     if user_id:
@@ -134,7 +134,7 @@ def check_request_refused_notice(user_name)->list[Notice]:
         return -1   # user不存在
     return result_request_notice
 
-# 更改用户信息，输入更改过后的全部用户信息（包括id）（应该是一个User类），返回是否成功{0：修改成功，1：修改失败}
+# 更改用户信息，输入更改过后的全部用户信息（包括id）（应该是一个User类），返回是否成功{0：修改成功，-1：修改失败}
 def change_user_info(user_name:str, new_user_info:User):
     user_id = name_to_id(user_name)
     if user_id:
@@ -175,7 +175,7 @@ def search_notice_content(notice_content:str)->list[Notice]:
             result_notice.append(notice)
     return result_notice
 
-# 发布需求，输入发布者id（需求内容可以调用change_notice）
+# 发布需求，输入发布者id（需求内容可以调用change_notice）{-1；用户不存在，正整数：notice_id}
 def add_notice(user_name:str):
     user_id = user_name_to_id(user_name)
     notice_id = None
@@ -185,33 +185,39 @@ def add_notice(user_name:str):
         return -1  # user不存在
     return notice_id
 
-# 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功
+# 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在}
 def request_notice(notice_id:int, user_name:str, contact:str):
     user_id = user_name_to_id(user_name)
     if_success = False
     if user_id:
-        request = Request(user_id, contact, 0)
-        if_success = add_request(notice_id,request)
-        if if_success:
-            if_success = 0
+        if check_notice_basic_database(notice_id):
+            request = Request(user_id, contact, 0)
+            if_success = add_request(notice_id,request)
+            if if_success:
+                if_success = 0
+        else:
+            if_success = -2  # notice不存在
     else:
-        return -1  # user不存在
+        if_success = -1  # user不存在
     return if_success
 
-# 应答某个需求的请求，输入需求id，申请人id，是否接收{1：接收，2：拒绝}，返回是否成功
+# 应答某个需求的请求，输入需求id，申请人id，是否接收{1：接收，2：拒绝}，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在}
 def answer_request(notice_id, user_name, if_answer):
     user_id = user_name_to_id(user_name)
     if_success = False
     if user_id:
-        request = Request(user_id, None, if_answer)
-        if_success = change_request_state(notice_id, request)
-        if if_success:
-            if_success = 0
+        if check_notice_basic_database(notice_id):
+            request = Request(user_id, None, if_answer)
+            if_success = change_request_state(notice_id, request)
+            if if_success:
+                if_success = 0
+        else:
+            if_success = -2
     else:
-        return -1  # user不存在
+        if_success = -1 # user不存在
     return if_success
 
-# 挂起需求，输入需求id，返回是否成功
+# 挂起需求，输入需求id，返回是否成功{0：成功，-1：需求不存在}
 def disable_notice(notice_id):
     notice = check_notice_basic_database(notice_id)
     if_success = -1
@@ -220,7 +226,7 @@ def disable_notice(notice_id):
         if_success = 0
     return if_success
 
-# 唤醒需求，输入需求id，返回是否成功
+# 唤醒需求，输入需求id，返回是否成功{0：成功，-1：需求不存在}
 def enable_notice(notice_id):
     notice = check_notice_basic_database(notice_id)
     if_success = -1
@@ -229,23 +235,29 @@ def enable_notice(notice_id):
         if_success = 0
     return if_success
 
-# 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功
+# 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功{0：成功，-1：需求不存在}
 def change_notice(notice_content:Notice):
-    if_success = change_notice_basic_database(notice_content)
-    if if_success:
-        if_success = 0
+    if check_notice_basic_database(notice_content.id):
+        if_success = change_notice_basic_database(notice_content)
+        if if_success:
+            if_success = 0
+    else:
+        if_success = -1
     return if_success
 
-# 判断是否本人需求，输入用户id和需求id，返回是否为user拥有的需求{0：是，1：否，2：用户不存在，3：需求不存在}
+# 判断是否本人需求，输入用户id和需求id，返回是否为user拥有的需求{0：是，1：否，-1：用户不存在，-2：需求不存在}
 def is_my_notice(user_name, notice_id):
     user_id = user_name_to_id(user_name)
     if user_id:
-        user_notice_list = check_user_own_list(user_id)
-        if_own = False
-        for i in user_notice_list:
-            if i == notice_id:
-                if_own = True
-                break
+        if check_notice_basic_database(notice_id):
+            user_notice_list = check_user_own_list(user_id)
+            if_own = 1  # 否
+            for i in user_notice_list:
+                if i == notice_id:
+                    if_own = 0  # 是
+                    break
+        else:
+            if_own = -2 # 需求不存在
     else:
         return -1  # user不存在
     return if_own
