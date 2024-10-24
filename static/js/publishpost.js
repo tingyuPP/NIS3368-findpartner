@@ -1,4 +1,3 @@
-
 // 创建ObsClient实例
 var obsClient = new ObsClient({
   access_key_id: 'FTCMA0RFFEFYAHZCTUNR',
@@ -12,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filePreview = document.getElementById('file-preview');
   const uploadProgress = document.getElementById('upload-progress');
   const titleInput = document.getElementById('title-input');
+  const contactInput = document.getElementById('contact-input');
   const contentInput = document.getElementById('content-input');
   const addTagBtn = document.getElementById('add-tag-btn');
   const tagsContainer = document.getElementById('tag-list');
@@ -43,11 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   publishBtn.addEventListener('click', async () => {
     const title = titleInput.value.trim();
+    const contact = contactInput.value.trim();
     const content = contentInput.value.trim();
     const category = categorySelect.value;
 
-    if (!title || !content || !category) {
+    if (!title || !content || !category || !contact) {
       alert('请填写完整信息');
+      return;
+    }
+
+    if (!validatePhoneNumber(contact)) {
+      alert('请输入有效的手机号');
       return;
     }
 
@@ -57,7 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    await sendToServer(imageUrl);
+    const currentDate = new Date().toISOString().split('T')[0]; // 获取当前日期
+
+    await sendToServer(imageUrl, currentDate);
   });
 
   cancelBtn.addEventListener('click', () => {
@@ -78,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resetForm() {
     titleInput.value = '';
+    contactInput.value = '';
     contentInput.value = '';
     tags.length = 0;
     renderTags();
@@ -113,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // 上传图片到华为云OBS
       const imageUrl = await uploadToOBS(file);
 
-
       // 将图片URL设置为预览图的src
       filePreview.querySelector('img').src = imageUrl;
     }
@@ -129,37 +137,41 @@ document.addEventListener('DOMContentLoaded', () => {
       }, (err, result) => {
         if (err) {
           alert('上传到OBS失败');
-          
+          reject(err);
         } else {
           const imageUrl = `https://findpartner.obs.cn-east-3.myhuaweicloud.com/${fileName}`;
-          console.log(imageUrl);
+          console.log('上传成功', imageUrl);
+          resolve(imageUrl);
         }
       });
     });
   }
 
-  function sendToServer(imageUrl) {
+  function sendToServer(imageUrl, currentDate) {
     return new Promise((resolve, reject) => {
       const title = titleInput.value.trim();
+      const contact = contactInput.value.trim();
       const content = contentInput.value.trim();
       const category = categorySelect.value;
       const tags = getTags();
 
-      if (!title || !content || !category) {
+      if (!title || !content || !category || !contact) {
         alert('请填写完整信息');
         return;
       }
 
       const postData = {
         title,
+        contact,
         content,
         category,
         tags,
-        imageUrl
+        imageUrl,
+        date: currentDate
       };
 
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/savePost', true);
+      xhr.open('POST', '/publish/', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
 
       xhr.onload = () => {
@@ -184,5 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getTags() {
     return tags.map(tag => tag.trim()).filter(tag => tag);
+  }
+
+  function validatePhoneNumber(phoneNumber) {
+    const phoneRegex = /^1[3-9]\d{9}$/; // 简单的手机号格式验证
+    return phoneRegex.test(phoneNumber);
   }
 });
