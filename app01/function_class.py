@@ -41,22 +41,23 @@ class User:
 
 
 class Notice:
-    def __init__(self, notice_id, owner_id, owner_contact, basic_type, image = None, detail_type = "unknown", time = "unknown", location = "unknown", description = "unknown", current_places = "1", max_places = "2", if_disabled = False, request_n = 0, request_list = None):
+    def __init__(self, notice_id, owner_id, owner_contact, title = "unknown",  basic_type = 0, image = None, tag_list = None, time = "unknown", description = "unknown", current_places = "1", max_places = "2", if_disabled = False, request_n = 0, request_list = None):
         self.id = notice_id                 # 需求id，不能缺省且唯一
         self.owner_id = owner_id            # 需求所有者的用户id，不能缺省
         self.owner_contact = owner_contact  # 需求所有者的联系方式，不能缺省
 
         # 需求的基本信息
+        self.title = title                  # 标题
+        self.description = description      # 具体内容
         self.basic_type = basic_type        # 大类（这里应当传入一个Basic_Type类的参数，但是并未做检查）
-        self.image = image                  # 需求图片
-        self.detail_type = detail_type      # 小类
+        self.tag = tag_list                 # tag
         self.time = time                    # 时间
-        self.location = location            # 地点
-        self.description = description      # 活动描述（备注）
+        self.image = image                  # 需求图片
 
-        # 控制人数
-        self.max_places = max_places        # 最大人数，包含需求所有者自己，所以缺省值为“2”
-        self.current_places = current_places    # 当前人数，包含需求者自己，所以缺省值为“1”
+
+        # # 控制人数
+        # self.max_places = max_places        # 最大人数，包含需求所有者自己，所以缺省值为“2”
+        # self.current_places = current_places    # 当前人数，包含需求者自己，所以缺省值为“1”
 
         # 状态
         self.if_disabled = if_disabled      # 表示是否挂起（True表示挂起）
