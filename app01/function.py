@@ -61,6 +61,8 @@ def check_my_notice(user_name)->list[Notice]:
         if notice_list:
             for i in notice_list:
                 my_notice.append(check_notice_basic_database(i))
+        else:
+            return None
     else:
         return -1   # user不存在
     return my_notice    # 没有则返回None
@@ -71,10 +73,13 @@ def check_my_enabled_notice(user_name)->list[Notice]:
     if user_id:
         notice_list = check_user_own_list(user_id)
         my_notice = []
-        for i in notice_list:
-            notice =check_notice_basic_database(i)
-            if not notice.if_disabled:  # 如果处于唤醒态
-                my_notice.append(notice)
+        if notice_list:
+            for i in notice_list:
+                notice =check_notice_basic_database(i)
+                if not notice.if_disabled:  # 如果处于唤醒态
+                    my_notice.append(notice)
+        else:
+            return None
     else:
         return -1   # user不存在
     return my_notice
@@ -85,10 +90,13 @@ def check_my_disabled_notice(user_name)->list[Notice]:
     if user_id:
         notice_list = check_user_own_list(user_id)
         my_notice = []
-        for i in notice_list:
-            notice =check_notice_basic_database(i)
-            if notice.if_disabled:  # 如果处于挂起态
-                my_notice.append(notice)
+        if notice_list:
+            for i in notice_list:
+                notice =check_notice_basic_database(i)
+                if notice.if_disabled:  # 如果处于挂起态
+                    my_notice.append(notice)
+        else:
+            return None
     else:
         return -1   # user不存在
     return my_notice
@@ -99,9 +107,12 @@ def check_request_notice(user_name)->list[Notice]:
     if user_id:
         notice_list = check_user_request_list(user_id)
         result_request_notice = []
-        for i in notice_list:
-            notice = check_notice_basic_database(i)
-            result_request_notice.append(notice)
+        if notice_list:
+            for i in notice_list:
+                notice = check_notice_basic_database(i)
+                result_request_notice.append(notice)
+        else:
+            return  None
     else:
         return -1   # user不存在
     return result_request_notice
@@ -112,10 +123,13 @@ def check_request_answered_notice(user_name)->list[Notice]:
     if user_id:
         notice_list = check_user_request_list(user_id)
         result_request_notice = []
-        for i in notice_list:
-            answer_state = check_request(user_id,i)
-            if answer_state[0] == 1: # 如果处于被通过态
-                result_request_notice.append(check_notice_basic_database(i))
+        if notice_list:
+            for i in notice_list:
+                answer_state = check_request(user_id,i)
+                if answer_state[0] == 1: # 如果处于被通过态
+                    result_request_notice.append(check_notice_basic_database(i))
+        else:
+            return None
     else:
         return -1   # user不存在
     return result_request_notice
@@ -126,16 +140,20 @@ def check_request_refused_notice(user_name)->list[Notice]:
     if user_id:
         notice_list = check_user_request_list(user_id)
         result_request_notice = []
-        for i in notice_list:
-            answer_state = check_request(user_id,i)
-            if answer_state == 2: # 如果处于被拒绝态
-                result_request_notice.append(check_notice_basic_database(i))
+        if notice_list:
+            for i in notice_list:
+                answer_state = check_request(user_id,i)
+                if answer_state[0] == 2: # 如果处于被拒绝态
+                    result_request_notice.append(check_notice_basic_database(i))
+        else:
+            return None
     else:
         return -1   # user不存在
     return result_request_notice
 
-# 更改用户信息，输入更改过后的全部用户信息（包括id）（应该是一个User类），返回是否成功{0：修改成功，-1：修改失败}
-def change_user_info(user_name:str, new_user_info:User):
+# 更改用户信息，输入更改过后的全部用户信息（包括id）（应该是一个User类），返回是否成功{0：修改成功，-1：用户不存在}
+def change_user_info(new_user_info:User):
+    user_name = new_user_info.user_name
     user_id = name_to_id(user_name)
     if user_id:
         change_user_basic_database(new_user_info)
