@@ -22,7 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
   { src: "https://tse1-mm.cn.bing.net/th/id/OIP-C.jzcWzXf_uts2sgE2WChuCQHaEo?w=263&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" },
   { src: "https://tse1-mm.cn.bing.net/th/id/OIP-C.Zte3ljd4g6kqrWWyg-8fhAHaEo?w=264&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" },
   { src: "https://tse1-mm.cn.bing.net/th/id/OIP-C.cGc4c8dVlqnfV3uwcS1IogHaE8?w=260&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" },
-  { src: "https://cdn.jsdelivr.net/gh/zlh123123/MyPictures/090d27fd04c81ca2bf644c4b3f6e2134487203952.jpg@1256w_708h_!web-article-pic.png" },
+    { src: "https://cdn.jsdelivr.net/gh/zlh123123/MyPictures/090d27fd04c81ca2bf644c4b3f6e2134487203952.jpg@1256w_708h_!web-article-pic.png" },
+    { src: "https://findpartner.obs.cn-east-3.myhuaweicloud.com/images/1729752099760_0b85baf6d4351104402a02f669ea7b961125377114.png%401256w_704h_%21web-article-pic.png" },
+    { src: "https://findpartner.obs.cn-east-3.myhuaweicloud.com/images/1729752099760_0b85baf6d4351104402a02f669ea7b961125377114.png%401256w_704h_%21web-article-pic.png" },
+    {src:"https://findpartner.obs.cn-east-3.myhuaweicloud.com/images/1729752099760_0b85baf6d4351104402a02f669ea7b961125377114.png%401256w_704h_%21web-article-pic.png"},
   ];
 
   const feedsContainer = document.getElementById('feeds-container');

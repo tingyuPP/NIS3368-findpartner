@@ -53,10 +53,10 @@ def create_notice(user_id: int):
     cur = conn.cursor()
 
     sql = '''
-        INSERT INTO Notice (user_id, notice_image, notice_basic_type, notice_detail_type, notice_owner_contact, notice_time, notice_location, notice_description, notice_max_places, notice_current_places, notice_if_disabled)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO Notice (user_id, notice_image, notice_basic_type, notice_title, notice_owner_contact, notice_time, notice_tag, notice_description, notice_if_disabled)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     '''
-    val = (user_id, "image", -1, "detail_type", "owner_contact", "time", "location", "description", 2, 0, 0)
+    val = (user_id, "image", -1, "unknown_title", "unknown_owner_contact", "unknown_time", "unknown_tag", "unknown_description", 0)
     rtn = cur.execute(sql, val)
     conn.commit()
 
@@ -204,15 +204,12 @@ def check_notice_basic_database(id: int):
         return None
 
     res = cur.fetchone()
-    notice = Notice(id, res[1], res[5], res[3])
+    notice = Notice(id, res[1], res[5], res[4], res[3])
     notice.image = res[2]
-    notice.detail_type = res[4]
     notice.time = res[6]
-    notice.location = res[7]
+    notice.tag = res[7].split("$")
     notice.description = res[8]
-    notice.max_places = res[9]
-    notice.current_places = res[10]
-    notice.if_disabled = res[11]
+    notice.if_disabled = res[9]
 
     cur.close()
     conn.close()
@@ -228,7 +225,7 @@ def search_notice_content_database(notice_content):
     sql = '''
         SELECT notice_id
         FROM Notice
-        WHERE CONCAT(notice_detail_type, notice_time, notice_location, notice_description) like (%s)
+        WHERE CONCAT(notice_title, notice_time, notice_tag, notice_description) like (%s)
     '''
     notice_content = '%' + notice_content + '%'
     val = (notice_content)
@@ -285,7 +282,7 @@ def search_notice_all_database(notice_type: Basic_Type, notice_content):
     sql = '''
         SELECT notice_id
         FROM Notice
-        WHERE notice_basic_type = (%s) AND CONCAT(notice_detail_type, notice_time, notice_location, notice_description) like (%s)
+        WHERE notice_basic_type = (%s) AND CONCAT(notice_title, notice_time, notice_tag, notice_description) like (%s)
     '''
     notice_type_int = notice_type.value
     val = (notice_type_int, notice_content)
@@ -335,11 +332,12 @@ def change_notice_basic_database(notice_content: Notice):
 
     sql = '''
         UPDATE Notice
-        SET notice_image = (%s), notice_basic_type = (%s), notice_detail_type = (%s), notice_owner_contact = (%s), notice_time = (%s), notice_location = (%s), notice_description = (%s), notice_max_places = (%s), notice_current_places = (%s), notice_if_disabled = (%s) 
+        SET notice_image = (%s), notice_basic_type = (%s), notice_title = (%s), notice_owner_contact = (%s), notice_time = (%s), notice_tag = (%s), notice_description = (%s), notice_if_disabled = (%s) 
         WHERE notice_id = (%s);
     '''
     # notice_type = int(notice_content.basic_type.value)
-    val = (notice_content.image, notice_content.basic_type, notice_content.detail_type, notice_content.owner_contact, notice_content.time, notice_content.location, notice_content.description, notice_content.max_places, notice_content.current_places, notice_content.if_disabled, notice_content.id)
+    tag_str = "$".join(notice_content.tag)
+    val = (notice_content.image, notice_content.basic_type, notice_content.title, notice_content.owner_contact, notice_content.time, tag_str, notice_content.description, notice_content.if_disabled, notice_content.id)
     rtn = cur.execute(sql, val)
 
     if cur.rowcount:

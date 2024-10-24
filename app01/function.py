@@ -162,6 +162,26 @@ def change_user_info(new_user_info:User):
         return -1  # user不存在
     return if_success
 
+# 发布需求，输入发布者id（需求内容可以调用change_notice）{-1；用户不存在，正整数：notice_id}
+def add_notice(user_name:str):
+    user_id = user_name_to_id(user_name)
+    notice_id = None
+    if user_id:
+        notice_id = create_notice(user_id)
+    else:
+        return -1  # user不存在
+    return notice_id
+
+# 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功{0：成功，-1：需求不存在}
+def change_notice(notice_content:Notice):
+    if check_notice_basic_database(notice_content.id):
+        if_success = change_notice_basic_database(notice_content)
+        if if_success:
+            if_success = 0
+    else:
+        if_success = -1
+    return if_success
+
 # 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（唤醒的）（没有则为空）
 def search_notice_all(notice_type:Basic_Type, notice_content:str)->list[Notice]:
     result_id = search_notice_all_database(notice_type, notice_content)
@@ -195,16 +215,6 @@ def search_notice_content(notice_content:str)->list[Notice]:
     else:
         return None
     return result_notice
-
-# 发布需求，输入发布者id（需求内容可以调用change_notice）{-1；用户不存在，正整数：notice_id}
-def add_notice(user_name:str):
-    user_id = user_name_to_id(user_name)
-    notice_id = None
-    if user_id:
-        notice_id = create_notice(user_id)
-    else:
-        return -1  # user不存在
-    return notice_id
 
 # 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在}
 def request_notice(notice_id:int, user_name:str, contact:str):
@@ -256,16 +266,6 @@ def enable_notice(notice_id):
         notice.if_disabled = 0   # 唤醒
         change_notice_basic_database(notice)
         if_success = 0
-    return if_success
-
-# 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功{0：成功，-1：需求不存在}
-def change_notice(notice_content:Notice):
-    if check_notice_basic_database(notice_content.id):
-        if_success = change_notice_basic_database(notice_content)
-        if if_success:
-            if_success = 0
-    else:
-        if_success = -1
     return if_success
 
 # 判断是否本人需求，输入用户id和需求id，返回是否为user拥有的需求{0：是，1：否，-1：用户不存在，-2：需求不存在}
