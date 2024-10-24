@@ -1,13 +1,15 @@
 from app01.function_class import *
 import pymysql
 
+
+
 # 创建python和MySQL连接
 def create_connection():
     conn = pymysql.connect(
             host="localhost",       # 根据你的数据库主机设置
             user="root",    # MySQL用户名# 
             # password="daerwen",# MySQL密码
-            password = "123456",
+            password = "Cyf20040629",
             database="findpartner"  # 数据库名称
         )
     return conn
@@ -226,8 +228,9 @@ def search_notice_content_database(notice_content):
     sql = '''
         SELECT notice_id
         FROM Notice
-        WHERE CONCART(notice_detail_type, notice_time, notice_location, notice_description) like '%(%s)%'
+        WHERE CONCAT(notice_detail_type, notice_time, notice_location, notice_description) like (%s)
     '''
+    notice_content = '%' + notice_content + '%'
     val = (notice_content)
     rtn = cur.execute(sql, val)
 
@@ -255,7 +258,8 @@ def search_notice_type_database(notice_type: Basic_Type):
         FROM Notice
         WHERE notice_basic_type = (%s)
     '''
-    val = (notice_type)
+    notice_type_int = notice_type.value
+    val = (notice_type_int)
     rtn = cur.execute(sql, val)
 
     if cur.rowcount == 0:
@@ -277,13 +281,15 @@ def search_notice_all_database(notice_type: Basic_Type, notice_content):
     conn = create_connection()
     cur = conn.cursor()
 
+    notice_content = '%' + notice_content + '%'
     sql = '''
         SELECT notice_id
         FROM Notice
-        WHERE notice_basic_type = (%s) AND CONCART(notice_detail_type, notice_time, notice_location, notice_description) like '%(%s)%'
+        WHERE notice_basic_type = (%s) AND CONCAT(notice_detail_type, notice_time, notice_location, notice_description) like (%s)
     '''
-    val = (notice_type, notice_content)
-    rtn = cur.execute(sql, val)
+    notice_type_int = notice_type.value
+    val = (notice_type_int, notice_content)
+    cur.execute(sql, val)
 
     if cur.rowcount == 0:
         cur.close()
@@ -332,7 +338,8 @@ def change_notice_basic_database(notice_content: Notice):
         SET notice_image = (%s), notice_basic_type = (%s), notice_detail_type = (%s), notice_owner_contact = (%s), notice_time = (%s), notice_location = (%s), notice_description = (%s), notice_max_places = (%s), notice_current_places = (%s), notice_if_disabled = (%s) 
         WHERE notice_id = (%s);
     '''
-    val = (notice_content.image, notice_content.basic_type, notice_content.detail_type, notice_content.owner_contact, notice_content.time, notice_content.location, notice_content.description, notice_content.max_places, notice_content.current_places, notice_content.if_disabled, notice_content.id)
+    notice_type = notice_content.basic_type.value
+    val = (notice_content.image, notice_type, notice_content.detail_type, notice_content.owner_contact, notice_content.time, notice_content.location, notice_content.description, notice_content.max_places, notice_content.current_places, notice_content.if_disabled, notice_content.id)
     rtn = cur.execute(sql, val)
 
     if cur.rowcount:
