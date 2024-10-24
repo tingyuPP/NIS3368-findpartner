@@ -62,7 +62,7 @@
                 <span class="channel">发布</span>
             </li>
             {% if login_result %}
-            <li class="active-channel">
+            <li class="active-channel" onclick="window.location.href='/my/'">
                 <img src="{{ user.profile.avatar.url }}" width="22" height="22" />
                 <span class="channel">我</span>
             </li>
