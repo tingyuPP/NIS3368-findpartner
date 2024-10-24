@@ -57,7 +57,7 @@ def log(request: HttpRequest):
 
 def mainpage(request):
     context = {
-        "user": request.user,
+        "login_result": request.session.get("is_login", None),
     }
     return render(request, "mainpage/mainpage.html", context)
 

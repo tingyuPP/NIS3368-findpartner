@@ -25,9 +25,9 @@
             <div class="tool-box"></div>
             <div class="input-box" id="sujContainer">
                 <input type="text" class="search-input"
-                    placeholder="{% if user.is_authenticated %}搜索交我伴{% else %}登录发现精彩内容{% endif %}" {% if user.is_authenticated %}
+                    placeholder="{% if login_result %}搜索交我伴{% else %}登录发现精彩内容{% endif %}" {% if login_result %}
                     @input="changeInput" @focus="focusInput" @keyup.enter="searchPage" ref="SearchInput" {% endif %} />
-                {% if user.is_authenticated %}
+                {% if login_result %}
                 <div class="input-button">
                     <div class="close-icon" v-show="showClose" @click="clearInput">
                         <Close style="width: 1.2em; height: 1.2em; margin-right: 20px; margin-top: 5px" />
@@ -61,19 +61,19 @@
                 <img src="{% static 'svg/postnew.svg' %}" alt="SVG Image" width="20" height="20">
                 <span class="channel">发布</span>
             </li>
-            {% if user.is_authenticated %}
+            {% if login_result %}
             <li class="active-channel">
                 <img src="{{ user.profile.avatar.url }}" width="22" height="22" />
                 <span class="channel">我</span>
             </li>
             {% else %}
             <div>
-                <button type="button" class="custom-button">登录 / 注册</button>
+                <button type="button" class="custom-button" id="login_button">登录 / 注册</button>
             </div>
             {% endif %}
             </ul>
 
-                    {% if not user.is_authenticated %}
+                    {% if not login_result %}
                     <div class="floating-box visible">
                         <div class="title">马上登录即可</div>
                         <div class="line-container">
@@ -171,9 +171,9 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        {% if user.is_authenticated %}
+                                        {% if login_result %}
                                         <div class="menu-item hover-effect">
-                                            <a href="{% url 'logout' %}"><span>退出登录</span></a>
+                                            <a href="/home/"><span>退出登录</span></a>
                                         </div>
                                         {% endif %}
                                     </div>
@@ -195,7 +195,7 @@
 <!-- 带登录检测的 -->
 <div class="main-content">
     <!-- 登录的情况下显示dashboard -->
-    {% if user.is_authenticated %}
+    {% if login_result %}
     {% include 'mainpage/dashboard.html' %}
     <!-- 没登录就加载 -->
     {% else %}
@@ -214,6 +214,14 @@
                 x.style.display = "none"; // 初始化为隐藏
                 console.log("mainpage.js loaded");
             });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginButton = document.getElementById('login_button');
+
+        loginButton.addEventListener('click', function() {
+            window.location.href = '/login/';
+    });
+});
     </script>
 </body>
 </html>
