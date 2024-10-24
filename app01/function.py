@@ -187,10 +187,13 @@ def search_notice_type(notice_type:Basic_Type)->list[Notice]:
 def search_notice_content(notice_content:str)->list[Notice]:
     result_id = search_notice_content_database(notice_content)
     result_notice = []
-    for i in result_id:
-        notice = check_notice_basic_database(i)
-        if not notice.if_disabled:  # 如果需求处于唤醒态
-            result_notice.append(notice)
+    if result_id:
+        for i in result_id:
+            notice = check_notice_basic_database(i)
+            if not notice.if_disabled:  # 如果需求处于唤醒态
+                result_notice.append(notice)
+    else:
+        return None
     return result_notice
 
 # 发布需求，输入发布者id（需求内容可以调用change_notice）{-1；用户不存在，正整数：notice_id}
