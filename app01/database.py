@@ -338,8 +338,8 @@ def change_notice_basic_database(notice_content: Notice):
         SET notice_image = (%s), notice_basic_type = (%s), notice_detail_type = (%s), notice_owner_contact = (%s), notice_time = (%s), notice_location = (%s), notice_description = (%s), notice_max_places = (%s), notice_current_places = (%s), notice_if_disabled = (%s) 
         WHERE notice_id = (%s);
     '''
-    notice_type = notice_content.basic_type.value
-    val = (notice_content.image, notice_type, notice_content.detail_type, notice_content.owner_contact, notice_content.time, notice_content.location, notice_content.description, notice_content.max_places, notice_content.current_places, notice_content.if_disabled, notice_content.id)
+    # notice_type = int(notice_content.basic_type.value)
+    val = (notice_content.image, notice_content.basic_type, notice_content.detail_type, notice_content.owner_contact, notice_content.time, notice_content.location, notice_content.description, notice_content.max_places, notice_content.current_places, notice_content.if_disabled, notice_content.id)
     rtn = cur.execute(sql, val)
 
     if cur.rowcount:
