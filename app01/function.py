@@ -52,6 +52,17 @@ def check_user(user_name)->User:
         return -1   # user不存在
     return user
 
+# 查看所有需求
+def check_all_notice()->list[Notice]:
+    notice_list = []
+    notice_id_list = check_all_notice_database()
+    if not notice_id_list:
+        return None
+    else:
+        for i in notice_id_list:
+            notice_list.append(check_notice_basic_database(i))
+    return notice_list
+
 # 查看拥有需求，输入用户id，返回需求列表{-1：用户不存在，notice类list：正常返回}
 def check_my_notice(user_name)->list[Notice]:
     user_id = user_name_to_id(user_name)

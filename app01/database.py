@@ -9,7 +9,8 @@ def create_connection():
             host="localhost",       # 根据你的数据库主机设置
             user="root",    # MySQL用户名# 
             # password="daerwen",# MySQL密码
-            password = "123456",
+            # password = "123456",
+            password = "Cyf20040629",
             database="findpartner"  # 数据库名称
         )
     return conn
@@ -215,6 +216,31 @@ def check_notice_basic_database(id: int):
     conn.close()
 
     return notice
+
+# 返回所有需求
+def check_all_notice_database():
+    notice_list = []
+    conn = create_connection()
+    cur = conn.cursor()
+
+    sql ='''
+        SELECT *
+        FROM Notice
+        WHERE notice_if_disabled = 0
+    '''
+    rtn = cur.execute(sql)
+
+    if cur.rowcount == 0:
+        cur.close()
+        conn.close()
+        return None
+
+    for row in cur.fetchall():
+        notice_list.append(row[0])
+
+    cur.close()
+    conn.close()
+    return notice_list
 
 # 全字段检索需求 输入搜索内容，在全字段检索 返回list(需求id列表) 未查询到返回None
 def search_notice_content_database(notice_content):
