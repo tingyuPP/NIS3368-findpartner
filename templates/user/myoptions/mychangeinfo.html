@@ -1,11 +1,14 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'css/mychangeinfo.css'%}" />
+<script type="text/javascript" src={% static "js/mychangeinfo.js" %}></script>
+<script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
+<script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
 
 <div class="info-container">
   <div class="change-avatar">
     <div class="change-avatar-title">修改头像：</div>
-    <label class="custum-file-upload" for="file">
+    <label class="custum-file-upload" for="file-input">
       <div class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24">
           <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -27,11 +30,16 @@
       <div class="text">
         <span>点击以上传图片</span>
       </div>
-      <input type="file" id="file" />
+      <input type="file" id="file-input" multiple>
     </label>
-    <button>
-      <span> 确认 </span>
-    </button>
+    <div id="file-preview"></div>
+    <form id="image-form" method="post" action="{% url 'change_avatar' %}">
+        {% csrf_token %}
+        <input type="hidden" id="image-url" name="image_url">
+        <button type="submit">
+          <span>确认</span>
+        </button>
+    </form>
   </div>
   <div class="change-username-title">修改用户名：</div>
   <form method="POST" action="{% url 'change_username' %}">

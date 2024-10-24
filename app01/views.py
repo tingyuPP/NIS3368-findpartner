@@ -141,6 +141,28 @@ def change_desc(request):
         
     return render(request, "user/myoptions/mychangeinfo.html")
 
+def change_avatar(request):
+    if request.method == "POST":
+        image_url = request.POST.get("image_url")
+        username = request.session["user_name"]
+        
+        if image_url == "":
+            messages.error(request, "请先上传图片！")
+            return redirect("/my/")
+
+        user_info = check_user(username)
+        user_info.image = image_url
+        result = change_user_info(username,user_info)
+
+        if result == 0:
+            messages.success(request, "修改成功！")
+            return redirect("/my/")
+        else:
+            messages.error(request, "修改失败！")
+            return redirect("/my/")
+        
+    return render(request, "user/myoptions/mychangeinfo.html")
+
 def published(request):
     return render(request, "user/myoptions/mypublished.html")
 

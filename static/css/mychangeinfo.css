@@ -112,3 +112,18 @@ button span {
 button:hover {
   background-color: #0071e2;
 }
+
+.preview-img {
+  max-width: 50%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #d9d9d9;
+}
+
+#file-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

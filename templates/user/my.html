@@ -99,9 +99,26 @@
                 .then(response => response.text())
                 .then(data => {
                     container.innerHTML = data;
+                    executeScripts(container);
                 })
                 .catch(error => console.error('Error loading content:', error));
         }
+    }
+
+        // 手动执行加载的 HTML 内容中的脚本
+    function executeScripts(container) {
+        const scripts = container.querySelectorAll('script');
+        scripts.forEach(script => {
+            const newScript = document.createElement('script');
+            if (script.src) {
+                newScript.src = script.src;
+                newScript.onload = () => console.log(`Script loaded: ${script.src}`);
+                newScript.onerror = () => console.error(`Error loading script: ${script.src}`);
+            } else {
+                newScript.textContent = script.textContent;
+            }
+            document.head.appendChild(newScript).parentNode.removeChild(newScript);
+        });
     }
 
     // 初始化默认选项
