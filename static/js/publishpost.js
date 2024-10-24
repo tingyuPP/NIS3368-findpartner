@@ -72,30 +72,112 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadProgress.value = 0;
   }
 
-  fileInput.addEventListener('change', (event) => {
+  fileInput.addEventListener('change', async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadstart = () => {
-        uploadProgress.style.display = 'block';
-      };
-      reader.onprogress = (e) => {
-        if (e.lengthComputable) {
-          const percentLoaded = Math.round((e.loaded / e.total) * 100);
-          uploadProgress.value = percentLoaded;
-        }
-      };
-      reader.onload = (e) => {
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.classList.add('preview-img');
-        filePreview.innerHTML = '';
-        filePreview.appendChild(img);
-        fileInput.style.display = 'none';
-        document.querySelector('label[for="file-input"]').style.display = 'none';
-        uploadProgress.style.display = 'none';
-      };
-      reader.readAsDataURL(file);
+      // 限制文件大小
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        alert('文件大小超过限制，请选择小于 2MB 的文件');
+        return;
+      }
+
+      // 压缩图片
+      const compressedFile = await compressImage(file);
+
+      // 转换为 Base64
+      const base64String = await convertToBase64(compressedFile);
+      console.log(base64String);
+
+      // 发送至后端并更新进度条
+      await sendToServer(base64String);
     }
   });
+
+  function compressImage(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const maxWidth = 800;
+          const maxHeight = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxWidth) {
+              height *= maxWidth / width;
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width *= maxHeight / height;
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob((blob) => {
+            resolve(blob);
+          }, 'image/jpeg', 0.9);
+        };
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  function sendToServer(base64String) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/upload', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentLoaded = Math.round((event.loaded / event.total) * 100);
+          uploadProgress.value = percentLoaded;
+          uploadProgress.style.display = 'block';
+        }
+      };
+
+      xhr.onloadstart = () => {
+        uploadProgress.style.display = 'block';
+      };
+
+      xhr.onloadend = () => {
+        uploadProgress.style.display = 'none';
+        if (xhr.status === 200) {
+          alert('上传成功');
+          resolve();
+        } else {
+          alert('上传失败');
+          reject();
+        }
+      };
+
+      xhr.onerror = () => {
+        uploadProgress.style.display = 'none';
+        alert('上传失败');
+        reject();
+      };
+
+      xhr.send(JSON.stringify({ image: base64String }));
+    });
+  }
 });
