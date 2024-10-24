@@ -165,6 +165,49 @@ def change_avatar(request):
 
 def published(request):
     return render(request, "user/myoptions/mypublished.html")
+    
+def publish_post(request):
+    if not request.session.get("is_login", None):
+        return redirect("/dashboard/")  # 如果未登录，重定向到仪表盘
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+
+            title = data.get('title', "unknown")  # 默认值为"unknown"
+            contact = data.get('contact')
+            content = data.get('content')
+            category = data.get('category', 0)  # 默认值为0
+            tags = data.get('tags') if data.get('tags') else []  # 确保 tags 是一个列表
+            image_url = data.get('imageUrl')
+            current_date = data.get('date', "unknown")  # 默认值为"unknown"
+                
+            notice_id = add_notice(request.user.username)  # 传入当前用户名或用户ID
+
+            if notice_id == -1:
+                return JsonResponse({'error': '用户不存在'}, status=400)
+                
+            notice = check_notice(notice_id)
+            if notice is None:
+                return JsonResponse({'error': '获取通知失败'}, status=400)
+
+            notice.owner_contact = contact
+            notice.title = title
+            notice.basic_type = category
+            notice.image = image_url
+            notice.time = current_date
+            notice.description = content
+            notice.tag_list = tags 
+
+            if change_notice(notice) == -1:
+                return JsonResponse({'error': '更新通知失败'}, status=400)
+                
+            return JsonResponse({'message': '发布成功'}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': '发布失败，数据格式错误'}, status=400)
+
+    return JsonResponse({'error': '仅支持POST请求'}, status=405)
 
 
 def replied(request):
