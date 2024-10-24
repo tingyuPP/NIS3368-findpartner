@@ -27,7 +27,7 @@ def log(request: HttpRequest):
 
             if login_result == 0:
                 request.session["is_login"] = True
-                request.session["user_id"] = username
+                request.session["user_name"] = username
                 return redirect("/dashboard/")
             elif login_result == 1:
                 messages.error(request, "密码错误！")
@@ -73,7 +73,22 @@ def publish(request):
     return render(request, "user/push.html")
 
 def my(request):
-    return render(request, "user/my.html")
+    if request.method == "GET":
+        if request.session.get("is_login", None):
+            username = request.session["user_name"]
+            user_info = check_user(username)
+            if user_info.introduction == "unknown":
+                user_info.introduction = "这个人还没有个人介绍"
+            context = {
+                "user_name": username,
+                "user_introduction": user_info.introduction,
+                "user_avatar": user_info.image,
+                "user_id": user_info.id,
+            }
+            return render(request, "user/my.html", context)
+        else:
+            messages.error(request, "请先登录！")
+            return redirect("/login/")
 
 
 def published(request):
