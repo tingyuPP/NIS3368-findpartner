@@ -34,19 +34,19 @@ CREATE TABLE Notice (
     -- 0-体育 1-学习 2-吃饭 3-游戏 4-出行
     notice_basic_type INT,
     -- 需求备注 小类
-    notice_detail_type VARCHAR(255),
+    notice_title VARCHAR(255),
     -- 需求发布人联系方式
     notice_owner_contact TEXT,
     -- 需求主体执行时间
 	notice_time TEXT,
     -- 需求主体执行地点
-	notice_location TEXT,
+	notice_tag TEXT,
     -- 需求描述
 	notice_description TEXT,
-    -- 名额
-    notice_max_places INT,
-    -- 当前名额 缺省为 2
-    notice_current_places INT,
+#     -- 名额
+#     notice_max_places INT,
+#     -- 当前名额 缺省为 2
+#     notice_current_places INT,
     -- 需求状态 1-挂起/..
 	notice_if_disabled INT,
     -- 需求创建时间戳
