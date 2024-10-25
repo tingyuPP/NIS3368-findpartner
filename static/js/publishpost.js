@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
           reject(err);
         } else {
           const imageUrl = `https://findpartner.obs.cn-east-3.myhuaweicloud.com/${fileName}`;
-          console.log('上传成功', imageUrl);
+          //console.log('上传成功', imageUrl);
           resolve(imageUrl);
         }
       });
@@ -177,7 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
       xhr.onload = () => {
         if (xhr.status === 200) {
           alert('发布成功');
-          resetForm();
+          window.location.href = '/dashboard/';
+          resetForm();         
           resolve();
         } else {
           alert('发布失败');
@@ -189,8 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('发布失败');
         reject();
       };
-
+      
       xhr.send(JSON.stringify(postData));
+      
     });
   }
 

@@ -5,6 +5,8 @@ from .forms import LoginForm, RegisterForm
 from django.contrib import messages
 from app01.function import *
 import re
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def home(request: HttpRequest):
@@ -73,8 +75,6 @@ def yinsixieyi(request):
 def kefu(request):
     return render(request, "mainpage/kefu.html")
 
-def publish(request):
-    return render(request, "user/push.html")
 
 def my(request):
     if request.method == "GET":
@@ -93,7 +93,7 @@ def my(request):
         else:
             messages.error(request, "请先登录！")
             return redirect("/login/")
-        
+
 def change_username(request):
     if request.method == "POST":
         new_username = request.POST.get("username")
@@ -166,8 +166,10 @@ def change_avatar(request):
 
 def published(request):
     return render(request, "user/myoptions/mypublished.html")
-    
-def publish_post(request):
+
+@csrf_exempt   
+def publish(request):
+
     if not request.session.get("is_login", None):
         return redirect("/dashboard/")  # 如果未登录，重定向到仪表盘
 
@@ -182,12 +184,14 @@ def publish_post(request):
             tags = data.get('tags') if data.get('tags') else []  # 确保 tags 是一个列表
             image_url = data.get('imageUrl')
             current_date = data.get('date', "unknown")  # 默认值为"unknown"
-                
-            notice_id = add_notice(request.user.username)  # 传入当前用户名或用户ID
 
+            notice_id = add_notice(
+                request.session["user_name"]
+            )  # 传入当前用户名或用户ID
+            #print(notice_id)
             if notice_id == -1:
                 return JsonResponse({'error': '用户不存在'}, status=400)
-                
+
             notice = check_notice(notice_id)
             if notice is None:
                 return JsonResponse({'error': '获取通知失败'}, status=400)
@@ -202,13 +206,13 @@ def publish_post(request):
 
             if change_notice(notice) == -1:
                 return JsonResponse({'error': '更新通知失败'}, status=400)
-                
+
             return JsonResponse({'message': '发布成功'}, status=200)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': '发布失败，数据格式错误'}, status=400)
 
-    return JsonResponse({'error': '仅支持POST请求'}, status=405)
+    return render(request, "user/push.html")
 
 
 def replied(request):
