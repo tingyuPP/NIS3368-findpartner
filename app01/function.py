@@ -36,7 +36,7 @@ def change_password(user_name, password, new_passwords):
     user_id = user_name_to_id(user_name)
     if user_id:
         user = check_user_basic_database(user_id)
-        if encrypt_oracle(user.passwords) == encrypt_oracle(password):  # 用户存在且密码正确
+        if user.passwords == encrypt_oracle(password):  # 用户存在且密码正确
             user.passwords = encrypt_oracle(new_passwords)
             change_user_basic_database(user)
             if_success = 0  # 更改密码成功
