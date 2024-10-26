@@ -9,8 +9,8 @@ def create_connection():
             host="localhost",       # 根据你的数据库主机设置
             user="root",    # MySQL用户名# 
             # password="daerwen",# MySQL密码
-            # password = "123456",
-            password = "Cyf20040629",
+            password = "123456",
+            # password = "Cyf20040629",
             database="findpartner"  # 数据库名称
         )
     return conn
