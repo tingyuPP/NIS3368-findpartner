@@ -5,8 +5,6 @@ from .forms import LoginForm, RegisterForm
 from django.contrib import messages
 from app01.function import *
 import re
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def home(request: HttpRequest):
@@ -44,7 +42,7 @@ def log(request: HttpRequest):
         
         elif register_form.is_valid():
             username = register_form.cleaned_data["reg_username"]
-            email = register_form.cleaned_data["reg_email"]
+            # email = register_form.cleaned_data["reg_email"]
             password = register_form.cleaned_data["reg_password"]
             password2 = register_form.cleaned_data["reg_password2"]
 
@@ -75,6 +73,8 @@ def yinsixieyi(request):
 def kefu(request):
     return render(request, "mainpage/kefu.html")
 
+def publish(request):
+    return render(request, "user/push.html")
 
 def my(request):
     if request.method == "GET":
@@ -93,7 +93,7 @@ def my(request):
         else:
             messages.error(request, "请先登录！")
             return redirect("/login/")
-
+        
 def change_username(request):
     if request.method == "POST":
         new_username = request.POST.get("username")
@@ -108,7 +108,7 @@ def change_username(request):
         
         user_info = check_user(username)
         user_info.user_name = new_username
-        result = change_user_info(username,user_info) 
+        result = change_user_info(user_info) 
         if result == 0:
             messages.success(request, "修改成功！")
             request.session["user_name"] = new_username
@@ -131,7 +131,7 @@ def change_desc(request):
         
         user_info = check_user(username)
         user_info.introduction = new_desc
-        result = change_user_info(username,user_info)
+        result = change_user_info(user_info)
 
         if result == 0:
             messages.success(request, "修改成功！")
@@ -140,6 +140,31 @@ def change_desc(request):
             messages.error(request, "修改失败！")
             return redirect("/my/")
         
+    return render(request, "user/myoptions/mychangeinfo.html")
+
+def change__password(request):
+    if request.method == "POST":    
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("new_password")
+        username = request.session["user_name"]
+
+        if not re.match(r'^[a-zA-Z0-9]{6,18}$', new_password):
+            messages.error(request, "密码必须为6-18位字母或数字！")
+            return redirect("/my/")
+        
+        if old_password == new_password:
+            messages.error(request, "新密码不能与旧密码相同！")
+            return redirect("/my/")
+        
+        result = change_password(username, old_password, new_password)
+
+        if result == 0:
+            messages.success(request, "修改成功！")
+            return redirect("/my/")
+        elif result == 1:
+            messages.error(request, "旧密码错误！")
+            return redirect("/my/")
+                
     return render(request, "user/myoptions/mychangeinfo.html")
 
 def change_avatar(request):
@@ -153,7 +178,7 @@ def change_avatar(request):
 
         user_info = check_user(username)
         user_info.image = image_url
-        result = change_user_info(username,user_info)
+        result = change_user_info(user_info)
 
         if result == 0:
             messages.success(request, "修改成功！")
@@ -166,10 +191,8 @@ def change_avatar(request):
 
 def published(request):
     return render(request, "user/myoptions/mypublished.html")
-
-@csrf_exempt   
-def publish(request):
-
+    
+def publish_post(request):
     if not request.session.get("is_login", None):
         return redirect("/dashboard/")  # 如果未登录，重定向到仪表盘
 
@@ -184,14 +207,12 @@ def publish(request):
             tags = data.get('tags') if data.get('tags') else []  # 确保 tags 是一个列表
             image_url = data.get('imageUrl')
             current_date = data.get('date', "unknown")  # 默认值为"unknown"
+                
+            notice_id = add_notice(request.user.username)  # 传入当前用户名或用户ID
 
-            notice_id = add_notice(
-                request.session["user_name"]
-            )  # 传入当前用户名或用户ID
-            #print(notice_id)
             if notice_id == -1:
                 return JsonResponse({'error': '用户不存在'}, status=400)
-
+                
             notice = check_notice(notice_id)
             if notice is None:
                 return JsonResponse({'error': '获取通知失败'}, status=400)
@@ -206,13 +227,13 @@ def publish(request):
 
             if change_notice(notice) == -1:
                 return JsonResponse({'error': '更新通知失败'}, status=400)
-
+                
             return JsonResponse({'message': '发布成功'}, status=200)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': '发布失败，数据格式错误'}, status=400)
 
-    return render(request, "user/push.html")
+    return JsonResponse({'error': '仅支持POST请求'}, status=405)
 
 
 def replied(request):

@@ -1,9 +1,6 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'css/mychangeinfo.css'%}" />
-<script type="text/javascript" src={% static "js/mychangeinfo.js" %}></script>
-<script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
-<script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
 
 <div class="info-container">
   <div class="change-avatar">
@@ -74,6 +71,30 @@
     </div>
   </form>
 
+  <div class="change-password-title">修改密码：</div>
+  <form method="POST" action="{% url 'change_password' %}">
+    {% csrf_token %}
+    <div class="change-password">
+      <input
+        class="text-sm custom-input w-full"
+        placeholder="输入旧密码"
+        type="text"
+        id="old-password-input"
+        name="old_password"
+      />
+      <input
+        class="text-sm custom-input w-full"
+        placeholder="输入新密码"
+        type="text"
+        id="new-password-input"
+        name="new_password"
+      />
+      <button type="submit">
+        <span>确认</span>
+      </button>
+    </div>
+  </form>
+
   {% if messages %}
   <script>
     {% for msg in messages %}
@@ -82,3 +103,7 @@
   </script>
   {% endif %}
 </div>
+
+<script type="text/javascript" src={% static "js/mychangeinfo.js" %}></script>
+<script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
+<script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>

@@ -16,13 +16,13 @@ $(document).ready(function () {
     event.preventDefault();
 
     var reg__username = $("#reg__username").val();
-    var reg__email = $("#reg__email").val();
+    //var reg__email = $("#reg__email").val();
     var reg__password = $("#reg__password").val();
     var reg__password2 = $("#repeat__password").val();
     //检查以上四个字段是否为空，非空则报错
     if (
       reg__username == "" ||
-      reg__email == "" ||
+      //reg__email == "" ||
       reg__password == "" ||
       reg__password2 == ""
     ) {
@@ -34,9 +34,9 @@ $(document).ready(function () {
       return;
     }
     //检查邮箱合法性
-    if(!validateEmail()){
-      return;
-    }
+    //if(!validateEmail()){
+    //  return;
+    //}
     //检查密码合法性
     if(!validatePassword()){
       return;
@@ -66,9 +66,9 @@ $(document).ready(function () {
     validateUsername();
   });
 
-  $("#reg__email").change(function (event) {
-    validateEmail();
-  });
+  //$("#reg__email").change(function (event) {
+  //  validateEmail();
+  //});
 
   $("#reg__password").change(function (event) {
     validatePassword();

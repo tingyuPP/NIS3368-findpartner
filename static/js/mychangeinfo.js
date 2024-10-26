@@ -5,9 +5,8 @@ var obsClient = new ObsClient({
   server: "https://obs.cn-east-3.myhuaweicloud.com",
   timeout: 3000, // 设置超时时间
 });
-
+alert("Hello from mychangeinfo.js");//测试能否正常加载
 document.addEventListener("DOMContentLoaded", () => {
-  alert("Hello from mychangeinfo.js");//测试能否正常加载
   const fileInput = document.getElementById("file-input");
   const imageUrlInput = document.getElementById("image-url");
   const filePreview = document.getElementById("file-preview");
