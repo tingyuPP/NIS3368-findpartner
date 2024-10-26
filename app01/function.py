@@ -2,6 +2,8 @@
 from django.db.models.expressions import result
 
 from app01.database import *
+from Crypto.Cipher import AES
+import base64
 
 
 # 注册函数，输入用户名、密码，创建新账户，返回是否修改成功{0：成功，1：失败}
@@ -9,6 +11,7 @@ def register(user_name, passwords):
     user_id = create_user(user_name)
     if not user_id:
         return 1
+    passwords = encrypt_oracle(passwords)
     user = User(user_id, user_name, passwords)
     if_success = change_user_basic_database(user)
     if if_success:
@@ -20,7 +23,7 @@ def login(user_name, passwords):
     user_id = user_name_to_id(user_name)
     if user_id:
         user = check_user_basic_database(user_id)
-        if user.passwords == passwords:
+        if user.passwords == encrypt_oracle(passwords):
             if_success = 0  # 登录成功
         else:
             if_success = 1  # 密码错误
@@ -33,8 +36,8 @@ def change_password(user_name, password, new_passwords):
     user_id = user_name_to_id(user_name)
     if user_id:
         user = check_user_basic_database(user_id)
-        if user.passwords == password:  # 用户存在且密码正确
-            user.passwords = new_passwords
+        if encrypt_oracle(user.passwords) == encrypt_oracle(password):  # 用户存在且密码正确
+            user.passwords = encrypt_oracle(new_passwords)
             change_user_basic_database(user)
             if_success = 0  # 更改密码成功
         else:
@@ -313,3 +316,42 @@ def id_to_name(user_id):
 def name_to_id(user_name):
     user_id = user_name_to_id(user_name)
     return user_id
+
+
+#################以下为一些工具函数##########################
+# 补全函数，确保字符串长度是16的倍数
+def add_to_16(value):
+    if isinstance(value, str):  # 如果是字符串，继续处理
+        while len(value) % 16 != 0:
+            value += '\0'
+        return value.encode('utf-8')  # 最终返回字节类型
+    elif isinstance(value, bytes):  # 如果是字节类型，直接处理
+        while len(value) % 16 != 0:
+            value += b'\0'
+        return value
+    else:
+        raise TypeError("The value must be a str or bytes")
+
+# 加密方法
+def encrypt_oracle(text):
+    # 秘钥
+    key = '123456'
+    # 初始化加密器
+    aes = AES.new(add_to_16(key), AES.MODE_ECB)
+    # 先进行AES加密
+    encrypt_aes = aes.encrypt(add_to_16(text))
+    # 用base64转成字符串形式
+    encrypted_text = str(base64.encodebytes(encrypt_aes), encoding='utf-8')  # 执行加密并转码返回bytes
+    return encrypted_text
+
+# 解密方法
+def decrypt_oracle(text):
+    # 秘钥
+    key = '123456'
+    # 初始化加密器
+    aes = AES.new(add_to_16(key), AES.MODE_ECB)
+    # 优先逆向解密base64成bytes
+    base64_decrypted = base64.decodebytes(text.encode(encoding='utf-8'))
+    # 执行解密密并转码返回str
+    decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\0', '')
+    return decrypted_text

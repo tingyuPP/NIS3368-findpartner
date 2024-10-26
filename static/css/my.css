@@ -1,7 +1,6 @@
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to right, #e0f7fa, #80deea);
-    /* 添加渐变背景 */
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,7 +11,6 @@ body {
 
 .user-page {
     background: rgba(255, 255, 255, 0.9);
-    /* 半透明白色背景 */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -41,11 +39,12 @@ body {
     margin-left: 20px;
 }
 
-
 .user-info {
     display: flex;
     justify-content: center;
     padding: 48px 0;
+    gap: 32px;
+    /* 增加间距 */
 }
 
 .avatar .avatar-wrapper {
@@ -66,6 +65,8 @@ body {
 .info-part {
     position: relative;
     width: 100%;
+    max-width: 600px;
+    /* 确保有足够的宽度 */
 }
 
 .info {
@@ -231,5 +232,3 @@ body {
 .feeds-tab-container {
     padding-left: 2rem;
 }
-
-
