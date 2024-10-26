@@ -9,6 +9,11 @@
     <title>个人主页</title>
     <link rel="stylesheet" href="{% static 'css/my.css'%}">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+    
+    <script type="text/javascript" src={% static "js/mychangeinfo.js" %}></script>
+    <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
+    <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
+
 </head>
 
 <body>
@@ -20,7 +25,7 @@
             <div class="user-info">
                 <div class="avatar">
                     <div class="avatar-wrapper">
-                        <img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.cGc4c8dVlqnfV3uwcS1IogHaE8?w=260&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+                        <img src="{{ user_avatar }}"
                             class="user-image" alt="用户头像">
                     </div>
                 </div>
@@ -29,7 +34,7 @@
                         <div class="basic-info">
                             <div class="user-basic">
                                 <div class="user-nickname">
-                                    <div class="user-name">{{ user_name }}</div>
+                                    <div class="user-name">{{ user_nickname }}</div>
                                 </div>
                                 <div class="user-content">
                                     <span class="user-redId">用户ID：{{ user_id }}</span>
@@ -106,20 +111,25 @@
     }
 
         // 手动执行加载的 HTML 内容中的脚本
-    function executeScripts(container) {
-        const scripts = container.querySelectorAll('script');
-        scripts.forEach(script => {
+    function executeScripts(element) {
+    const scripts = element.querySelectorAll('script');
+    scripts.forEach(script => {
+        if (script.src) {
             const newScript = document.createElement('script');
-            if (script.src) {
-                newScript.src = script.src;
-                newScript.onload = () => console.log(`Script loaded: ${script.src}`);
-                newScript.onerror = () => console.error(`Error loading script: ${script.src}`);
-            } else {
-                newScript.textContent = script.textContent;
-            }
+            newScript.src = script.src;
+            newScript.onload = () => {
+                console.log(`Script loaded: ${script.src}`);
+                initializeChangeInfo();
+            };
+            document.head.appendChild(newScript);
+        } else {
+            const newScript = document.createElement('script');
+            newScript.textContent = script.textContent;
             document.head.appendChild(newScript).parentNode.removeChild(newScript);
-        });
-    }
+            console.log('Inline script executed');
+        }
+    });
+}
 
     // 初始化默认选项
     document.addEventListener('DOMContentLoaded', function () {

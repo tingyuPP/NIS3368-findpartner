@@ -1,17 +1,18 @@
-// 创建ObsClient实例
-var obsClient = new ObsClient({
-  access_key_id: "FTCMA0RFFEFYAHZCTUNR",
-  secret_access_key: "DtOPu5ExOARQuMZHAGewDVzryaH1ht7gSWlflsJ5",
-  server: "https://obs.cn-east-3.myhuaweicloud.com",
-  timeout: 3000, // 设置超时时间
-});
-alert("Hello from mychangeinfo.js");//测试能否正常加载
-document.addEventListener("DOMContentLoaded", () => {
+function initializeChangeInfo() {
+  // 创建ObsClient实例
+  var obsClient = new ObsClient({
+    access_key_id: "FTCMA0RFFEFYAHZCTUNR",
+    secret_access_key: "DtOPu5ExOARQuMZHAGewDVzryaH1ht7gSWlflsJ5",
+    server: "https://obs.cn-east-3.myhuaweicloud.com",
+    timeout: 3000, // 设置超时时间
+  });
+
   const fileInput = document.getElementById("file-input");
   const imageUrlInput = document.getElementById("image-url");
   const filePreview = document.getElementById("file-preview");
+  const fileInputLabel = document.getElementById("file-input-label");
 
-  filePreview.innerHTML = '';
+  filePreview.innerHTML = "";
 
   async function uploadToOBS(file) {
     return new Promise((resolve, reject) => {
@@ -27,7 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("上传到OBS失败");
           } else {
             const imageUrl = `https://findpartner.obs.cn-east-3.myhuaweicloud.com/${fileName}`;
-            console.log(imageUrl);
+            //console.log(imageUrl);
+            resolve(imageUrl);
           }
         }
       );
@@ -35,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   fileInput.addEventListener("change", async (event) => {
-    alert("Hello from mychangeinfo.js");//测试能否正常加载
     const file = event.target.files[0];
     if (file) {
       // 限制文件大小
@@ -57,12 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
       fileInputLabel.style.display = "none";
       // 上传图片到华为云OBS
       const imageUrl = await uploadToOBS(file);
-      console.log(imageUrl);
       imageUrlInput.value = imageUrl;
-
-      
+      console.log(imageUrlInput.value);
+      console.log(111)
       // 将图片URL设置为预览图的src
-      filePreview.querySelector('img').src = imageUrl;
+      filePreview.querySelector("img").src = imageUrl;
     }
   });
-});
+}
+

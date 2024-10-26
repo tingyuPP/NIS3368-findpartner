@@ -5,7 +5,7 @@
 <div class="info-container">
   <div class="change-avatar">
     <div class="change-avatar-title">修改头像：</div>
-    <label class="custum-file-upload" for="file-input">
+    <label class="custum-file-upload" for="file-input" id="file-input-label">
       <div class="icon">
         <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24">
           <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
@@ -38,13 +38,13 @@
         </button>
     </form>
   </div>
-  <div class="change-username-title">修改用户名：</div>
+  <div class="change-username-title">修改昵称：</div>
   <form method="POST" action="{% url 'change_username' %}">
     {% csrf_token %}
     <div class="change-username">
       <input
         class="text-sm custom-input w-full"
-        placeholder="输入要修改的用户名"
+        placeholder="输入要修改的昵称"
         type="text"
         id="username-input"
         name="username"

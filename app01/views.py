@@ -105,7 +105,7 @@ def my(request):
             if user_info.introduction == "unknown":
                 user_info.introduction = "这个人还没有个人介绍"
             context = {
-                "user_name": username,
+                "user_nickname": user_info.nickname,
                 "user_introduction": user_info.introduction,
                 "user_avatar": user_info.image,
                 "user_id": user_info.id,
@@ -117,22 +117,20 @@ def my(request):
         
 def change_username(request):
     if request.method == "POST":
-        new_username = request.POST.get("username")
+        new_nickname = request.POST.get("username")
         username = request.session["user_name"]
-        if new_username == username:
-            messages.error(request, "新用户名不能与旧用户名相同！")
-            return redirect("/my/")
-        
-        if not re.match(r'^[a-zA-Z0-9]{6,18}$', new_username):
-            messages.error(request, "用户名必须为6-18位字母或数字！")
-            return redirect("/my/")
-        
+
         user_info = check_user(username)
-        user_info.user_name = new_username
+        old_nickname = user_info.nickname
+
+        if new_nickname == old_nickname:
+            messages.error(request, "新昵称不能与旧昵称相同！")
+            return redirect("/my/")
+
+        user_info.nickname = new_nickname
         result = change_user_info(user_info) 
         if result == 0:
             messages.success(request, "修改成功！")
-            request.session["user_name"] = new_username
             return redirect("/my/")
         else:
             messages.error(request, "修改失败！")
