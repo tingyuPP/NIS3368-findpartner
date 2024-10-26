@@ -62,6 +62,27 @@ def mainpage(request):
     }
     return render(request, "mainpage/mainpage.html", context)
 
+def dashboard_recommend(request):
+    return render(request, "mainpage/waterfallshowcard/recommend.html")
+
+def dashboard_sports(request):
+    return render(request, "mainpage/waterfallshowcard/sports.html")
+
+def dashboard_emotion(request):
+    return render(request, "mainpage/waterfallshowcard/emotion.html")
+
+def dashboard_food(request):
+    return render(request, "mainpage/waterfallshowcard/food.html")
+
+def dashboard_study(request):
+    return render(request, "mainpage/waterfallshowcard/study.html")
+
+def dashboard_travel(request):
+    return render(request, "mainpage/waterfallshowcard/travel.html")
+
+def dashboard_games(request):
+    return render(request, "mainpage/waterfallshowcard/games.html")
+
 def main(request):
     return render(request, "mainpage/main.html")
 
