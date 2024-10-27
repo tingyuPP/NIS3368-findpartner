@@ -127,6 +127,10 @@ def change_username(request):
             messages.error(request, "新昵称不能与旧昵称相同！")
             return redirect("/my/")
 
+        if len(new_nickname) > 10:
+            messages.error(request, "昵称长度不能超过10个字符！")
+            return redirect("/my/")
+
         user_info.nickname = new_nickname
         result = change_user_info(user_info) 
         if result == 0:

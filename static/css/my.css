@@ -86,7 +86,6 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    max-width: calc(100% - 96px);
 }
 
 .user-name {
