@@ -93,3 +93,8 @@ function executeScripts(element) {
         }
     });
 }
+
+// 初始化默认频道
+document.addEventListener('DOMContentLoaded', function() {
+    handleChannelClick('recommend');
+});
