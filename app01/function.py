@@ -355,3 +355,19 @@ def decrypt_oracle(text):
     # 执行解密密并转码返回str
     decrypted_text = str(aes.decrypt(base64_decrypted), encoding='utf-8').replace('\0', '')
     return decrypted_text
+
+def serialize_notice(obj):
+    return {
+        "id": obj.id,
+        "owner_id": obj.owner_id,
+        "owner_contact": obj.owner_contact,
+        "title": obj.title,
+        "description": obj.description,
+        "basic_type": obj.basic_type,
+        "tag": obj.tag,
+        "time": obj.time,
+        "image": obj.image,
+        "if_disabled": obj.if_disabled
+    }
+
+

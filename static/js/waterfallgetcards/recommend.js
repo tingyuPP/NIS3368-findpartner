@@ -1,5 +1,8 @@
 function initializeWaterfall_recommend() {
   console.log("waterfallgetcards.js loaded");
+
+  const noticeList = JSON.parse('{{ notice_list|safe|escapejs }}');
+  console.log(noticeList);
   
   const list = [
     { src: "https://tse1-mm.cn.bing.net/th/id/OIP-C.Zte3ljd4g6kqrWWyg-8fhAHaEo?w=264&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" },

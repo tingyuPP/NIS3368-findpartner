@@ -65,7 +65,13 @@ def mainpage(request):
     return render(request, "mainpage/mainpage.html", context)
 
 def dashboard_recommend(request):
-    return render(request, "mainpage/waterfallshowcard/recommend.html")
+    notice_list = check_all_notice()
+
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return render(request, "mainpage/waterfallshowcard/recommend.html", {"notice_list": json.dumps(serialize_notice_list)})
 
 def dashboard_sports(request):
     return render(request, "mainpage/waterfallshowcard/sports.html")
