@@ -57,8 +57,10 @@ def log(request: HttpRequest):
             return render(request, "home/login.html", locals())
 
 def mainpage(request):
+    user_info = check_user(request.session.get("user_name", None))
     context = {
         "login_result": request.session.get("is_login", None),
+        "image_url": user_info.image,
     }
     return render(request, "mainpage/mainpage.html", context)
 

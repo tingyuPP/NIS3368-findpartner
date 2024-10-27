@@ -413,6 +413,11 @@ header {
 
 }
 
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 /* @media screen and (min-width: 960px) and (max-width: 1191px) {
     .main-content {
         padding-left: calc(-6px + 25vw);
