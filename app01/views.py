@@ -67,13 +67,16 @@ def mainpage(request):
     return render(request, "mainpage/mainpage.html", context)
 
 def dashboard_recommend(request):
+    return render(request, "mainpage/waterfallshowcard/recommend.html")
+
+def get_recommend_notice(request):
     notice_list = check_all_notice()
 
     if not notice_list:
         serialize_notice_list = []
     else:
         serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
-    return render(request, "mainpage/waterfallshowcard/recommend.html", {"notice_list": json.dumps(serialize_notice_list)})
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_sports(request):
     return render(request, "mainpage/waterfallshowcard/sports.html")
@@ -103,9 +106,6 @@ def yinsixieyi(request):
 
 def kefu(request):
     return render(request, "mainpage/kefu.html")
-
-def publish(request):
-    return render(request, "user/push.html")
 
 def my(request):
     if request.method == "GET":

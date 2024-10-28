@@ -357,14 +357,17 @@ def decrypt_oracle(text):
     return decrypted_text
 
 def serialize_notice(obj):
+    owner_username = id_to_name(obj.owner_id)
+    owner_info = check_user(owner_username)
     return {
         "id": obj.id,
         "owner_id": obj.owner_id,
         "owner_contact": obj.owner_contact,
+        "owner_nickname": owner_info.nickname,
+        "owner_avatar": owner_info.image,
         "title": obj.title,
         "description": obj.description,
         "basic_type": obj.basic_type,
-        "tag": obj.tag,
         "time": obj.time,
         "image": obj.image,
         "if_disabled": obj.if_disabled
