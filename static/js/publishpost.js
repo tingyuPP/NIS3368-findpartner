@@ -29,9 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     newTagInput.placeholder = '输入标签';
     newTagInput.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
-        const tag = newTagInput.value.trim();
+        const tag = newTagInput.value.trim();//去掉字符串两边的空格
         if (tag) {
           tags.push(tag);
+          //console.log(tags);
           renderTags();
         }
       }
@@ -156,10 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const tags = getTags();
 
       if (!title || !content || !category || !contact) {
-        alert('请填写完整信息');
+        
+        alert('请填写完整信息');      
         return;
       }
-
+      
       const postData = {
         title,
         contact,
@@ -170,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         date: currentDate
       };
 
+      //console.log('Sending postData:', tags);
       const xhr = new XMLHttpRequest();
       xhr.open('POST', '/publish/', true);
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -197,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function getTags() {
+    //console.log(tags);
     return tags.map(tag => tag.trim()).filter(tag => tag);
   }
 

@@ -156,12 +156,17 @@ def get_games_notice(request):
         serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
+
 def main(request, post_id):
     post = check_notice(post_id)
     author = check_notice_owner(post.owner_id)
+
+    # 还需要当前用户的信息，通过用户名获取用户类
+    now_user = check_user(request.session["user_name"])
     context = {
         "post": post,
         "author": author,
+        "now_user": now_user,
     }
     return render(request, "mainpage/main.html", context)
 
@@ -319,6 +324,8 @@ def publish(request):
             content = data.get("content")
             category = data.get("category", 0)  # 默认值为0
             tags = data.get("tags") if data.get("tags") else []  # 确保 tags 是一个列表
+            # 测试tags
+            # print(tags)
             image_url = data.get("imageUrl")
             current_date = data.get("date", "unknown")  # 默认值为"unknown"
             notice_id = add_notice(
@@ -338,7 +345,12 @@ def publish(request):
             notice.image = image_url
             notice.time = current_date
             notice.description = content
-            notice.tag_list = tags
+            # 将tags转化为字符串，两项之间用空格隔开
+            # tags = ' '.join(tags)
+            # print(tags)
+
+            notice.tag = tags
+            print(notice.tag)
 
             if change_notice(notice) == -1:
                 return JsonResponse({"error": "更新通知失败"}, status=400)

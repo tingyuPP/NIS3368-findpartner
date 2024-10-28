@@ -1,12 +1,13 @@
 from enum import Enum
 
-# 定义需求的大类：体育，学习，吃饭，游戏，出行
+# 定义需求的大类：体育，学习，吃饭，游戏，出行，情感
 class Basic_Type(Enum):
     sport = 0
     study = 1
     food = 2
     game = 3
     travel = 4
+    emotion = 5
 
 class Request:
     def __init__(self, user_request_id, contact, answer_state = 0):

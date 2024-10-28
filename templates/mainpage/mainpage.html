@@ -48,11 +48,11 @@
     <div class="main">
         <div class="side-bar">
             <ul class="channel-list">
-            <li class="active-channel">
+            <li class="active-channel" onclick="window.location.href='/dashboard/'">
                 <img src="{% static 'svg/explore.svg' %}" alt="SVG Image" width="20" height="20" >
                 <span class="channel">发现</span>
             </li>
-            <li class="active-channel">
+            <li class="active-channel" onclick="window.location.href='/message/'">
                 <img src="{% static 'svg/message.svg' %}" alt="SVG Image" width="20" height="20">
                 <span class="channel">消息</span>
             </li>

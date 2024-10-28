@@ -37,6 +37,9 @@
                                 {% for tag in post.tag %}
                                 <a class="tag tag-search">#{{ tag }}</a>
                                 {% endfor %}
+                                
+
+
                             </div>
                             <div class="bottom-container">
                                 <span class="date">{{ post.time }}</span>
@@ -44,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="javascript:;" class="invite-button">发送邀请</a>
+                <a href="javascript:;" class="invite-button" onclick="sendmyinvitation()">发送邀请</a>
             </div>
         </div>
         <div class="close-cricle" onclick="closeNoteDetail()">
@@ -60,6 +63,35 @@
         history.pushState(null, null, '/dashboard');
         window.location.reload();
     }
+
+    function sendmyinvitation() {
+            const noticeId = '{{ post.id }}'; // 替换为实际的notice_id
+            const userName = '{{ now_user.username }}'; // 替换为实际的user_name
+            const contact = '{{ now_user.email }}'; // 替换为实际的contact
+
+            fetch('/api/request_notice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ notice_id: noticeId, user_name: userName, contact: contact })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success === 0) {
+                        alert('请求成功');
+                    } else if (data.success === -1) {
+                        alert('用户不存在');
+                    } else if (data.success === -2) {
+                        alert('需求不存在');
+                    } else {
+                        alert('请求失败');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
 </script>
 
 </html>
