@@ -46,6 +46,12 @@ urlpatterns = [
     path("change_avatar/", views.change_avatar, name="change_avatar"),
     path("change_password/", views.change__password, name="change_password"),
     path("get-recommend-notice/", views.get_recommend_notice),
+    path("get-sports-notice/", views.get_sports_notice),
+    path("get-emotion-notice/", views.get_emotion_notice),
+    path("get-food-notice/", views.get_food_notice),
+    path("get-study-notice/", views.get_study_notice),
+    path("get-travel-notice/", views.get_travel_notice),
+    path("get-games-notice/", views.get_games_notice),
     path("get-my-published-notice/", views.get_my_published_notice),
     path("get-my-replied-notice/", views.get_my_replied_notice),
 ]
