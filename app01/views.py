@@ -248,7 +248,7 @@ def change_avatar(request):
 def published(request):
     return render(request, "user/myoptions/mypublished.html")
 
-def get_published_notice(request):
+def get_my_published_notice(request):
     notice_list = check_my_notice(request.session.get("user_name", None))
     if not notice_list:
         serialize_notice_list = []
@@ -305,6 +305,14 @@ def publish(request):
 
 def replied(request):
     return render(request, "user/myoptions/myreplied.html")
+
+def get_my_replied_notice(request):
+    notice_list = check_request_notice(request.session.get("user_name", None))
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 
 def info(request):

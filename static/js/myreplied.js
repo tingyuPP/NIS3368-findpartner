@@ -1,6 +1,6 @@
-function initializePublished() {
+function initializeReplied() {
   // 使用 fetch 或 jQuery 的 AJAX 请求后端数据
-  fetch("/get-my-published-notice/")
+  fetch("/get-my-replied-notice/")
     .then((response) => response.json())
     .then((data) => {
       console.log(data); // 输出数据供后续处理

@@ -125,6 +125,9 @@
                 else if (script.src.includes('/static/js/mypublished.js')) {
                     initializePublished();
                 }
+                else if (script.src.includes('/static/js/myreplied.js')) {
+                    initializeReplied();
+                }
             };
             document.head.appendChild(newScript);
         } else {
