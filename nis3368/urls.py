@@ -46,4 +46,5 @@ urlpatterns = [
     path("change_avatar/", views.change_avatar, name="change_avatar"),
     path("change_password/", views.change__password, name="change_password"),
     path("get-recommend-notice/", views.get_recommend_notice),
+    path("get-published-notice/", views.get_published_notice),
 ]

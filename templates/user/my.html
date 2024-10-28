@@ -13,7 +13,7 @@
     <script type="text/javascript" src={% static "js/mychangeinfo.js" %}></script>
     <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
     <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
-
+    <script type="text/javascript" src={% static "js/mypublished.js" %}></script>
 </head>
 
 <body>
@@ -119,7 +119,12 @@
             newScript.src = script.src;
             newScript.onload = () => {
                 console.log(`Script loaded: ${script.src}`);
-                initializeChangeInfo();
+                if (script.src.includes('/static/js/mychangeinfo.js')) {
+                    initializeChangeInfo();
+                }
+                else if (script.src.includes('/static/js/mypublished.js')) {
+                    initializePublished();
+                }
             };
             document.head.appendChild(newScript);
         } else {
