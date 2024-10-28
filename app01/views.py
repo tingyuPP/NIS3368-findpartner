@@ -87,26 +87,74 @@ def get_recommend_notice(request):
 def dashboard_sports(request):
     return render(request, "mainpage/waterfallshowcard/sports.html")
 
+def get_sports_notice(request):
+    notice_list = check_all_notice()
+
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_emotion(request):
     return render(request, "mainpage/waterfallshowcard/emotion.html")
 
+def get_emotion_notice(request):
+    notice_list = check_all_notice()
+
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_food(request):
     return render(request, "mainpage/waterfallshowcard/food.html")
 
+def get_food_notice(request):
+    notice_list = check_all_notice()
+
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_study(request):
     return render(request, "mainpage/waterfallshowcard/study.html")
 
+def get_study_notice(request):
+    notice_list = check_all_notice()
+
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_travel(request):
     return render(request, "mainpage/waterfallshowcard/travel.html")
 
+def get_travel_notice(request):
+    notice_list = check_all_notice()
+
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_games(request):
     return render(request, "mainpage/waterfallshowcard/games.html")
 
+def get_games_notice(request):
+    notice_list = check_all_notice()
+
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def main(request, post_id):
     post = check_notice(post_id)
