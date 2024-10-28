@@ -228,7 +228,8 @@ def change_notice(notice_content: Notice):
 
 
 # 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（唤醒的）（没有则为空）
-def search_notice_all(notice_type: Basic_Type, notice_content: str) -> list[Notice]:
+def search_notice_all(notice_type: int, notice_content: str) -> list[Notice]:
+    notice_type = Basic_Type(notice_type)
     result_id = search_notice_all_database(notice_type, notice_content)
     print(result_id)
     result_notice = []
@@ -240,7 +241,8 @@ def search_notice_all(notice_type: Basic_Type, notice_content: str) -> list[Noti
 
 
 # 按照大类检索需求，输入大类，返回检索到的需求列表（唤醒的）（没有则为空）
-def search_notice_type(notice_type: Basic_Type) -> list[Notice]:
+def search_notice_type(notice_type: int) -> list[Notice]:
+    notice_type = Basic_Type(notice_type)
     result_id = search_notice_type_database(notice_type)
     result_notice = []
     for i in result_id:
