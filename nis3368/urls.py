@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
 
@@ -31,18 +32,18 @@ urlpatterns = [
     path("dashboard/study/", views.dashboard_study),
     path("dashboard/travel/", views.dashboard_travel),
     path("dashboard/games/", views.dashboard_games),
-    path("main/", views.main),
+    path("main/<int:post_id>/", views.main),
     path("publish/", views.publish, name="publish"),
     path("my/", views.my),
     path("my/published/", views.published),
     path("my/replied/", views.replied),
     path("my/info/", views.info),
-    path("message/",views.message),
-    path("yinsixieyi/",views.yinsixieyi),
-    path("kefu/",views.kefu),
-    path("change_username/",views.change_username, name="change_username"),
-    path("change_desc/",views.change_desc, name="change_desc"),
-    path("change_avatar/",views.change_avatar, name="change_avatar"),
-    path("change_password/",views.change__password, name="change_password"),
+    path("message/", views.message),
+    path("yinsixieyi/", views.yinsixieyi),
+    path("kefu/", views.kefu),
+    path("change_username/", views.change_username, name="change_username"),
+    path("change_desc/", views.change_desc, name="change_desc"),
+    path("change_avatar/", views.change_avatar, name="change_avatar"),
+    path("change_password/", views.change__password, name="change_password"),
     path("get-recommend-notice/", views.get_recommend_notice),
 ]
