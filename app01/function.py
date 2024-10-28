@@ -233,12 +233,14 @@ def search_notice_all(notice_type: int, notice_content: str) -> list[Notice]:
         return -1
     notice_type = Basic_Type(notice_type)
     result_id = search_notice_all_database(notice_type, notice_content)
-    print(result_id)
     result_notice = []
-    for i in result_id:
-        notice = check_notice_basic_database(i)
-        if not notice.if_disabled:  # 如果需求处于唤醒态
-            result_notice.append(notice)
+    if result_id:
+        for i in result_id:
+            notice = check_notice_basic_database(i)
+            if not notice.if_disabled:  # 如果需求处于唤醒态
+                result_notice.append(notice)
+    else:
+        return None
     return result_notice
 
 
@@ -249,10 +251,13 @@ def search_notice_type(notice_type: int) -> list[Notice]:
     notice_type = Basic_Type(notice_type)
     result_id = search_notice_type_database(notice_type)
     result_notice = []
-    for i in result_id:
-        notice = check_notice_basic_database(i)
-        if not notice.if_disabled:  # 如果需求处于唤醒态
-            result_notice.append(notice)
+    if result_id:
+        for i in result_id:
+            notice = check_notice_basic_database(i)
+            if not notice.if_disabled:  # 如果需求处于唤醒态
+                result_notice.append(notice)
+    else:
+        return None
     return result_notice
 
 
