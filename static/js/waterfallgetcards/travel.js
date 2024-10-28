@@ -1,24 +1,16 @@
 function initializeWaterfall_travel() {
   // 使用 fetch 或 jQuery 的 AJAX 请求后端数据
   fetch("/get-travel-notice/")
-    .then((response) => response.json())
+     .then((response) => response.json())
     .then((data) => {
       console.log(data); // 输出数据供后续处理
       // 可在此处理数据，例如渲染到页面
       printNotice(data.notice_list);
     })
     .catch((error) => console.error("Error fetching data:", error));
-
-
 }
 
-function openNoteDetail(id) {
-  // 更新浏览器地址栏
-  history.pushState(null, null, `/main/`);
 
-  //刷新页面
-  location.reload();
-}
 
 function printNotice(data) {
   const feedsContainer = document.getElementById("feeds-container");
@@ -31,7 +23,6 @@ function printNotice(data) {
 
     const img = document.createElement("img");
     img.setAttribute("data-src", item.image);
-    console.log(item.image);
     img.className = "lazy";
 
     const footer = document.createElement("div");
@@ -76,19 +67,21 @@ function printNotice(data) {
 
     feedsContainer.appendChild(card);
   });
-}
 
   // 懒加载功能
   const lazyImages = document.querySelectorAll(".lazy");
   const lazyLoad = () => {
+    
     lazyImages.forEach((img) => {
+      const rect = img.getBoundingClientRect();
+      
       if (
-        img.getBoundingClientRect().top < window.innerHeight &&
-        img.getBoundingClientRect().bottom > 0 &&
+        rect.top < window.innerHeight &&
+        rect.bottom > 0 &&
         getComputedStyle(img).display !== "none"
       ) {
         img.src = img.getAttribute("data-src");
-        console.log(img.src);
+
         img.classList.remove("lazy");
       }
     });
@@ -104,3 +97,12 @@ function printNotice(data) {
   window.addEventListener("resize", lazyLoad);
   window.addEventListener("orientationchange", lazyLoad);
   lazyLoad();
+}
+
+function openNoteDetail(id) {
+  // 更新浏览器地址栏
+  history.pushState(null, null, `/main/${id}/`);
+
+  //刷新页面
+  location.reload();
+}
