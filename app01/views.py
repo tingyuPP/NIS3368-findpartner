@@ -97,7 +97,22 @@ def dashboard_games(request):
     return render(request, "mainpage/waterfallshowcard/games.html")
 
 def main(request):
-    return render(request, "mainpage/main.html")
+    if request.method == "GET":
+        notice_id = request.GET.get("id")
+        notice = check_notice(notice_id)
+        owner_id = notice.owner_id
+        owner_nickname = id_to_name(owner_id)
+        owner_info = check_user(owner_nickname)
+        context = {
+            "owner_id": owner_id,
+            "owner_nickname": owner_info.nickname,
+            "owner_avatar": owner_info.image,
+            "notice_title": notice.title,
+            "notice_content": notice.description,
+            "notice_image": notice.image,
+            "notice_time": notice.time,
+        }
+    return render(request, "mainpage/main.html", context)
 
 
 def yinsixieyi(request):

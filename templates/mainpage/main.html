@@ -18,7 +18,7 @@
             <div class="media-container">
                 <div class="carousel">
                     <div class="carousel-item">
-                        <img src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg" alt="图片">
+                        <img src="{{ notice_image }}" alt="图片">
                     </div>
 
                 </div>
@@ -27,22 +27,22 @@
                 <div class="author-container">
                     <div class="author-me">
                         <div class="info">
-                            <img class="avatar-item" src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg" alt="头像">
-                            <span class="name">这是名字</span>
+                            <img class="avatar-item" src="{{ owner_avatar }}" alt="头像">
+                            <span class="name">{{ owner_nickname }}</span>
                         </div>
 
                     </div>
                     <div class="note-scroller">
                         <div class="note-content">
-                            <div class="title">这是什么动漫</div>
+                            <div class="title">{{ notice_title }}</div>
                             <div class="desc">
-                                <span>这是什么描述信息 <br></span>
+                                <span>{{ notice_content }} <br></span>
                                 <a class="tag tag-search">#海贼王</a>
                                 <a class="tag tag-search">#海贼王</a>
                                 <a class="tag tag-search">#海贼王</a>
                             </div>
                             <div class="bottom-container">
-                                <span class="date">2023-10-21</span>
+                                <span class="date">{{ notice_time }}</span>
                             </div>
                         </div>
                     </div>

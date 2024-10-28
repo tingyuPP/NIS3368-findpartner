@@ -14,8 +14,7 @@ function initializeWaterfall_recommend() {
 
 function openNoteDetail(id) {
   // 更新浏览器地址栏
-  history.pushState(null, null, `/main/`);
-
+  history.pushState(null, null, `/main/?id=${id}`);
   //刷新页面
   location.reload();
 }
