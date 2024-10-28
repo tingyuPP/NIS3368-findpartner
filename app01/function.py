@@ -271,12 +271,12 @@ def search_notice_content(notice_content: str) -> list[Notice]:
 
 
 # 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在}
-def request_notice(notice_id: int, user_name: str, contact: str):
+def request_notice(notice_id: int, user_name: str):
     user_id = user_name_to_id(user_name)
     if_success = False
     if user_id:
         if check_notice_basic_database(notice_id):
-            request = Request(user_id, contact, 0)
+            request = Request(user_id, "NULL", 0)
             if_success = add_request(notice_id, request)
             if if_success:
                 if_success = 0
