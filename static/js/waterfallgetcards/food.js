@@ -1,4 +1,4 @@
-function initializeWaterfall_recommend() {
+function initializeWaterfall_food() {
   // 使用 fetch 或 jQuery 的 AJAX 请求后端数据
   fetch("/get-food-notice/")
     .then((response) => response.json())

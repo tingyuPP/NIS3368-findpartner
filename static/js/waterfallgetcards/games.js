@@ -1,4 +1,4 @@
-function initializeWaterfall_recommend() {
+function initializeWaterfall_games() {
   // 使用 fetch 或 jQuery 的 AJAX 请求后端数据
   fetch("/get-games-notice/")
     .then((response) => response.json())
