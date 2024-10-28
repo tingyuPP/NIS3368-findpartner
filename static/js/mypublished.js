@@ -74,5 +74,16 @@ function printNotice(data) {
 
     // 将消息项添加到容器中
     messagesContainer.appendChild(messageItem);
+
+    messageItem.addEventListener("click", function () {
+      openNoteDetail(item.id);
+    });
   });
+}
+
+function openNoteDetail(id) {
+  // 更新浏览器地址栏
+  history.pushState(null, null, `/main/${id}/`);
+  //刷新页面
+  location.reload();
 }
