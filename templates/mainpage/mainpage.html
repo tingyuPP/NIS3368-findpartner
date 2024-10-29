@@ -62,7 +62,7 @@
                 <span class="channel">发布</span>
             </li>
             {% if login_result %}
-            <li class="active-channel" onclick="window.location.href='/my/'">
+            <li class="active-channel" onclick="window.location.href=`/my/{{user_id}}/`">
                 <img src="{{ image_url }}" width="22" height="22" class="avatar"/>
                 <span class="channel">我</span>
             </li>
@@ -254,8 +254,8 @@
 
         loginButton.addEventListener('click', function() {
             window.location.href = '/login/';
+        });
     });
-});
     </script>
 </body>
 </html>

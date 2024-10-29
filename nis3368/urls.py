@@ -34,7 +34,7 @@ urlpatterns = [
     path("dashboard/games/", views.dashboard_games),
     path("main/<int:post_id>/", views.main),
     path("publish/", views.publish, name="publish"),
-    path("my/", views.my),
+    path("my/<int:user_id>/", views.my),
     path("my/published/", views.published),
     path("my/replied/", views.replied),
     path("my/info/", views.info),

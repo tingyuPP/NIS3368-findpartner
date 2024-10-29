@@ -17,16 +17,16 @@ function printNotice(data) {
     const messageItem = document.createElement("li");
     messageItem.className = "message-item";
 
-    // 用户头像部分
-    const userAvatar = document.createElement("a");
-    userAvatar.className = "user-avatar";
+    // 注意！！！！这里下面的“头像”均为写错了，实际为帖子封面。
+    const userNotice = document.createElement("a");
+    userNotice.className = "user-notice";
 
-    const avatarImg = document.createElement("img");
-    avatarImg.className = "avatar-item";
-    avatarImg.src = item.owner_avatar; // 使用item中的头像URL
-    avatarImg.alt = "用户头像"; // 设置图像描述
+    const noticeImg = document.createElement("img");
+    noticeImg.className = "notice-item";
+    noticeImg.src = item.image; // 使用item中的头像URL
+    noticeImg.alt = "用户头像"; // 设置图像描述
 
-    userAvatar.appendChild(avatarImg);
+    userNotice.appendChild(noticeImg);
 
     // 消息主内容部分
     const mainContent = document.createElement("div");
@@ -69,7 +69,7 @@ function printNotice(data) {
     mainContent.appendChild(inforTiezi);
 
     // 将所有部分添加到消息项
-    messageItem.appendChild(userAvatar);
+    messageItem.appendChild(userNotice);
     messageItem.appendChild(mainContent);
 
     // 将消息项添加到容器中

@@ -17,7 +17,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.user-avatar {
+.user-notice {
     margin-right: 24px;
     flex-shrink: 0;
     display: flex;
@@ -25,7 +25,7 @@
     justify-content: center;
 }
 
-.avatar-item {
+.notice-item {
     width: 160px;
     /* 增加图片宽度 */
     height: 120px;

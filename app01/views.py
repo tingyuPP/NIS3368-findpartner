@@ -66,6 +66,7 @@ def mainpage(request):
     context = {
         "login_result": request.session.get("is_login", None),
         "image_url": user_info.image,
+        "user_id": user_info.id,
     }
     return render(request, "mainpage/mainpage.html", context)
 
@@ -159,8 +160,7 @@ def get_games_notice(request):
 
 def main(request, post_id):
     post = check_notice(post_id)
-    author = check_notice_owner(post.owner_id)
-
+    author = check_notice_owner(post.id)
     # 还需要当前用户的信息，通过用户名获取用户类
     now_user = check_user(request.session["user_name"])
     context = {
@@ -179,18 +179,25 @@ def kefu(request):
     return render(request, "mainpage/kefu.html")
 
 
-def my(request):
+def my(request, user_id):
     if request.method == "GET":
         if request.session.get("is_login", None):
-            username = request.session["user_name"]
+            username = id_to_name(user_id)
             user_info = check_user(username)
             if user_info.introduction == "unknown":
                 user_info.introduction = "这个人还没有个人介绍"
+
+            my_username = request.session["user_name"]
+            if username == my_username:
+                is_myself = True
+            else:
+                is_myself = False
             context = {
                 "user_nickname": user_info.nickname,
                 "user_introduction": user_info.introduction,
                 "user_avatar": user_info.image,
                 "user_id": user_info.id,
+                "is_myself": is_myself,
             }
             return render(request, "user/my.html", context)
         else:
@@ -202,26 +209,27 @@ def change_username(request):
     if request.method == "POST":
         new_nickname = request.POST.get("username")
         username = request.session["user_name"]
+        user_id = name_to_id(username)
 
         user_info = check_user(username)
         old_nickname = user_info.nickname
 
         if new_nickname == old_nickname:
             messages.error(request, "新昵称不能与旧昵称相同！")
-            return redirect("/my/")
+            return redirect("/my/{user_id}/")
 
         if len(new_nickname) > 10:
             messages.error(request, "昵称长度不能超过10个字符！")
-            return redirect("/my/")
+            return redirect("/my/{user_id}/")
 
         user_info.nickname = new_nickname
         result = change_user_info(user_info)
         if result == 0:
             messages.success(request, "修改成功！")
-            return redirect("/my/")
+            return redirect("/my/{user_id}/")
         else:
             messages.error(request, "修改失败！")
-            return redirect("/my/")
+            return redirect("/my/{user_id}/")
 
     return render(request, "user/myoptions/mychangeinfo.html")
 
@@ -230,10 +238,11 @@ def change_desc(request):
     if request.method == "POST":
         new_desc = request.POST.get("desc")
         username = request.session["user_name"]
+        user_id = name_to_id(username)
 
         if new_desc == "":
             messages.error(request, "个人介绍不能为空！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
 
         user_info = check_user(username)
         user_info.introduction = new_desc
@@ -241,10 +250,10 @@ def change_desc(request):
 
         if result == 0:
             messages.success(request, "修改成功！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
         else:
             messages.error(request, "修改失败！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
 
     return render(request, "user/myoptions/mychangeinfo.html")
 
@@ -254,23 +263,24 @@ def change__password(request):
         old_password = request.POST.get("old_password")
         new_password = request.POST.get("new_password")
         username = request.session["user_name"]
+        user_id = name_to_id(username)
 
         if not re.match(r"^[a-zA-Z0-9]{6,18}$", new_password):
             messages.error(request, "密码必须为6-18位字母或数字！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
 
         if old_password == new_password:
             messages.error(request, "新密码不能与旧密码相同！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
 
         result = change_password(username, old_password, new_password)
 
         if result == 0:
             messages.success(request, "修改成功！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
         elif result == 1:
             messages.error(request, "旧密码错误！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
 
     return render(request, "user/myoptions/mychangeinfo.html")
 
@@ -282,7 +292,7 @@ def change_avatar(request):
 
         if image_url == "":
             messages.error(request, "请先上传图片！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
 
         user_info = check_user(username)
         user_info.image = image_url
@@ -290,10 +300,10 @@ def change_avatar(request):
 
         if result == 0:
             messages.success(request, "修改成功！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
         else:
             messages.error(request, "修改失败！")
-            return redirect("/my/")
+            return redirect(f"/my/{user_id}")
 
     return render(request, "user/myoptions/mychangeinfo.html")
 

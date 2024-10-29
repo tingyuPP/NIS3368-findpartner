@@ -76,6 +76,8 @@
     {% endif %}
 
 <script>
+
+
     function selectTab(tab) {
         // 移除所有选项的 active 类
         document.querySelectorAll('.reds-tab-item').forEach(item => {
@@ -141,6 +143,14 @@
 
     // 初始化默认选项
     document.addEventListener('DOMContentLoaded', function () {
+        // 如果需要在 JavaScript 中进一步处理 is_myself 参数，可以使用以下代码
+        const isMyself = {{ is_myself|yesno:"true,false" }};
+        console.log('isMyself:', isMyself);
+        if (!isMyself) {
+            console.log('is not myself');
+            document.querySelector('.reds-sticky-box').classList.add('hidden');
+            document.querySelector('.feeds-tab-container').classList.add('hidden');
+        }
         selectTab('published');
     });
 </script>

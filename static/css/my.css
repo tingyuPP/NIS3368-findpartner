@@ -231,3 +231,7 @@ body {
 .feeds-tab-container {
     padding-left: 2rem;
 }
+
+.hidden {
+    display: none;
+}
