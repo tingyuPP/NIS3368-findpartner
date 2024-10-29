@@ -11,8 +11,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def home(request: HttpRequest):
-    request.session["is_login"] = False
-    request.session["user_name"] = None
     return render(request, "home/home.html")
 
 
@@ -59,9 +57,17 @@ def log(request: HttpRequest):
                 messages.error(request, "用户已存在！")
 
             return render(request, "home/login.html", locals())
+        
+def logout(request: HttpRequest):
+    if not request.session.get("is_login", None):
+        return redirect("/home/")
+    request.session.flush()
+    return redirect("/home/")   
 
 
 def mainpage(request):
+    if not request.session.get("is_login", None):
+        return render(request, "mainpage/mainpage.html")
     user_info = check_user(request.session.get("user_name", None))
     context = {
         "login_result": request.session.get("is_login", None),

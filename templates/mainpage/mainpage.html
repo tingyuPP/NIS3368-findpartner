@@ -201,7 +201,7 @@
                                         </div>
                                         {% if login_result %}
                                         <div class="menu-item hover-effect">
-                                            <a href="/home/"><span>退出登录</span></a>
+                                            <a href="{% url 'logout' %}" id='exit-login'><span>退出登录</span></a>
                                         </div>
                                         {% endif %}
                                     </div>
@@ -256,6 +256,8 @@
             window.location.href = '/login/';
         });
     });
+
+
     </script>
 </body>
 </html>
