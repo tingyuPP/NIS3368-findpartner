@@ -162,11 +162,12 @@ def main(request, post_id):
     author = check_notice_owner(post.owner_id)
 
     # 还需要当前用户的信息，通过用户名获取用户类
-    now_user = check_user(request.session["user_name"])
+    #now_user = check_user(request.session["user_name"])
+    
     context = {
         "post": post,
         "author": author,
-        "now_user": now_user,
+        
     }
     return render(request, "mainpage/main.html", context)
 
@@ -350,7 +351,7 @@ def publish(request):
             # print(tags)
 
             notice.tag = tags
-            print(notice.tag)
+            #print(notice.tag)
 
             if change_notice(notice) == -1:
                 return JsonResponse({"error": "更新通知失败"}, status=400)
@@ -381,3 +382,20 @@ def info(request):
 
 def message(request):
     return render(request, "user/message.html")
+
+
+@csrf_exempt
+def request_notice_view(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body.decode("utf-8"))
+            notice_id = data.get("notice_id")
+            # user_name = data.get("user_name")
+            print(notice_id)
+            print(request.session["user_name"])
+
+            result = request_notice(notice_id, request.session["user_name"])
+            return JsonResponse({"success": result})
+        except json.JSONDecodeError:
+            return JsonResponse({"success": -3, "error": "数据格式错误"}, status=400)
+    return JsonResponse({"success": -4, "error": "无效的请求方法"}, status=405)
