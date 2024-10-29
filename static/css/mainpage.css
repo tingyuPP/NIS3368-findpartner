@@ -186,8 +186,8 @@ header {
 
 .input-button {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: -170px;
+    top: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -416,6 +416,21 @@ header {
 .avatar {
     border-radius: 50%;
     object-fit: cover;
+}
+
+form {
+    height: 100%;
+}
+
+.search-button {
+    background: none; /* 移除按钮背景 */
+    border: none; /* 移除按钮边框 */
+    padding: 0; /* 移除按钮内边距 */
+    cursor: pointer; /* 鼠标悬停时显示为指针 */
+}
+
+.search-button img {
+    display: block; /* 确保图片占据整个按钮 */
 }
 
 /* @media screen and (min-width: 960px) and (max-width: 1191px) {

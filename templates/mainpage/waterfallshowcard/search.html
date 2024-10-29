@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>搜索结果</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/waterfallcardstyle.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/mainpage.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/search.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/waterfallgetcards/search.js' %}"></script>
+    <script>
+      function fetchSearchResults() {
+        var searchWord = "{{ search_word }}";
+        $.ajax({
+          url: "{% url 'get_search_notice' %}",
+          data: {
+            search_word: searchWord,
+          },
+          success: function (data) {
+            console.log(data); // 输出数据供后续处理
+            // 可在此处理数据，例如渲染到页面
+            printNotice(data.notice_list);
+          },
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchSearchResults();
+      });
+    </script>
+  </head>
+  <body>
+    <div class="top" id="search-top">
+        <header class="mask-paper">
+            <a style="display: flex" href="/dashboard/">
+                <img src="{% static 'images/logo_nobackground.png'%}" style="width: 200px;margin-top: 20px;" alt="logo" />
+            </a>
+            <div class="tool-box"></div>
+            <div class="input-box" id="sujContainer">
+                <form method="GET" action="{% url 'search' %}">
+                    <input type="text" class="search-input" name="search_word"
+                        placeholder="{% if login_result %}搜索交我伴{% else %}登录发现精彩内容{% endif %}" {% if login_result %}
+                        @input="changeInput" @focus="focusInput" @keyup.enter="searchPage" ref="SearchInput" {% endif %} 
+                        value="{% if search_word %}{{ search_word }}{% endif %}"/>
+                    {% if login_result %}
+                    <div class="input-button">
+                        <div class="search-icon" @click="searchPage">
+                            <button type="submit" class="search-button">
+                                <img src="{% static 'svg/search.svg' %}" alt="search button" width="40" height="40">
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <SearchContainer v-show="showSearch" :recordList="recordList"></SearchContainer>
+                <SujContainer v-show="showHistory" :closeHistoryRecord="showHistory"></SujContainer>
+                {% endif %}
+            </div>
+            <div class="right"></div>
+            </header>
+    </div>
+    <div id="feeds-container" class="feeds-container"></div>
+    <hr>
+    <div class="bottom">
+      共找到 {{ notice_count }} 条请求
+    </div>
+  </body>
+</html>

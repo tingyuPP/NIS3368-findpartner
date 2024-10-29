@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
     <!-- 引入js文件 -->
     <!-- <script src="{% static 'js/mainpage.js'%}"></script> -->
-
+    <script src="{% static 'js/waterfallgetcards/recommend.js' %}"></script>
     
 </head>
 <body>
@@ -24,20 +24,19 @@
             </a>
             <div class="tool-box"></div>
             <div class="input-box" id="sujContainer">
-                <input type="text" class="search-input"
-                    placeholder="{% if login_result %}搜索交我伴{% else %}登录发现精彩内容{% endif %}" {% if login_result %}
-                    @input="changeInput" @focus="focusInput" @keyup.enter="searchPage" ref="SearchInput" {% endif %} />
-                {% if login_result %}
-                <div class="input-button">
-                    <div class="close-icon" v-show="showClose" @click="clearInput">
-                        <Close style="width: 1.2em; height: 1.2em; margin-right: 20px; margin-top: 5px" />
+                <form method="GET" action="{% url 'search' %}">
+                    <input type="text" class="search-input" name="search_word"
+                        placeholder="{% if login_result %}搜索交我伴{% else %}登录发现精彩内容{% endif %}" {% if login_result %}
+                        @input="changeInput" @focus="focusInput" @keyup.enter="searchPage" ref="SearchInput" {% endif %} />
+                    {% if login_result %}
+                    <div class="input-button">
+                        <div class="search-icon" @click="searchPage">
+                            <button type="submit" class="search-button">
+                                <img src="{% static 'svg/search.svg' %}" alt="search button" width="40" height="40">
+                            </button>
+                        </div>
                     </div>
-                    <div class="search-icon" @click="searchPage">
-                        <a href="#">
-                            <Search style="width: 1.2em; height: 1.2em; margin-right: 20px; margin-top: 5px" />
-                        </a>
-                    </div>
-                </div>
+                </form>
                 <SearchContainer v-show="showSearch" :recordList="recordList"></SearchContainer>
                 <SujContainer v-show="showHistory" :closeHistoryRecord="showHistory"></SujContainer>
                 {% endif %}

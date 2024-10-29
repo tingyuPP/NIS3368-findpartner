@@ -1,0 +1,21 @@
+hr {
+  margin: 20px 0; /* 横线的间距可以根据需要调整 */
+  border: none;
+  border-top: 1px solid #ddd; /* 设定横线的样式和颜色 */
+}
+
+.bottom {
+  text-align: center; /* 文字居中 */
+  padding: 10px 0; /* 顶部和底部填充 */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#search-top {
+  margin-bottom: 30px;
+  flex-shrink: 0;
+  position: relative;
+}

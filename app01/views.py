@@ -76,10 +76,35 @@ def mainpage(request):
     }
     return render(request, "mainpage/mainpage.html", context)
 
+def search(request):
+    search_word = request.GET.get("search_word")
+    notice_list = search_notice_content(search_word)
+    if notice_list:
+        notice_count = len(notice_list)
+    else:
+        notice_count = 0
+    context = {
+        "login_result": request.session.get("is_login", None),
+        "search_word": search_word,
+        "notice_count": notice_count,
+    }
+
+    if not search_word:
+        return redirect("/dashboard/")
+    return render(request, "mainpage/waterfallshowcard/search.html", context)
+
+def get_search_notice(request):
+    search_word = request.GET.get("search_word")
+    notice_list = search_notice_content(search_word)
+    if not notice_list:
+        serialize_notice_list = []
+    else:
+        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+
+    return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_recommend(request):
     return render(request, "mainpage/waterfallshowcard/recommend.html")
-
 
 def get_recommend_notice(request):
     notice_list = check_all_notice()
