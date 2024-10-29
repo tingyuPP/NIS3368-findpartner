@@ -89,72 +89,90 @@ def dashboard_sports(request):
     return render(request, "mainpage/waterfallshowcard/sports.html")
 
 def get_sports_notice(request):
-    notice_list = check_all_notice()
-
-    if not notice_list:
+    # 使用 search_notice_type 获取体育通知
+    sport_notice_list = search_notice_type(1)
+    print("Sport notice list:", sport_notice_list)  # 打印获取到的通知列表
+    # 序列化体育通知
+    if not sport_notice_list:
         serialize_notice_list = []
     else:
-        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+        serialize_notice_list = [serialize_notice(notice) for notice in sport_notice_list]
+    print("Serialized notice list:", serialize_notice_list)  # 打印序列化后的通知列表
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_emotion(request):
     return render(request, "mainpage/waterfallshowcard/emotion.html")
 
 def get_emotion_notice(request):
-    notice_list = check_all_notice()
-
-    if not notice_list:
+    # 使用 search_notice_type 获取情感通知
+    emotion_notice_list = search_notice_type(6)
+    print("Emotion notice list:", emotion_notice_list)  # 打印获取到的通知列表
+    # 序列化情感通知
+    if not emotion_notice_list:
         serialize_notice_list = []
     else:
-        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+        serialize_notice_list = [serialize_notice(notice) for notice in emotion_notice_list]
+    print("Serialized notice list:", serialize_notice_list)  # 打印序列化后的通知列表
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_food(request):
     return render(request, "mainpage/waterfallshowcard/food.html")
 
 def get_food_notice(request):
-    notice_list = check_all_notice()
-
-    if not notice_list:
+    # 使用 search_notice_type 获取美食通知
+    food_notice_list = search_notice_type(3)
+    print("Food notice list:", food_notice_list)  # 打印获取到的通知列表
+    # 序列化美食通知
+    if not food_notice_list:
         serialize_notice_list = []
     else:
-        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+        serialize_notice_list = [serialize_notice(notice) for notice in food_notice_list]
+    print("Serialized notice list:", serialize_notice_list)  # 打印序列化后的通知列表
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_study(request):
     return render(request, "mainpage/waterfallshowcard/study.html")
 
 def get_study_notice(request):
-    notice_list = check_all_notice()
-
-    if not notice_list:
+    # 使用 search_notice_type 获取学习通知
+    study_notice_list = search_notice_type(2)
+    print("Study notice list:", study_notice_list)  # 打印获取到的通知列表
+    # 序列化学习通知
+    if not study_notice_list:
         serialize_notice_list = []
     else:
-        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+        serialize_notice_list = [serialize_notice(notice) for notice in study_notice_list]
+    print("Serialized notice list:", serialize_notice_list)  # 打印序列化后的通知列表
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_travel(request):
     return render(request, "mainpage/waterfallshowcard/travel.html")
 
 def get_travel_notice(request):
-    notice_list = check_all_notice()
-
-    if not notice_list:
+    # 使用 search_notice_type 获取旅游通知
+    travel_notice_list = search_notice_type(5)
+    print("Travel notice list:", travel_notice_list)  # 打印获取到的通知列表
+    # 序列化旅游通知
+    if not travel_notice_list:
         serialize_notice_list = []
     else:
-        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+        serialize_notice_list = [serialize_notice(notice) for notice in travel_notice_list]
+    print("Serialized notice list:", serialize_notice_list)  # 打印序列化后的通知列表
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_games(request):
     return render(request, "mainpage/waterfallshowcard/games.html")
 
 def get_games_notice(request):
-    notice_list = check_all_notice()
-
-    if not notice_list:
+    # 使用 search_notice_type 获取游戏通知
+    game_notice_list = search_notice_type(4)
+    print("Game notice list:", game_notice_list)  # 打印获取到的通知列表
+    # 序列化游戏通知
+    if not game_notice_list:
         serialize_notice_list = []
     else:
-        serialize_notice_list = [serialize_notice(notice) for notice in notice_list]
+        serialize_notice_list = [serialize_notice(notice) for notice in game_notice_list]
+    print("Serialized notice list:", serialize_notice_list)  # 打印序列化后的通知列表
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 
