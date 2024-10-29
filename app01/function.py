@@ -275,15 +275,16 @@ def search_notice_content(notice_content: str) -> list[Notice]:
     return result_notice
 
 
-# 对某个需求发起请求，输入需求id、申请人id、申请人联系方式，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在}
+# 对某个需求发起请求，输入需求id、申请人id，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在，-3：重复request}
 def request_notice(notice_id: int, user_name: str):
     user_id = user_name_to_id(user_name)
-    if_success = False
     if user_id:
         if check_notice_basic_database(notice_id):
             request = Request(user_id, "NULL", 0)
             if_success = add_request(notice_id, request)
-            if if_success:
+            if not if_success:
+                if_success = -3 # 重复申请
+            else:
                 if_success = 0
         else:
             if_success = -2  # notice不存在
@@ -291,6 +292,21 @@ def request_notice(notice_id: int, user_name: str):
         if_success = -1  # user不存在
     return if_success
 
+# 删除某个，输入需求id、申请人id，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在，-3：request不存在}
+def delete_request(notice_id: int, user_name: str):
+    user_id = user_name_to_id(user_name)
+    if user_id:
+        if check_notice_basic_database(notice_id):
+            if_success = delete_request(notice_id, user_id)
+            if not if_success:
+                if_success = -3 # 申请不存在
+            else:
+                if_success = 0
+        else:
+            if_success = -2  # notice不存在
+    else:
+        if_success = -1  # user不存在
+    return if_success
 
 # 应答某个需求的请求，输入需求id，申请人id，是否接收{1：接收，2：拒绝}，返回是否成功{0：成功，-1：用户不存在，-2：需求不存在}
 def answer_request(notice_id, user_name, if_answer):

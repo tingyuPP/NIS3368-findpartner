@@ -67,15 +67,16 @@
     });
     function sendmyinvitation() {
             const noticeId = '{{ post.id }}'; // 替换为实际的notice_id
-            const userName = '{{ now_user.username }}'; // 替换为实际的user_name
-            const contact = '{{ now_user.email }}'; // 替换为实际的contact
+
+
+            
 
             fetch('/api/request_notice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ notice_id: noticeId, user_name: userName, contact: contact })
+                body: JSON.stringify({ notice_id: noticeId })
             })
                 .then(response => response.json())
                 .then(data => {
@@ -85,7 +86,9 @@
                         alert('用户不存在');
                     } else if (data.success === -2) {
                         alert('需求不存在');
-                    } else {
+                    } 
+
+                    else {
                         alert('请求失败');
                     }
                 })
