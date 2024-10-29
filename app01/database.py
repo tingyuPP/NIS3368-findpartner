@@ -8,8 +8,8 @@ def create_connection():
         host="localhost",  # 根据你的数据库主机设置
         user="root",  # MySQL用户名#
         # password="daerwen",# MySQL密码
-        password="123456",
-        # password = "Cyf20040629",
+        # password="123456",
+        password = "Cyf20040629",
         database="findpartner",  # 数据库名称
     )
     return conn
@@ -290,7 +290,7 @@ def search_notice_content_database(notice_content):
 
 
 # 按照大类检索需求 输入搜索内容(某个大类Basic_Type(自定义枚举类型)) 返回list(需求id列表) 未查询到返回None
-def search_notice_type_database(notice_type: Basic_Type):
+def search_notice_type_database(notice_type: int):
     notice_list = []
     conn = create_connection()
     cur = conn.cursor()
@@ -300,8 +300,8 @@ def search_notice_type_database(notice_type: Basic_Type):
         FROM Notice
         WHERE notice_basic_type = (%s)
     """
-    notice_type_int = notice_type.value
-    val = notice_type_int
+    # notice_type_int = notice_type.value
+    val = notice_type
     rtn = cur.execute(sql, val)
 
     if cur.rowcount == 0:
@@ -319,7 +319,7 @@ def search_notice_type_database(notice_type: Basic_Type):
 
 
 # 按照大类和关键字检索 关键字在除大类以外的4个用户自定义字段(小类、时间、地点、活动描述)中检索 返回list(需求id列表) 未查询到返回None
-def search_notice_all_database(notice_type: Basic_Type, notice_content):
+def search_notice_all_database(notice_type: int, notice_content):
     notice_list = []
     conn = create_connection()
     cur = conn.cursor()
@@ -330,8 +330,8 @@ def search_notice_all_database(notice_type: Basic_Type, notice_content):
         FROM Notice
         WHERE notice_basic_type = (%s) AND CONCAT(notice_title, notice_time, notice_tag, notice_description) like (%s)
     """
-    notice_type_int = notice_type.value
-    val = (notice_type_int, notice_content)
+    # notice_type = notice_type.value
+    val = (notice_type, notice_content)
     cur.execute(sql, val)
 
     if cur.rowcount == 0:

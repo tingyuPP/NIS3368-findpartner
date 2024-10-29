@@ -216,12 +216,16 @@ def check_notice_owner(notice_id: int) -> User:
     return user
 
 
-# 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功{0：成功，-1：需求不存在}
+# 更改需求内容，输入更改后的需求（包括id，应为Notice类），返回是否成功{0：成功，-1：需求不存在，-2：改变的需求不合规}
 def change_notice(notice_content: Notice):
-    if check_notice_basic_database(notice_content.id):
-        if_success = change_notice_basic_database(notice_content)
-        if if_success:
-            if_success = 0
+    notice = check_notice_basic_database(notice_content.id)
+    if notice:
+        if int(notice_content.basic_type) > 5 or int(notice_content.basic_type) < 0:
+            if_success = -2
+        else:
+            if_success = change_notice_basic_database(notice_content)
+            if if_success:
+                if_success = 0
     else:
         if_success = -1
     return if_success
@@ -229,9 +233,8 @@ def change_notice(notice_content: Notice):
 
 # 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（唤醒的）（没有则为空）
 def search_notice_all(notice_type: int, notice_content: str) -> list[Notice]:
-    if notice_type < 0 or notice_type > 4:
+    if notice_type < 0 or notice_type > 5:
         return -1
-    notice_type = Basic_Type(notice_type)
     result_id = search_notice_all_database(notice_type, notice_content)
     result_notice = []
     if result_id:
@@ -246,9 +249,8 @@ def search_notice_all(notice_type: int, notice_content: str) -> list[Notice]:
 
 # 按照大类检索需求，输入大类，返回检索到的需求列表（唤醒的）（没有则为空）
 def search_notice_type(notice_type: int) -> list[Notice]:
-    if notice_type < 0 or notice_type > 4:
+    if notice_type < 0 or notice_type > 5:
         return -1
-    notice_type = Basic_Type(notice_type)
     result_id = search_notice_type_database(notice_type)
     result_notice = []
     if result_id:
