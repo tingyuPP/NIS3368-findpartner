@@ -220,7 +220,7 @@ def check_notice_owner(notice_id: int) -> User:
 def change_notice(notice_content: Notice):
     notice = check_notice_basic_database(notice_content.id)
     if notice:
-        if int(notice_content.basic_type) > 5 or int(notice_content.basic_type) < 0:
+        if int(notice_content.basic_type) > 6 or int(notice_content.basic_type) < 0:
             if_success = -2
         else:
             if_success = change_notice_basic_database(notice_content)
@@ -233,7 +233,7 @@ def change_notice(notice_content: Notice):
 
 # 检索需求，输入大类，检测的内容（应该是一个字符串），返回检索到的需求列表（唤醒的）（没有则为空）
 def search_notice_all(notice_type: int, notice_content: str) -> list[Notice]:
-    if notice_type < 0 or notice_type > 5:
+    if notice_type < 0 or notice_type > 6:
         return -1
     result_id = search_notice_all_database(notice_type, notice_content)
     result_notice = []
@@ -249,7 +249,7 @@ def search_notice_all(notice_type: int, notice_content: str) -> list[Notice]:
 
 # 按照大类检索需求，输入大类，返回检索到的需求列表（唤醒的）（没有则为空）
 def search_notice_type(notice_type: int) -> list[Notice]:
-    if notice_type < 0 or notice_type > 5:
+    if notice_type < 0 or notice_type > 6:
         return -1
     result_id = search_notice_type_database(notice_type)
     result_notice = []
