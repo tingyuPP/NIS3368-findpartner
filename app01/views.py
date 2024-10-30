@@ -217,9 +217,30 @@ def main(request, post_id):
     }
     return render(request, "mainpage/main.html", context)
 
-def applylist(request, post_id):   
-    # 添加相关代码
-    return render(request, "mainpage/applylist.html")
+def applylist(request, post_id):
+    user_list = check_request_user(post_id)
+    user_info_list = []
+    if user_list:
+        for user_id in user_list:
+            user = check_user(id_to_name(user_id))
+            request_state = check_request(user_id, post_id)
+            user_info_list.append((user, request_state))
+
+    return render(request, "mainpage/applylist.html", {"user_list": user_info_list})
+
+
+# def handle_answer_request(request):
+#     if request.method == "POST":
+#         user_id = request.POST.get('user_id')
+#         post_id = request.POST.get('post_id')
+#         action = request.POST.get('action')  # 'accept' 或 'reject'
+#
+#         # 调用 answer_request 函数
+#         result = answer_request(post_id, user_id, action)
+#
+#         return JsonResponse({"success": True, "result": result})
+#
+#     return JsonResponse({"success": False, "message": "请求失败"}, status=400)
 
 def yinsixieyi(request):
     return render(request, "mainpage/yinsixieyi.html")
@@ -441,7 +462,6 @@ def info(request):
 
 def message(request):
     return render(request, "user/message.html")
-
 
 @csrf_exempt
 def request_notice_view(request):
