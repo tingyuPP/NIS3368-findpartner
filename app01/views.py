@@ -205,12 +205,15 @@ def main(request, post_id):
     post = check_notice(post_id)
     author = check_notice_owner(post.id)
     # 还需要当前用户的信息，通过用户名获取用户类
-    #now_user = check_user(request.session["user_name"])
-    
+    if author.user_name == request.session.get("user_name", None):
+        is_myself = True
+    else:
+        is_myself = False
+
     context = {
         "post": post,
         "author": author,
-        
+        "is_myself": is_myself,
     }
     return render(request, "mainpage/main.html", context)
 
