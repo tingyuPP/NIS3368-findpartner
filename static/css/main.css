@@ -42,7 +42,8 @@
     transform: translate(104px, 32px) scale(1);
     overflow: visible;
     display: flex;
-    box-shadow: 0 8px 64px 0 rgba(0, 0, 0, 0.04), 0 1px 4px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: 0 8px 64px 0 rgba(0, 0, 0, 0.04),
+        0 1px 4px 0 rgba(0, 0, 0, 0.02);
     border-radius: 20px;
     background: #895454;
     transform-origin: left top;
@@ -138,7 +139,6 @@
 }
 
 .note-scroller {
-    
     flex-grow: 1;
     height: 80vh;
 }
@@ -290,4 +290,5 @@
 .comment-comp {
     margin-top: 20px;
 }
+
 

@@ -217,6 +217,9 @@ def main(request, post_id):
     }
     return render(request, "mainpage/main.html", context)
 
+def applylist(request, post_id):   
+    # 添加相关代码
+    return render(request, "mainpage/applylist.html")
 
 def yinsixieyi(request):
     return render(request, "mainpage/yinsixieyi.html")

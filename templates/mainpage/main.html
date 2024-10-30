@@ -25,7 +25,11 @@
                         <div class="author-me">
                             <div class="info">
                                 <a href="/my/{{ author.id }}/">
-                                    <img class="avatar-item" src="{{ author.image }}" alt="头像">
+                                    <img
+                                        class="avatar-item"
+                                        src="{{ author.image }}"
+                                        alt="头像"
+                                    />
                                 </a>
                                 <span class="name">{{ author.nickname }}</span>
                             </div>
@@ -34,7 +38,7 @@
                             <div class="note-content">
                                 <div class="title">{{ post.title }}</div>
                                 <div class="desc">
-                                <span>{{ post.description }} <br></span>
+                                    <span>{{ post.description }} <br /></span>
                                     {% for tag in post.tag %}
                                     <a class="tag tag-search">#{{ tag }}</a>
                                     {% endfor %}
@@ -45,16 +49,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="button-container">
-                        <a
-                            href="javascript:;"
-                            class="invite-button"
-                            onclick="sendmyinvitation()"
-                            >发送邀请</a
-                        >
-                        <a href="javascript:" class="disable-button"></a>
-                        <a href="javascript:" class="list-button"></a>
-                    </div>
+
+                    <a
+                        href="javascript:;"
+                        class="invite-button"
+                        onclick="sendmyinvitation()"
+                        >发送邀请</a
+                    >
+                    <button class="disable-button">
+                        <svg class="delete-svgIcon" viewBox="0 0 448 512">
+                            <path
+                                d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"
+                            ></path>
+                        </svg>
+                    </button>
+                    <button class="list-button" onclick="viewApplyList()">查看申请列表</button>
                 </div>
             </div>
             <div class="close-cricle" onclick="closeNoteDetail()">
@@ -66,10 +75,24 @@
     </body>
 
     <script>
-
         document.addEventListener("DOMContentLoaded", function () {
-            
+            const isMyself = {{ is_myself|yesno:"true,false" }};
+            console.log(isMyself);
+            if (isMyself) {
+                document.querySelector(".invite-button").style.display = "none";
+            } else {
+                document.querySelector(".disable-button").style.display = "none";
+                document.querySelector(".list-button").style.display = "none";
+            }
         });
+
+        function viewApplyList() {
+              // 更新浏览器地址栏
+            history.pushState(null, null, `/applylist/{{ post.id }}/`);
+
+             //刷新页面
+            location.reload();
+        }
 
         function closeNoteDetail() {
             history.back();
