@@ -58,5 +58,6 @@ urlpatterns = [
     path("get-my-published-notice/", views.get_my_published_notice),
     path("get-my-replied-notice/", views.get_my_replied_notice),
     path("api/request_notice", views.request_notice_view, name="request_notice"),
+    path("api/disable_notice", views.disable__notice),
     path("applylist/<int:post_id>", views.applylist, name="applylist"),
 ]

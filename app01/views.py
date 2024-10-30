@@ -209,11 +209,21 @@ def main(request, post_id):
         is_myself = True
     else:
         is_myself = False
+    
+    if post.if_disabled:
+        if is_myself:
+            is_disabled = True
+        else:
+            messages.error(request, "该通知已被挂起！")
+            return redirect("/dashboard/")
+    else:
+        is_disabled = False
 
     context = {
         "post": post,
         "author": author,
         "is_myself": is_myself,
+        "is_disabled": is_disabled,
     }
     return render(request, "mainpage/main.html", context)
 
@@ -442,6 +452,29 @@ def info(request):
 def message(request):
     return render(request, "user/message.html")
 
+@csrf_exempt
+def disable__notice(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            notice_id = data.get("notice_id")
+            post = check_notice(notice_id)
+            if not request.session.get("user_name", None):
+                return JsonResponse({"success": -1, "message": "未登录", "error": str(e)})
+
+            elif id_to_name(post.owner_id) != request.session.get("user_name", None):
+                return JsonResponse({"success": -2, "message": "无权限删除", "error": str(e)})
+            
+            result = disable_notice(notice_id)
+            print(result)
+
+            if result == 0:
+                return JsonResponse({"success": 0, "message": "删除成功"})
+            else:
+                return JsonResponse({"success": -3, "message": "删除失败"})
+
+        except Exception as e:
+            return JsonResponse({"success": -3, "message": "删除失败", "error": str(e)})
 
 @csrf_exempt
 def request_notice_view(request):

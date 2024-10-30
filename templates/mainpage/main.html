@@ -63,7 +63,9 @@
                             ></path>
                         </svg>
                     </button>
+                    <div class="tooltip">点击后，该找搭子需求将被挂起，对其他用户不可见。</div>
                     <button class="list-button" onclick="viewApplyList()">查看申请列表</button>
+                    <button class="recover-button"></button>
                 </div>
             </div>
             <div class="close-cricle" onclick="closeNoteDetail()">
@@ -77,13 +79,59 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const isMyself = {{ is_myself|yesno:"true,false" }};
+            const is_disabled = {{ is_disabled|yesno:"true,false" }};
             console.log(isMyself);
             if (isMyself) {
                 document.querySelector(".invite-button").style.display = "none";
+                if (is_disabled) {
+                    document.querySelector(".disable-button").style.display = "none";
+                } else {
+                    document.querySelector(".recover-button").style.display = "none";
+                }
             } else {
                 document.querySelector(".disable-button").style.display = "none";
                 document.querySelector(".list-button").style.display = "none";
             }
+
+            // 添加鼠标悬停事件监听器
+            const disableButton = document.querySelector('.disable-button');
+            const tooltip = document.querySelector('.tooltip');
+
+            disableButton.addEventListener('mouseover', function () {
+                const rect = disableButton.getBoundingClientRect();
+                tooltip.style.display = 'block';
+            });
+
+            disableButton.addEventListener('mouseout', function () {
+                tooltip.style.display = 'none';
+            });
+
+            disableButton.addEventListener('click', function () {
+                const noticeId = "{{ post.id }}"; // 替换为实际的notice_id
+                fetch("/api/disable_notice", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ notice_id: noticeId }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success === 0) {
+                            alert("挂起成功");
+                        } else if (data.success === -1) {
+                            alert("未登录");
+                        } else if (data.success === -2) {
+                            alert("无权限删除");
+                        } else {
+                            alert("删除失败");
+                        }
+                        location.reload(); // 刷新页面
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            });
         });
 
         function viewApplyList() {

@@ -1,76 +1,144 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>交我伴 - 你的搭子部落</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>交我伴 - 你的搭子部落</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css" />
-    <link rel="stylesheet" href="{% static 'css/dashboard.css'%}">
-    <link rel="stylesheet" href="{% static 'css/mainpage.css'%}" />
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
-    <!-- 引入js文件 -->
-    <!-- <script src="{% static 'js/mainpage.js'%}"></script> -->
-    <script src="{% static 'js/waterfallgetcards/recommend.js' %}"></script>
-    
-</head>
-<body>
-<div class="container" id="container">
-    <div class="top">
-        <header class="mask-paper">
-            <a style="display: flex">
-                <img src="{% static 'images/logo_nobackground.png'%}" style="width: 200px;margin-top: 20px;" alt="logo" />
-            </a>
-            <div class="tool-box"></div>
-            <div class="input-box" id="sujContainer">
-                <form method="GET" action="{% url 'search' %}">
-                    <input type="text" class="search-input" name="search_word"
-                        placeholder="{% if login_result %}搜索交我伴{% else %}登录发现精彩内容{% endif %}" {% if login_result %}
-                        @input="changeInput" @focus="focusInput" @keyup.enter="searchPage" ref="SearchInput" {% endif %} />
-                    {% if login_result %}
-                    <div class="input-button">
-                        <div class="search-icon" @click="searchPage">
-                            <button type="submit" class="search-button">
-                                <img src="{% static 'svg/search.svg' %}" alt="search button" width="40" height="40">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css"
+        />
+        <link rel="stylesheet" href="{% static 'css/dashboard.css'%}" />
+        <link rel="stylesheet" href="{% static 'css/mainpage.css'%}" />
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+        <!-- 引入js文件 -->
+        <!-- <script src="{% static 'js/mainpage.js'%}"></script> -->
+        <script src="{% static 'js/waterfallgetcards/recommend.js' %}"></script>
+    </head>
+    <body>
+        <div class="container" id="container">
+            <div class="top">
+                <header class="mask-paper">
+                    <a style="display: flex">
+                        <img
+                            src="{% static 'images/logo_nobackground.png'%}"
+                            style="width: 200px; margin-top: 20px"
+                            alt="logo"
+                        />
+                    </a>
+                    <div class="tool-box"></div>
+                    <div class="input-box" id="sujContainer">
+                        <form method="GET" action="{% url 'search' %}">
+                            <input
+                                type="text"
+                                class="search-input"
+                                name="search_word"
+                                placeholder="{% if login_result %}搜索交我伴{% else %}登录发现精彩内容{% endif %}"
+                                {%
+                                if
+                                login_result
+                                %}
+                                @input="changeInput"
+                                @focus="focusInput"
+                                @keyup.enter="searchPage"
+                                ref="SearchInput"
+                                {%
+                                endif
+                                %}
+                            />
+                            {% if login_result %}
+                            <div class="input-button">
+                                <div class="search-icon" @click="searchPage">
+                                    <button type="submit" class="search-button">
+                                        <img
+                                            src="{% static 'svg/search.svg' %}"
+                                            alt="search button"
+                                            width="40"
+                                            height="40"
+                                        />
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <SearchContainer
+                            v-show="showSearch"
+                            :recordList="recordList"
+                        ></SearchContainer>
+                        <SujContainer
+                            v-show="showHistory"
+                            :closeHistoryRecord="showHistory"
+                        ></SujContainer>
+                        {% endif %}
+                    </div>
+                    <div class="right"></div>
+                </header>
+            </div>
+            <div class="main">
+                <div class="side-bar">
+                    <ul class="channel-list">
+                        <li
+                            class="active-channel"
+                            onclick="window.location.href='/dashboard/'"
+                        >
+                            <img
+                                src="{% static 'svg/explore.svg' %}"
+                                alt="SVG Image"
+                                width="20"
+                                height="20"
+                            />
+                            <span class="channel">发现</span>
+                        </li>
+                        <li
+                            class="active-channel"
+                            onclick="window.location.href='/message/'"
+                        >
+                            <img
+                                src="{% static 'svg/message.svg' %}"
+                                alt="SVG Image"
+                                width="20"
+                                height="20"
+                            />
+                            <span class="channel">消息</span>
+                        </li>
+                        <li
+                            class="active-channel"
+                            onclick="window.location.href='/publish/'"
+                        >
+                            <img
+                                src="{% static 'svg/postnew.svg' %}"
+                                alt="SVG Image"
+                                width="20"
+                                height="20"
+                            />
+                            <span class="channel">发布</span>
+                        </li>
+                        {% if login_result %}
+                        <li
+                            class="active-channel"
+                            onclick="window.location.href=`/my/{{user_id}}/`"
+                        >
+                            <img
+                                src="{{ image_url }}"
+                                width="22"
+                                height="22"
+                                class="avatar"
+                            />
+                            <span class="channel">我</span>
+                        </li>
+                        {% else %}
+                        <div>
+                            <button
+                                type="button"
+                                class="custom-button"
+                                id="login_button"
+                            >
+                                登录 / 注册
                             </button>
                         </div>
-                    </div>
-                </form>
-                <SearchContainer v-show="showSearch" :recordList="recordList"></SearchContainer>
-                <SujContainer v-show="showHistory" :closeHistoryRecord="showHistory"></SujContainer>
-                {% endif %}
-            </div>
-            <div class="right"></div>
-            </header>
-    </div>
-    <div class="main">
-        <div class="side-bar">
-            <ul class="channel-list">
-            <li class="active-channel" onclick="window.location.href='/dashboard/'">
-                <img src="{% static 'svg/explore.svg' %}" alt="SVG Image" width="20" height="20" >
-                <span class="channel">发现</span>
-            </li>
-            <li class="active-channel" onclick="window.location.href='/message/'">
-                <img src="{% static 'svg/message.svg' %}" alt="SVG Image" width="20" height="20">
-                <span class="channel">消息</span>
-            </li>
-            <li class="active-channel" onclick="window.location.href='/publish/'">
-                
-                <img src="{% static 'svg/postnew.svg' %}" alt="SVG Image" width="20" height="20">
-                <span class="channel">发布</span>
-            </li>
-            {% if login_result %}
-            <li class="active-channel" onclick="window.location.href=`/my/{{user_id}}/`">
-                <img src="{{ image_url }}" width="22" height="22" class="avatar"/>
-                <span class="channel">我</span>
-            </li>
-            {% else %}
-            <div>
-                <button type="button" class="custom-button" id="login_button">登录 / 注册</button>
-            </div>
-            {% endif %}
-            </ul>
+                        {% endif %}
+                    </ul>
 
                     {% if not login_result %}
                     <div class="floating-box visible">
@@ -101,75 +169,103 @@
                         </div>
                     </div>
                     {% else %}
-                                        <div class="floating-box visible">
-                                            <div class="title">欢迎来到交我伴</div>
-                                            <div class="line-container">
-                                                <svg class="reds-icon icon" width="16" height="16">
-                                                    <use xlink:href="#thumbUp"></use>
-                                                </svg>
-                                                <span class="desc">刷到更懂你的优质搭子内容</span>
-                                            </div>
-                                            <div class="line-container">
-                                                <svg class="reds-icon icon" width="16" height="16">
-                                                    <use xlink:href="#convention_b"></use>
-                                                </svg>
-                                                <span class="desc">搜索最新找搭子信息</span>
-                                            </div>
-                                            <div class="line-container">
-                                                <svg class="reds-icon icon" width="16" height="16">
-                                                    <use xlink:href="#collect"></use>
-                                                </svg>
-                                                <span class="desc">查看你的搭子信息</span>
-                                            </div>
-                                            <div class="line-container">
-                                                <svg class="reds-icon icon" width="16" height="16">
-                                                    <use xlink:href="#chat"></use>
-                                                </svg>
-                                                <span class="desc">与搭子更好地互动、交流</span>
-                                            </div>
-                                        </div>
+                    <div class="floating-box visible">
+                        <div class="title">欢迎来到交我伴</div>
+                        <div class="line-container">
+                            <svg class="reds-icon icon" width="16" height="16">
+                                <use xlink:href="#thumbUp"></use>
+                            </svg>
+                            <span class="desc">刷到更懂你的优质搭子内容</span>
+                        </div>
+                        <div class="line-container">
+                            <svg class="reds-icon icon" width="16" height="16">
+                                <use xlink:href="#convention_b"></use>
+                            </svg>
+                            <span class="desc">搜索最新找搭子信息</span>
+                        </div>
+                        <div class="line-container">
+                            <svg class="reds-icon icon" width="16" height="16">
+                                <use xlink:href="#collect"></use>
+                            </svg>
+                            <span class="desc">查看你的搭子信息</span>
+                        </div>
+                        <div class="line-container">
+                            <svg class="reds-icon icon" width="16" height="16">
+                                <use xlink:href="#chat"></use>
+                            </svg>
+                            <span class="desc">与搭子更好地互动、交流</span>
+                        </div>
+                    </div>
                     {% endif %}
-                    
+
                     <!-- 嵌入 SVG 图标定义 -->
                     <svg style="display: none">
                         <symbol id="thumbUp" viewBox="0 0 24 24">
                             <path
-                                d="M1 21h4V9H1v12zM23 10h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L16.17 3 9.59 9.59C9.21 9.95 9 10.45 9 11v8c0 .55.45 1 1 1h6c.38 0 .72-.21.89-.55l3.66-7.33c.08-.14.13-.3.13-.46V11c0-.55-.45-1-1-1zm-2 7h-4v-6h4v6z" />
+                                d="M1 21h4V9H1v12zM23 10h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L16.17 3 9.59 9.59C9.21 9.95 9 10.45 9 11v8c0 .55.45 1 1 1h6c.38 0 .72-.21.89-.55l3.66-7.33c.08-.14.13-.3.13-.46V11c0-.55-.45-1-1-1zm-2 7h-4v-6h4v6z"
+                            />
                         </symbol>
                         <symbol id="convention_b" viewBox="0 0 24 24">
                             <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                            />
                         </symbol>
                         <symbol id="collect" viewBox="0 0 24 24">
                             <path
-                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                            />
                         </symbol>
                         <symbol id="chat" viewBox="0 0 24 24">
-                            <path d="M20 2H4c-1.1 0-2 .9-2 2v14l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 9H6V9h12v2zm0-3H6V6h12v2z" />
+                            <path
+                                d="M20 2H4c-1.1 0-2 .9-2 2v14l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 9H6V9h12v2zm0-3H6V6h12v2z"
+                            />
                         </symbol>
-
-
                     </svg>
-                    
-                    <div class="information-container" id="informationContainer">
+
+                    <div
+                        class="information-container"
+                        id="informationContainer"
+                    >
                         <div class="information-pad">
                             <div class="container" id="menuinformation">
                                 <div class="group-wrapper">
-                                    <a class="menu-item hover-effect links" target="_blank"
-                                        href="https://github.com/tingyuPP/NIS3368-findpartner">
+                                    <a
+                                        class="menu-item hover-effect links"
+                                        target="_blank"
+                                        href="https://github.com/tingyuPP/NIS3368-findpartner"
+                                    >
                                         <span>关于交我伴</span>
                                         <div class="icon">
-                                            <svg style="width: 1em; height: 1em; margin-right: 8px">
-                                                <use xlink:href="#arrowRight"></use>
+                                            <svg
+                                                style="
+                                                    width: 1em;
+                                                    height: 1em;
+                                                    margin-right: 8px;
+                                                "
+                                            >
+                                                <use
+                                                    xlink:href="#arrowRight"
+                                                ></use>
                                             </svg>
                                         </div>
                                     </a>
-                                    <a class="menu-item hover-effect links" target="_blank"
-                                        href="/yinsixieyi/">
+                                    <a
+                                        class="menu-item hover-effect links"
+                                        target="_blank"
+                                        href="/yinsixieyi/"
+                                    >
                                         <span>隐私，协议</span>
                                         <div class="icon">
-                                            <svg style="width: 1em; height: 1em; margin-right: 8px">
-                                                <use xlink:href="#arrowRight"></use>
+                                            <svg
+                                                style="
+                                                    width: 1em;
+                                                    height: 1em;
+                                                    margin-right: 8px;
+                                                "
+                                            >
+                                                <use
+                                                    xlink:href="#arrowRight"
+                                                ></use>
                                             </svg>
                                         </div>
                                     </a>
@@ -185,79 +281,110 @@
                                         <div class="group-header">设置</div>
                                         <div class="menu-item hover-effect">
                                             <span>深色模式</span>
-                                            <div class="multistage-toggle component">
-                                                <button class="toggle-item active">
-                                                    <svg style="width: 1em; height: 1em">
-                                                        <use xlink:href="#sunny"></use>
+                                            <div
+                                                class="multistage-toggle component"
+                                            >
+                                                <button
+                                                    class="toggle-item active"
+                                                >
+                                                    <svg
+                                                        style="
+                                                            width: 1em;
+                                                            height: 1em;
+                                                        "
+                                                    >
+                                                        <use
+                                                            xlink:href="#sunny"
+                                                        ></use>
                                                     </svg>
                                                 </button>
                                                 <button class="toggle-item">
-                                                    <svg style="width: 1em; height: 1em">
-                                                        <use xlink:href="#moon"></use>
+                                                    <svg
+                                                        style="
+                                                            width: 1em;
+                                                            height: 1em;
+                                                        "
+                                                    >
+                                                        <use
+                                                            xlink:href="#moon"
+                                                        ></use>
                                                     </svg>
                                                 </button>
                                             </div>
                                         </div>
                                         {% if login_result %}
                                         <div class="menu-item hover-effect">
-                                            <a href="{% url 'logout' %}" id='exit-login'><span>退出登录</span></a>
+                                            <a
+                                                href="{% url 'logout' %}"
+                                                id="exit-login"
+                                                ><span>退出登录</span></a
+                                            >
                                         </div>
                                         {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
+
                         <div class="information-wrapper" onclick="showmenu()">
                             <script src="{% static 'js/mainpage.js' %}"></script>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                                <path fill="currentColor" fill-rule="evenodd"
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    fill-rule="evenodd"
                                     d="M19.75 12a.75.75 0 0 0-.75-.75H5a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 .75-.75m0-5a.75.75 0 0 0-.75-.75H5a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 .75-.75m0 10a.75.75 0 0 0-.75-.75H5a.75.75 0 0 0 0 1.5h14a.75.75 0 0 0 .75-.75"
-                                    clip-rule="evenodd" />
+                                    clip-rule="evenodd"
+                                />
                             </svg>
                             <span class="channel">更多</span>
                         </div>
                     </div>
+                </div>
+                <!-- 带登录检测的 -->
+
+                <div class="main-content">
+                    <!-- 登录的情况下显示dashboard -->
+                    {% if login_result %} {% include 'mainpage/dashboard.html'%}
+                    <!-- 没登录就加载 -->
+                    {% else %}
+                    <link
+                        rel="stylesheet"
+                        href="{% static 'css/loading.css'%}"
+                    />
+                    <div class="container-load">
+                        <div class="loading"><i></i><i></i><i></i><i></i></div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-<!-- 带登录检测的 -->
 
-
-<div class="main-content">
-    <!-- 登录的情况下显示dashboard -->
-    {% if login_result %}
-    {% include 'mainpage/dashboard.html' %}
-    <!-- 没登录就加载 -->
-    {% else %}
-    <link rel="stylesheet" href="{% static 'css/loading.css'%}">
-    <div class="container-load">
-        <div class="loading"><i></i><i></i><i></i><i></i></div>
-    </div>
-    {% endif %}
-
-
-</div>
-
-
-                    </div>
-                    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
                 var x = document.getElementById("menuinformation");
                 x.style.display = "none"; // 初始化为隐藏
                 console.log("mainpage.js loaded");
             });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const loginButton = document.getElementById('login_button');
+            document.addEventListener("DOMContentLoaded", function () {
+                const loginButton = document.getElementById("login_button");
 
-        loginButton.addEventListener('click', function() {
-            window.location.href = '/login/';
-        });
-    });
-
-
-    </script>
-</body>
+                loginButton.addEventListener("click", function () {
+                    window.location.href = "/login/";
+                });
+            });
+        </script>
+        {% if messages %}
+        <script>
+            {% for msg in messages %}
+                alert('{{ msg.message }}');
+            {% endfor %}
+        </script>
+        {% endif %}
+    </body>
 </html>
-
