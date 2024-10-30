@@ -63,7 +63,31 @@
                             ></path>
                         </svg>
                     </button>
-                    <button class="list-button" onclick="viewApplyList()">查看申请列表</button>
+                    <div class="tooltip">
+                        点击后，该找搭子需求将被挂起，对其他用户不可见。
+                    </div>
+                    <button class="list-button" onclick="viewApplyList()">
+                        查看申请列表
+                    </button>
+                    <button class="recover-button">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-arrow-repeat"
+                            viewBox="0 0 16 16"
+                        >
+                            <path
+                                d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"
+                            ></path>
+                            <path
+                                fill-rule="evenodd"
+                                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
+                            ></path>
+                        </svg>
+                        恢复需求
+                    </button>
                 </div>
             </div>
             <div class="close-cricle" onclick="closeNoteDetail()">
@@ -77,13 +101,89 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const isMyself = {{ is_myself|yesno:"true,false" }};
+            const is_disabled = {{ is_disabled|yesno:"true,false" }};
             console.log(isMyself);
             if (isMyself) {
                 document.querySelector(".invite-button").style.display = "none";
+                if (is_disabled) {
+                    document.querySelector(".disable-button").style.display = "none";
+                    document.querySelector(".list-button").style.display = "none";
+                } else {
+                    document.querySelector(".recover-button").style.display = "none";
+                }
             } else {
                 document.querySelector(".disable-button").style.display = "none";
                 document.querySelector(".list-button").style.display = "none";
+                document.querySelector(".recover-button").style.display = "none";
             }
+
+            // 添加鼠标悬停事件监听器
+            const disableButton = document.querySelector('.disable-button');
+            const tooltip = document.querySelector('.tooltip');
+            const recoverButton = document.querySelector('.recover-button');
+
+            disableButton.addEventListener('mouseover', function () {
+                const rect = disableButton.getBoundingClientRect();
+                tooltip.style.display = 'block';
+            });
+
+            disableButton.addEventListener('mouseout', function () {
+                tooltip.style.display = 'none';
+            });
+
+            disableButton.addEventListener('click', function () {
+                const noticeId = "{{ post.id }}"; // 替换为实际的notice_id
+                fetch("/api/disable_notice", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ notice_id: noticeId }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success === 0) {
+                            alert("挂起成功");
+                        } else if (data.success === -1) {
+                            alert("未登录");
+                        } else if (data.success === -2) {
+                            alert("无权限删除");
+                        } else {
+                            alert("删除失败");
+                        }
+                        location.reload(); // 刷新页面
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            });
+
+            recoverButton.addEventListener('click', function () {
+                const noticeId = "{{ post.id }}"; // 替换为实际的notice_id
+                fetch("/api/recover_notice", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ notice_id: noticeId }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success === 0) {
+                            alert("恢复成功");
+                        } else if (data.success === -1) {
+                            alert("未登录");
+                        } else if (data.success === -2) {
+                            alert("无权限恢复");
+                        } else {
+                            alert("恢复失败");
+                        }
+                        location.reload(); // 刷新页面
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            });
         });
 
         function viewApplyList() {

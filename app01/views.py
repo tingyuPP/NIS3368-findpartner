@@ -210,6 +210,15 @@ def main(request, post_id):
     else:
         is_myself = False
 
+    if post.if_disabled:
+        if is_myself:
+            is_disabled = True
+        else:
+            messages.error(request, "该通知已被挂起！")
+            return redirect("/dashboard/")
+    else:
+        is_disabled = False
+
     context = {
         "post": post,
         "author": author,
@@ -462,6 +471,7 @@ def info(request):
 
 def message(request):
     return render(request, "user/message.html")
+
 
 @csrf_exempt
 def request_notice_view(request):
