@@ -304,11 +304,19 @@
     z-index: 1;
     width: 200px;
     height: 40px;
+}
+
+#delete-tooltip {
     top: 90%;
     left: 28%;
 }
 
-.tooltip::after {
+#recover-tooltip {
+    top: 72%;
+    left: 28%;
+}
+
+#delete-tooltip::after {
     content: "";
     position: absolute;
     top: 30px;
@@ -317,4 +325,15 @@
     border-width: 10px;
     border-style: solid;
     border-color: transparent transparent transparent #333; /* 小三角的颜色 */
+}
+
+#recover-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent; /* 小三角的颜色 */
 }

@@ -63,8 +63,11 @@
                             ></path>
                         </svg>
                     </button>
-                    <div class="tooltip">
+                    <div class="tooltip" id="delete-tooltip">
                         点击后，该找搭子需求将被挂起，对其他用户不可见。
+                    </div>
+                    <div class="tooltip" id="recover-tooltip">
+                        点击后，该找搭子需求将被恢复正常可见状态。
                     </div>
                     <button class="list-button" onclick="viewApplyList()">
                         查看申请列表
@@ -119,16 +122,17 @@
 
             // 添加鼠标悬停事件监听器
             const disableButton = document.querySelector('.disable-button');
-            const tooltip = document.querySelector('.tooltip');
+            const delete_tooltip = document.getElementById('delete-tooltip');
+            const recover_tooltip = document.getElementById('recover-tooltip');
             const recoverButton = document.querySelector('.recover-button');
 
             disableButton.addEventListener('mouseover', function () {
                 const rect = disableButton.getBoundingClientRect();
-                tooltip.style.display = 'block';
+                delete_tooltip.style.display = 'block';
             });
 
             disableButton.addEventListener('mouseout', function () {
-                tooltip.style.display = 'none';
+                delete_tooltip.style.display = 'none';
             });
 
             disableButton.addEventListener('click', function () {
@@ -156,6 +160,15 @@
                     .catch((error) => {
                         console.error("Error:", error);
                     });
+            });
+
+            recoverButton.addEventListener('mouseover', function () {
+                const rect = disableButton.getBoundingClientRect();
+                recover_tooltip.style.display = 'block';
+            });
+
+            recoverButton.addEventListener('mouseout', function () {
+                recover_tooltip.style.display = 'none';
             });
 
             recoverButton.addEventListener('click', function () {
