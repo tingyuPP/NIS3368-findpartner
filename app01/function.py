@@ -338,9 +338,8 @@ def check_request_user(notice_id) -> list[int]:
         return -1  # user不存在
 
 # 查看某个request的应答状态{0：未知，1：同意，2：拒绝，-1：notice不存在，-2：user不存在}
-def check_request_state(notice_id, user_name):
-    user_id = user_name_to_id(user_name)
-    if user_id:
+def check_request_state(notice_id, user_id):
+    if check_user_basic_database(user_id):
         if check_notice_basic_database(notice_id):
             request_state = check_request(notice_id, user_id)
             return request_state
