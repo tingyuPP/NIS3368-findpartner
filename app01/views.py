@@ -476,6 +476,31 @@ def disable__notice(request):
         except Exception as e:
             return JsonResponse({"success": -3, "message": "删除失败", "error": str(e)})
 
+
+@csrf_exempt
+def recover_notice(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            notice_id = data.get("notice_id")
+            post = check_notice(notice_id)
+            if not request.session.get("user_name", None):
+                return JsonResponse({"success": -1, "message": "未登录", "error": str(e)})
+
+            elif id_to_name(post.owner_id) != request.session.get("user_name", None):
+                return JsonResponse({"success": -2, "message": "无权限恢复", "error": str(e)})
+            
+            result = enable_notice(notice_id)
+            print(result)
+
+            if result == 0:
+                return JsonResponse({"success": 0, "message": "恢复成功"})
+            else:
+                return JsonResponse({"success": -3, "message": "恢复失败"})
+
+        except Exception as e:
+            return JsonResponse({"success": -3, "message": "恢复失败", "error": str(e)})
+
 @csrf_exempt
 def request_notice_view(request):
     if request.method == "POST":
