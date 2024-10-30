@@ -6,74 +6,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/message.css'%}">
+    <link rel="stylesheet" href="{% static 'css/message.css' %}">
     <title>消息查看</title>
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
 </head>
 
 <body>
     <div class="background">
-
         <ul class="message-container">
-            {%  for user in user_list %}
+            {% for user, request_state in user_list %}
             <li class="message-item">
-                <a class="user-avatar">
-                    <img class="avatar-item" src="src" alt="用户头像">
+                <a class="user-avatar" href="/my/{{ user.id }}/">
+                    <img class="avatar-item" src="{{ user.image }}" alt="用户头像">
                 </a>
                 <div class="main">
                     <div class="info">
                         <div class="user-info">
-                            <a class="username">用户名</a>
-                            <div class="interaction-hint"><span>2021-10-9</span></div>
+                            <a class="username">{{ user.nickname }}</a>
                         </div>
                         <div class="interaction-content">
                             <span>向你发送了搭子邀请</span>
-                            <div class="msg-count">!</div>
+                            {# <div class="msg-count">!</div> #}
                         </div>
+                    </div>
+                    <div class="button-container">
+                        <button type="button" class="button" onclick="acceptInvitation('{{ user.id }}')">同意</button>
+                        <button type="button" class="button" onclick="rejectInvitation('{{ user.id }}')">拒绝</button>
                     </div>
                 </div>
             </li>
             {% endfor %}
-            <!-- 复制上面的<li>块以添加更多消息项 -->
-
-{#                    <li class="message-item">#}
-{#                        <a class="user-avatar">#}
-{#                            <img class="avatar-item" src="src" alt="用户头像">#}
-{#                        </a>#}
-{#                        <div class="main">#}
-{#                            <div class="info">#}
-{#                                <div class="user-info">#}
-{#                                    <a class="username">用户名</a>#}
-{#                                    <div class="interaction-hint"><span>2021-10-9</span></div>#}
-{#                                </div>#}
-{#                                <div class="interaction-content">#}
-{#                                    <span>向你发送了搭子邀请</span>#}
-{#                                    <div class="msg-count">!</div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </li>#}
-{##}
-{##}
-{#                                <li class="message-item">#}
-{#                                    <a class="user-avatar">#}
-{#                    <img class="avatar-item" src="src" alt="用户头像">#}
-{#                </a>#}
-{#                <div class="main">#}
-{#                    <div class="info">#}
-{#                        <div class="user-info">#}
-{#                            <a class="username">用户名</a>#}
-{#                            <div class="interaction-hint"><span>2021-10-9</span></div>#}
-{#                        </div>#}
-{#                        <div class="interaction-content">#}
-{#                            <span>向你发送了搭子邀请</span>#}
-{#                            <div class="msg-count">!</div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </li>#}
         </ul>
     </div>
+    
+    <script>
+        // 处理按钮点击的JavaScript函数
+        function acceptInvitation(userId) {
+            alert('已同意用户 ID: ' + userId);
+        }
+
+        function rejectInvitation(userId) {
+            alert('已拒绝用户 ID: ' + userId);
+        }
+    </script>
 </body>
 
 </html>
