@@ -369,6 +369,7 @@ def change_avatar(request):
     if request.method == "POST":
         image_url = request.POST.get("image_url")
         username = request.session["user_name"]
+        user_id = name_to_id(username)
 
         if image_url == "":
             messages.error(request, "请先上传图片！")
