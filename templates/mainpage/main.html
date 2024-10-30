@@ -25,7 +25,9 @@
                 <div class="author-container">
                     <div class="author-me">
                         <div class="info">
-                            <img class="avatar-item" src="{{ author.image }}" alt="头像">
+                            <a href="/my/{{ author.id }}/">
+                                <img class="avatar-item" src="{{ author.image }}" alt="头像">
+                            </a>
                             <span class="name">{{ author.nickname }}</span>
                         </div>
                     </div>
