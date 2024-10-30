@@ -145,6 +145,33 @@ def check_user_own_list(id: int):
 
     return notice_list
 
+def check_notice_request_list(id: int):
+    request_list = []
+    conn = create_connection()
+    cur = conn.cursor()
+
+    sql = """
+        SELECT user_id
+        FROM Requests
+        WHERE notice_id = (%s)
+    """
+    val = id
+    rtn = cur.execute(sql, val)
+
+    if cur.rowcount == 0:
+        cur.close()
+        conn.close()
+        return None
+
+    i = 0
+    for line in cur.fetchall():
+        request_list.append(line[0])
+
+    cur.close()
+    conn.close()
+
+    return request_list
+
 
 # 查看用户申请的需求 返回一个list 未查询到返回None
 def check_user_request_list(id: int):

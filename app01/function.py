@@ -326,6 +326,21 @@ def answer_request(notice_id, user_name, if_answer):
         if_success = -1  # user不存在
     return if_success
 
+# 查看某个notice的申请人列表
+def check_request_user(notice_id) -> list[Notice]:
+    if notice_id:
+        user_list = check_user_request_list(notice_id)
+        result_request_user = []
+        if user_list:
+            for i in user_list:
+                user = check_user_basic_database(i)
+                result_request_user.append(user)
+        else:
+            return None
+    else:
+        return -1  # user不存在
+    return result_request_user
+
 
 # 挂起需求，输入需求id，返回是否成功{0：成功，-1：需求不存在}
 def disable_notice(notice_id):
