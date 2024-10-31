@@ -8,6 +8,17 @@
         <link rel="stylesheet" href="{% static 'css/main.css'%}" />
         <link rel="stylesheet" href="{% static 'css/pushbutton.css'%}" />
         <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+        <link rel="stylesheet" href="{% static 'css/window.css' %}" />
+        <!-- 引入 Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <script
+            type="text/javascript"
+            src="{% static 'js/jquery-3.7.1.min.js' %}"
+        ></script>
+        <script src="{% static 'js/main.js' %}"></script>
     </head>
 
     <body>
@@ -91,7 +102,7 @@
                         </svg>
                         恢复需求
                     </button>
-                    <button class="result-button" id="result-button">
+                    <button class="result-button trigger" id="result-button">
                         <span class="result-text">查看结果</span>
                         <span class="result-svg">
                             <svg
@@ -113,6 +124,25 @@
             <div class="close-cricle" onclick="closeNoteDetail()">
                 <div class="close close-mask-white">
                     <span class="close-icon">✖️</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-wrapper"></div>
+        <!-- Modal -->
+        <div class="modal-wrapper">
+            <div class="modal">
+                <div class="head">
+                    <a class="btn-close trigger" href="#">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="content">
+                    <div class="good-job">
+                        <img src="{% static 'svg/right.svg' %}" alt="" class="result-image" width="100px" height="100px">
+                        <h1 id="result"></h1>
+                        <h2 id="describe"></h2>
+                    </div>
                 </div>
             </div>
         </div>
@@ -154,9 +184,18 @@
                 // 可选：更改按钮样式，使其看起来被禁用
                 inviteButton.style.opacity = '0.6';
                 inviteButton.style.cursor = 'not-allowed';
-            } else if ({{ apply_result }} == 1 || {{ apply_result }} == 2) {
+            } else if ({{ apply_result }} == 1 ) {
                 inviteButton.style.display = 'none';
                 resultButton.style.display = 'flex';
+                document.querySelector('.result-image').src="{% static 'svg/right.svg' %}";
+                document.getElementById('result').textContent = "搭子配对成功！";
+                document.getElementById('describe').textContent = "发起人联系方式为：{{ owner_contact }}，请与对方进一步联系以获取更多信息";
+            } else if ({{ apply_result }} == 2) {
+                inviteButton.style.display = 'none';
+                resultButton.style.display = 'flex';
+                document.querySelector('.result-image').src="{% static 'svg/wrong.svg' %}";
+                document.getElementById('result').textContent = "您的申请被拒绝了！";
+                document.getElementById('describe').textContent = "别伤心，请尝试对其他需求发起申请！";
             }
 
             disableButton.addEventListener('mouseover', function () {
