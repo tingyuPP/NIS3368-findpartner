@@ -101,6 +101,10 @@ while True:
 
     elif action_type == '11':
         print("change_user_info(new_user_info:User)")
+        user_name = input()
+        user = check_user(user_name)
+        user.nickname = input()
+        change_user_info(user)
 
     elif action_type == '12':
         print("search_notice_all(notice_type:Basic_Type, notice_content:Notice)->list[Notice]")
@@ -136,8 +140,8 @@ while True:
         notice_id = input()
         notice_id = int(notice_id)
         user_name = input()
-        contact = input()
-        result = request_notice(notice_id, user_name, contact)
+        # contact = input()
+        result = request_notice(notice_id, user_name)
         print("result:%s" % result)
 
     # ok
@@ -196,4 +200,13 @@ while True:
         result = name_to_id(user_name)
         print("result:%s" % result)
 
-
+    elif action_type == '24':
+        print("check_request_user(notice_id) -> list[int]")
+        post_id = int(input())
+        user_list = check_request_user(post_id)
+        user_info_list = []
+        if user_list:
+            for user_id in user_list:
+                user_info_list.append(check_user(id_to_name(user_id)))
+        for i in user_info_list:
+            print(i.nickname)

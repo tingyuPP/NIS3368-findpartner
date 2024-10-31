@@ -41,6 +41,31 @@ body {
     transform: scale(1.05);
 }
 
+/* 按钮样式 */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* 按钮之间的间距 */
+}
+
+.button {
+    background-color: #4ac1f7;
+    color: #fff;
+    border: none; /* 去掉边框 */
+    padding: 10px 20px; /* 上下和左右的内边距 */
+    text-align: center; /* 文本居中 */
+    text-decoration: none; /* 去掉下划线 */
+    display: inline-block; /* 行内块元素 */
+    font-size: 16px; /* 字体大小 */
+    border-radius: 8px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停时显示手型 */
+    transition: background-color 0.3s; /* 动画效果 */
+}
+
+.button:hover {
+    background-color: #007bff; /* 悬停时的背景色 */
+}
+
 /* 悬停添加箭头图标 */
 .back-button-container {
     display: flex;
@@ -121,6 +146,31 @@ right: 0;
     background-color: #0056b3;  /* 鼠标悬停时的背景颜色 */
 }
 
+
+/* 按钮样式 */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* 按钮之间的间距 */
+}
+
+.button {
+    background-color: #4ac1f7;
+    color: #fff;
+    border: none; /* 去掉边框 */
+    padding: 10px 20px; /* 上下和左右的内边距 */
+    text-align: center; /* 文本居中 */
+    text-decoration: none; /* 去掉下划线 */
+    display: inline-block; /* 行内块元素 */
+    font-size: 16px; /* 字体大小 */
+    border-radius: 8px; /* 圆角 */
+    cursor: pointer; /* 鼠标悬停时显示手型 */
+    transition: background-color 0.3s; /* 动画效果 */
+}
+
+.button:hover {
+    background-color: #007bff; /* 悬停时的背景色 */
+}
 
 .message-container {
     width: 40rem;
@@ -268,3 +318,4 @@ right: 0;
         background-position: 0% 50%;
     }
 }
+
