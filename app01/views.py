@@ -221,12 +221,18 @@ def main(request, post_id):
 
     apply_result = check_request_state(post_id, name_to_id(request.session.get("user_name", None)))
 
+    if apply_result == 1:
+        owner_contact = post.owner_contact
+    else:
+        owner_contact = "unknown"
+
     context = {
         "post": post,
         "author": author,
         "is_myself": is_myself,
         "is_disabled": is_disabled,
         "apply_result": apply_result,
+        "owner_contact": owner_contact,
     }
     return render(request, "mainpage/main.html", context)
 

@@ -150,6 +150,7 @@
         console.log('isMyself:', isMyself);
         if (!isMyself) {
             console.log('is not myself');
+            document.body.style.alignItems = 'center';
             document.querySelector('.reds-sticky-box').classList.add('hidden');
             document.querySelector('.feeds-tab-container').classList.add('hidden');
         }
