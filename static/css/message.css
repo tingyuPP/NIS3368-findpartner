@@ -119,31 +119,33 @@ right: 0;
 }
 
 .yes-button {
-    background-color: #00ff2a;  /* 按钮背景色 */
+    background-color: rgba(0, 255, 42, 0.64);  /* 按钮背景色 */
     color: white;                /* 按钮文字颜色 */
     border: none;                /* 去掉边框 */
     border-radius: 8px;         /* 圆角半径 */
     padding: 10px 20px;         /* 内边距 */
     cursor: pointer;             /* 鼠标悬停时变成手型 */
     transition: background-color 0.3s;  /* 背景颜色过渡效果 */
+    font-size: 20px;
 }
 
 .yes-button:hover {
-    background-color: #0056b3;  /* 鼠标悬停时的背景颜色 */
+    background-color: rgb(5, 97, 44);  /* 鼠标悬停时的背景颜色 */
 }
 
 .no-button {
-    background-color: #ff3c00;  /* 按钮背景色 */
+    background-color: rgba(255, 60, 0, 0.66);  /* 按钮背景色 */
     color: white;                /* 按钮文字颜色 */
     border: none;                /* 去掉边框 */
     border-radius: 8px;         /* 圆角半径 */
     padding: 10px 20px;         /* 内边距 */
     cursor: pointer;             /* 鼠标悬停时变成手型 */
     transition: background-color 0.3s;  /* 背景颜色过渡效果 */
+    font-size: 20px;
 }
 
 .no-button:hover {
-    background-color: #0056b3;  /* 鼠标悬停时的背景颜色 */
+    background-color: rgb(110, 35, 13);  /* 鼠标悬停时的背景颜色 */
 }
 
 
