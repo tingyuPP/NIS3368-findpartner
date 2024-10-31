@@ -310,7 +310,6 @@
 }
 
 .tooltip {
-    display: none; /* 初始隐藏 */
     position: absolute;
     background-color: #333;
     color: #fff;
@@ -327,11 +326,27 @@
 #delete-tooltip {
     top: 90%;
     left: 28%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+#delete-tooltip.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 #recover-tooltip {
     top: 72%;
     left: 28%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+#recover-tooltip.show {
+    opacity: 1;
+    visibility: visible;
 }
 
 #delete-tooltip::after {

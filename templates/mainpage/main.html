@@ -200,11 +200,11 @@
 
             disableButton.addEventListener('mouseover', function () {
                 const rect = disableButton.getBoundingClientRect();
-                delete_tooltip.style.display = 'block';
+                delete_tooltip.classList.add('show');
             });
 
             disableButton.addEventListener('mouseout', function () {
-                delete_tooltip.style.display = 'none';
+                delete_tooltip.classList.remove('show');
             });
 
             disableButton.addEventListener('click', function () {
@@ -236,11 +236,11 @@
 
             recoverButton.addEventListener('mouseover', function () {
                 const rect = disableButton.getBoundingClientRect();
-                recover_tooltip.style.display = 'block';
+                recover_tooltip.classList.add('show');
             });
 
             recoverButton.addEventListener('mouseout', function () {
-                recover_tooltip.style.display = 'none';
+                recover_tooltip.classList.remove('show');
             });
 
             recoverButton.addEventListener('click', function () {
