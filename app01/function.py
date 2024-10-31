@@ -343,7 +343,10 @@ def check_request_state(notice_id, user_id):
     if check_user_basic_database(user_id):
         if check_notice_basic_database(notice_id):
             request_state = check_request(user_id, notice_id)
-            return request_state[0]
+            if request_state[0] == None:
+                return -3
+            else:
+                return request_state[0]
         else:
             return -1
     else:
