@@ -21,19 +21,71 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    width: 50px; /* Set equal width and height */
+    height: 50px; /* Set equal width and height */
+    padding: 0; /* Remove padding */
+    background-color: #0056b3; /* Set background to a darker blue */
+    color: #ffffff; /* Set the arrow color to white */
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 50%; /* Make the button circular */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s, transform 0.3s;
+    font-size: 24px; /* Adjust the font size */
+    line-height: 50px; /* Center the text vertically */
+    text-align: center; /* Center the text horizontally */
+    font-weight: bold; /* Make the arrow thicker */
 }
 
 .back-button:hover {
-    background-color: #0056b3;
+    background-color: #004080 !important; /* Slightly darker blue on hover */
     transform: scale(1.05);
 }
+
+/* 悬停添加箭头图标 */
+.niceButton5 {
+    display: inline-block;
+    border-radius: 20px;
+    background-color: #4576f6;
+    border: none;
+    color: #ffff;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 11px;
+    width: 50px;
+    height: 50px;
+    line-height: 33px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    vertical-align: middle;
+    position: absolute; /* Positioning the button absolutely */
+    top: 10%; /* Adjust the top position */
+    left: 10%; /* Adjust the left position */
+    z-index: 99;
+}
+      .niceButton5 span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+      }
+      .niceButton5 span::after {
+        content: ">";
+        position: absolute;
+        opacity: 0;
+        top: 20%;
+        right: 20%;
+        transition: 0.5s;
+      }
+      .niceButton5:hover span {
+        padding-right: 30px;
+      }
+      .niceButton5:hover span::after {
+        opacity: 1;
+        right: 0;
+      }
+
 
 .button {
     background-color: #007BFF;  /* 按钮背景色 */
@@ -65,6 +117,16 @@ body {
     padding-top: 24px;
     border-bottom: 1px solid #e0e0e0;
     animation: slideIn 0.5s ease-in-out;
+}
+
+.none-message-item {
+    display: flex;
+    flex-direction: row;
+    padding: 40%; /* Increased padding */
+    border-bottom: 1px solid #e0e0e0;
+    animation: slideIn 0.5s ease-in-out;
+    font-size: 18px; /* Increased font size */
+    margin: 20px 0; /* Added margin */
 }
 
 .user-avatar {

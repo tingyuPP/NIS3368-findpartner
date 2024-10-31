@@ -12,44 +12,49 @@
 </head>
 
 <body>
+    <button class="niceButton5" onclick="goBackAndRefresh()">&times;</button>
+
     <div class="background">
         <ul class="message-container">
-            {% for user, request_state, post_id in user_list %}
-            <li class="message-item">
-                <a class="user-avatar" href="/my/{{ user.id }}/">
-                    <img class="avatar-item" src="{{ user.image }}" alt="用户头像">
-                </a>
-                <div class="main">
-                    <div class="info">
-                        <div class="user-info">
-                            <a class="username">{{ user.nickname }}</a>
+            {% if user_list %}
+                {% for user, request_state, post_id in user_list %}
+                <li class="message-item">
+                    <a class="user-avatar" href="/my/{{ user.id }}/">
+                        <img class="avatar-item" src="{{ user.image }}" alt="用户头像">
+                    </a>
+                    <div class="main">
+                        <div class="info">
+                            <div class="user-info">
+                                <a class="username">{{ user.nickname }}</a>
+                            </div>
+                            <div class="interaction-content">
+                                <span>向你发送了搭子邀请</span>
+                            </div>
                         </div>
-                        <div class="interaction-content">
-                            <span>向你发送了搭子邀请</span>
-{#                            <span>{{ request_state }}</span>#}
-                            {# <div class="msg-count">!</div> #}
+                        {% if request_state == 0 %}
+                        <div class="button-container">
+                            <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '1')">同意</button>
+                            <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '2')">拒绝</button>
                         </div>
-                    </div>
-                    {% if request_state == 0 %}
-                    <div class="button-container">
-                        <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '1')">同意</button>
-                        <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '2')">拒绝</button>
-                    </div>
-                    {% elif request_state == 1 %}
+                        {% elif request_state == 1 %}
                         <div class="interaction-content">
                             <span>已接受</span>
                         </div>
-                    {% elif request_state == 2 %}
+                        {% elif request_state == 2 %}
                         <div class="interaction-content">
                             <span>已拒绝</span>
                         </div>
-                    {% endif %}
-                </div>
-            </li>
-            {% endfor %}
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            {% else %}
+                <img src="{% static 'images/暂时没有内容.png' %}" alt="暂时没有内容" style="width: 500px; height: auto; margin-left: 11%;">
+            {% endif %}
+            
         </ul>
     </div>
-    
+
     <script>
         function acceptInvitation(userId) {
             answerRequest(userId, 'accept');
@@ -83,6 +88,12 @@
                 console.error('Error:', error);
                 alert('发生错误，请重试');
             });
+        }
+        function goBackAndRefresh() {
+            window.history.back();
+            setTimeout(function() {
+                window.location.reload();
+            }, 100); // Adjust the delay as needed
         }
     </script>
 </body>
