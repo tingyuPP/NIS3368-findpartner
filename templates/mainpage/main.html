@@ -105,6 +105,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             const isMyself = {{ is_myself|yesno:"true,false" }};
             const is_disabled = {{ is_disabled|yesno:"true,false" }};
+            console.log({{ apply_result }});
             console.log(isMyself);
             if (isMyself) {
                 document.querySelector(".invite-button").style.display = "none";
@@ -125,6 +126,11 @@
             const delete_tooltip = document.getElementById('delete-tooltip');
             const recover_tooltip = document.getElementById('recover-tooltip');
             const recoverButton = document.querySelector('.recover-button');
+            const inviteButton = document.querySelector('.invite-button');
+
+            if ({{ apply_result }} == 0) {
+                inviteButton.textContent = "邀请已发送";
+            }
 
             disableButton.addEventListener('mouseover', function () {
                 const rect = disableButton.getBoundingClientRect();

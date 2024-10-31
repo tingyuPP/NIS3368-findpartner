@@ -219,7 +219,7 @@ def main(request, post_id):
     else:
         is_disabled = False
 
-    apply_result = check_request_state(post_id, id_to_name(request.session.get("user_name", None)))
+    apply_result = check_request_state(post_id, name_to_id(request.session.get("user_name", None)))
 
     context = {
         "post": post,
@@ -230,7 +230,7 @@ def main(request, post_id):
     }
     return render(request, "mainpage/main.html", context)
 
-def applylist(request, post_id):
+def applyList(request, post_id):
     user_list = check_request_user(post_id)
     user_info_list = []
     if user_list:
@@ -373,6 +373,7 @@ def change_avatar(request):
     if request.method == "POST":
         image_url = request.POST.get("image_url")
         username = request.session["user_name"]
+        user_id = name_to_id(username)
 
         if image_url == "":
             messages.error(request, "请先上传图片！")
