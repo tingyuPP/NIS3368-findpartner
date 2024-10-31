@@ -329,7 +329,7 @@ def answer_request(notice_id, user_name, if_answer):
 # 查看某个notice的申请人列表
 def check_request_user(notice_id) -> list[int]:
     if notice_id:
-        user_list = check_user_request_list(notice_id)
+        user_list = check_notice_request_list(notice_id)
         if user_list:
             return user_list
         else:
@@ -341,9 +341,9 @@ def check_request_user(notice_id) -> list[int]:
 # 査看某个request的应答状态{0:未知，1:同意，2:拒绝，-1:notice不存在，-2:user不存在}
 def check_request_state(notice_id, user_id):
     if check_user_basic_database(user_id):
-        if check_user_basic_database(notice_id):
-            request_state = check_request(notice_id, user_id)
-            return request_state
+        if check_notice_basic_database(notice_id):
+            request_state = check_request(user_id, notice_id)
+            return request_state[0]
         else:
             return -1
     else:

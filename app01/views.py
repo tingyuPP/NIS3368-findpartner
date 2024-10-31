@@ -236,24 +236,25 @@ def applyList(request, post_id):
     if user_list:
         for user_id in user_list:
             user = check_user(id_to_name(user_id))
-            request_state = check_request(user_id, post_id)
-            user_info_list.append((user, request_state))
+            request_state = check_request_state(post_id, user_id)
+            user_info_list.append((user, request_state, post_id))
 
     return render(request, "mainpage/applylist.html", {"user_list": user_info_list})
 
 
-# def handle_answer_request(request):
-#     if request.method == "POST":
-#         user_id = request.POST.get('user_id')
-#         post_id = request.POST.get('post_id')
-#         action = request.POST.get('action')  # 'accept' 或 'reject'
-#
-#         # 调用 answer_request 函数
-#         result = answer_request(post_id, user_id, action)
-#
-#         return JsonResponse({"success": True, "result": result})
-#
-#     return JsonResponse({"success": False, "message": "请求失败"}, status=400)
+def handle_answer_request(request):
+    if request.method == "POST":
+        user_id = request.POST.get('user_id')
+        post_id = request.POST.get('post_id')
+        action = request.POST.get('action')  # {1：同意，2：拒绝}
+
+        # 调用 answer_request 函数
+        user_name = user_id_to_name(user_id)
+        result = answer_request(post_id, user_name, action)
+
+        return JsonResponse({"success": True, "result": result})
+
+    return JsonResponse({"success": False, "message": "请求失败"}, status=400)
 
 def yinsixieyi(request):
     return render(request, "mainpage/yinsixieyi.html")
