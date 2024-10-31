@@ -230,7 +230,37 @@
                         console.error("Error:", error);
                     });
             });
-        });
+
+    
+            const imgElement = document.querySelector('.carousel-item img');
+
+            imgElement.onload = function () {
+                const width = imgElement.naturalWidth;
+                const height = imgElement.naturalHeight;
+            
+                // 根据宽高比添加类
+                if (width >= height) {
+                    imgElement.classList.add('landscape'); // 添加横向类
+                } else {
+                    imgElement.classList.add('portrait'); // 添加竖向类
+                }
+            
+                // 处理过大或过小的图片
+                const containerAspectRatio = imgElement.parentElement.offsetWidth / imgElement.parentElement.offsetHeight;
+                const imageAspectRatio = width / height;
+            
+                if (imageAspectRatio > containerAspectRatio) {
+                    imgElement.classList.add('landscape');
+                } else {
+                    imgElement.classList.add('portrait');
+                }
+            };
+
+
+});
+
+
+        
 
         function viewApplyList() {
               // 更新浏览器地址栏
@@ -272,5 +302,6 @@
                     console.error("Error:", error);
                 });
         }
+
     </script>
 </html>
