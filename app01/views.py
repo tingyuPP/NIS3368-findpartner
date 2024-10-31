@@ -219,10 +219,14 @@ def main(request, post_id):
     else:
         is_disabled = False
 
+    apply_result = check_request_state(post_id, id_to_name(request.session.get("user_name", None)))
+
     context = {
         "post": post,
         "author": author,
         "is_myself": is_myself,
+        "is_disabled": is_disabled,
+        "apply_result": apply_result,
     }
     return render(request, "mainpage/main.html", context)
 
