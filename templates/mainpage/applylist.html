@@ -12,10 +12,13 @@
 </head>
 
 <body>
-    <button class="niceButton5" onclick="goBackAndRefresh()">&times;</button>
+
 
     <div class="background">
         <ul class="message-container">
+            <div class = "back-button-container">
+                <button class="niceButton5" onclick="goBackAndRefresh()">&times;</button>
+            </div>
             {% if user_list %}
                 {% for user, request_state, post_id in user_list %}
                 <li class="message-item">
@@ -33,8 +36,8 @@
                         </div>
                         {% if request_state == 0 %}
                         <div class="button-container">
-                            <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '1')">同意</button>
-                            <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '2')">拒绝</button>
+                            <button type="button" class="yes-button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '1')">&#10003;</button>
+                            <button type="button" class="no-button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '2')">&#10005;</button>
                         </div>
                         {% elif request_state == 1 %}
                         <div class="interaction-content">

@@ -42,12 +42,19 @@ body {
 }
 
 /* 悬停添加箭头图标 */
+.back-button-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 0; /* Adjust padding as needed */
+}
+
 .niceButton5 {
     display: inline-block;
     border-radius: 20px;
-    background-color: #4576f6;
+    background-color: #fbfdfe;
     border: none;
-    color: #ffff;
+    color: #5b72ee;
     text-align: center;
     font-size: 40px;
     font-weight: 400;
@@ -59,36 +66,35 @@ body {
     cursor: pointer;
     margin: 5px;
     vertical-align: middle;
-    position: absolute; /* Positioning the button absolutely */
-    top: 10%; /* Adjust the top position */
-    left: 10%; /* Adjust the left position */
+    position: relative; /* Positioning the button absolutely */
+    top: 0; /* Adjust the top position */
+    left: 0; /* Adjust the left position */
     z-index: 99;
 }
-  .niceButton5 span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-  }
-  .niceButton5 span::after {
-    content: ">";
-    position: absolute;
-    opacity: 0;
-    top: 20%;
-    right: 20%;
-    transition: 0.5s;
-  }
-  .niceButton5:hover span {
-    padding-right: 30px;
-  }
-  .niceButton5:hover span::after {
-    opacity: 1;
-    right: 0;
-  }
+.niceButton5 span {
+cursor: pointer;
+display: inline-block;
+position: relative;
+transition: 0.5s;
+}
+.niceButton5 span::after {
+content: ">";
+position: absolute;
+opacity: 0;
+top: 20%;
+right: 20%;
+transition: 0.5s;
+}
+.niceButton5:hover span {
+padding-right: 30px;
+}
+.niceButton5:hover span::after {
+opacity: 1;
+right: 0;
+}
 
-
-.button {
-    background-color: #007BFF;  /* 按钮背景色 */
+.yes-button {
+    background-color: #00ff2a;  /* 按钮背景色 */
     color: white;                /* 按钮文字颜色 */
     border: none;                /* 去掉边框 */
     border-radius: 8px;         /* 圆角半径 */
@@ -97,7 +103,21 @@ body {
     transition: background-color 0.3s;  /* 背景颜色过渡效果 */
 }
 
-.button:hover {
+.yes-button:hover {
+    background-color: #0056b3;  /* 鼠标悬停时的背景颜色 */
+}
+
+.no-button {
+    background-color: #ff3c00;  /* 按钮背景色 */
+    color: white;                /* 按钮文字颜色 */
+    border: none;                /* 去掉边框 */
+    border-radius: 8px;         /* 圆角半径 */
+    padding: 10px 20px;         /* 内边距 */
+    cursor: pointer;             /* 鼠标悬停时变成手型 */
+    transition: background-color 0.3s;  /* 背景颜色过渡效果 */
+}
+
+.no-button:hover {
     background-color: #0056b3;  /* 鼠标悬停时的背景颜色 */
 }
 
@@ -109,6 +129,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     animation: fadeIn 1s ease-in-out;
+    min-height: 500px;
 }
 
 .message-item {

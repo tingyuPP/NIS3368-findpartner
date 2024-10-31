@@ -236,6 +236,13 @@ body {
     display: none;
 }
 
+.back-button-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px; /* Adjust padding as needed */
+}
+
 .niceButton5 {
     display: inline-block;
     border-radius: 20px;
@@ -253,7 +260,7 @@ body {
     cursor: pointer;
     margin: 5px;
     vertical-align: middle;
-    position: absolute; /* Positioning the button absolutely */
+    position: relative; /* Positioning the button absolutely */
     top: 2%; /* Adjust the top position */
     left: 10%; /* Adjust the left position */
     z-index: 99;
