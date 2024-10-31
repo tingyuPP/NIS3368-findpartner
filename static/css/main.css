@@ -62,43 +62,40 @@
 }
 
 .carousel {
-    height: 90vh; /* 设置轮播的高度为视口高度的90% */
-    display: flex; /* 使用 flexbox 布局 */
-    flex-direction: column; /* 子元素在垂直方向上排列 */
+    height: 90vh; 
+    display: flex; 
+    flex-direction: column; 
 }
 
 .carousel-item {
-    width: 100%; /* 设置宽度为100%，充满父容器 */
-    height: 100%; /* 设置高度为100%，充满父容器 */
-    overflow: hidden; /* 防止内容溢出容器 */
-    display: flex; /* 使 img 元素居中 */
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
+    width: 100%; 
+    height: 100%;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
 }
 
 .carousel-item img {
-    max-width: 100%; /* 限制图像最大宽度为100% */
-    max-height: 100%; /* 限制图像最大高度为100% */
-    width: auto; /* 自动调整宽度以保持比例 */
-    height: auto; /* 自动调整高度以保持比例 */
-    object-fit: cover; /* 默认使用 cover */
-    transition: object-fit 0.3s; /* 设置过渡效果 */
+    max-width: 100%; 
+    max-height: 100%; 
+    width: auto; 
+    height: auto; 
+    object-fit: cover; 
+    transition: object-fit 0.3s; 
 }
 
-/* 横向图片 */
 .carousel-item img.landscape {
-    object-fit: cover; /* 横向图片使用 cover，保持填充效果 */
+    object-fit: cover; 
 }
 
-/* 竖向图片 */
 .carousel-item img.portrait {
-    object-fit: contain; /* 竖向图片使用 contain，保持比例并填充 */
+    object-fit: contain; 
 }
 
-/* 保持图片居中 */
 .carousel-item img {
-    display: block; /* 确保图片作为块元素，避免下方间距 */
-    margin: auto; /* 自动居中 */
+    display: block; 
+    margin: auto; 
 }
 
 .interaction-container {
