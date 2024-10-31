@@ -8,12 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人主页</title>
     <link rel="stylesheet" href="{% static 'css/my.css'%}">
+{#    <link rel="stylesheet" href="{% static 'css/message.css'%}">#}
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
     
     <script type="text/javascript" src={% static "js/mychangeinfo.js" %}></script>
     <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs-without-polyfill.3.24.3.min.js' %}"></script>
     <script src="{% static 'node_modules/esdk-obs-browserjs/dist/esdk-obs-browserjs.3.24.3.min.js' %}"></script>
     <script type="text/javascript" src={% static "js/mypublished.js" %}></script>
+    
 </head>
 
 <body>
@@ -23,6 +25,7 @@
         <div class="user">
 
             <div class="user-info">
+                <button class="niceButton5" onclick="goBackAndRefresh()">&times;</button>
                 <div class="avatar">
                     <div class="avatar-wrapper">
                         <img src="{{ user_avatar }}"
@@ -151,6 +154,12 @@
         }
         selectTab('published');
     });
+    function goBackAndRefresh() {
+        window.history.back();
+        setTimeout(function() {
+            window.location.reload();
+        }, 100); // Adjust the delay as needed
+    }
 </script>
 </body>
 

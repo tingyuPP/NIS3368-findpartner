@@ -235,3 +235,47 @@ body {
 .hidden {
     display: none;
 }
+
+.niceButton5 {
+    display: inline-block;
+    border-radius: 20px;
+    background-color: #fbfdfe;
+    border: none;
+    color: #5b72ee;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 11px;
+    width: 50px;
+    height: 50px;
+    line-height: 33px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    vertical-align: middle;
+    position: absolute; /* Positioning the button absolutely */
+    top: 2%; /* Adjust the top position */
+    left: 10%; /* Adjust the left position */
+    z-index: 99;
+}
+.niceButton5 span {
+cursor: pointer;
+display: inline-block;
+position: relative;
+transition: 0.5s;
+}
+.niceButton5 span::after {
+content: ">";
+position: absolute;
+opacity: 0;
+top: 20%;
+right: 20%;
+transition: 0.5s;
+}
+.niceButton5:hover span {
+padding-right: 30px;
+}
+.niceButton5:hover span::after {
+opacity: 1;
+right: 0;
+}
