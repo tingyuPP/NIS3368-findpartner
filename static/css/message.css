@@ -35,6 +35,21 @@ body {
     transform: scale(1.05);
 }
 
+.button {
+    background-color: #007BFF;  /* 按钮背景色 */
+    color: white;                /* 按钮文字颜色 */
+    border: none;                /* 去掉边框 */
+    border-radius: 8px;         /* 圆角半径 */
+    padding: 10px 20px;         /* 内边距 */
+    cursor: pointer;             /* 鼠标悬停时变成手型 */
+    transition: background-color 0.3s;  /* 背景颜色过渡效果 */
+}
+
+.button:hover {
+    background-color: #0056b3;  /* 鼠标悬停时的背景颜色 */
+}
+
+
 .message-container {
     width: 40rem;
     background: #fff;

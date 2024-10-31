@@ -58,10 +58,10 @@ urlpatterns = [
     path("get-my-published-notice/", views.get_my_published_notice),
     path("get-my-replied-notice/", views.get_my_replied_notice),
     path("api/request_notice", views.request_notice_view, name="request_notice"),
-    path("applylist/<int:post_id>/", views.applylist, name="applylist"),
-    # path("answer_request/", views.handle_answer_request, name="answer_request"),
+    # path("applylist/<int:post_id>/", views.applylist, name="applylist"),
+    path("answer_request/", views.handle_answer_request, name="answer_request"),
 
     path("api/disable_notice", views.disable__notice),
     path("api/recover_notice", views.recover_notice),
-    path("applylist/<int:post_id>", views.applylist, name="applylist"),
+    path("applylist/<int:post_id>/", views.applylist, name="applylist"),
 ]

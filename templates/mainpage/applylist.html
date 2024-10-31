@@ -14,7 +14,7 @@
 <body>
     <div class="background">
         <ul class="message-container">
-            {% for user, request_state in user_list %}
+            {% for user, request_state, post_id in user_list %}
             <li class="message-item">
                 <a class="user-avatar" href="/my/{{ user.id }}/">
                     <img class="avatar-item" src="{{ user.image }}" alt="用户头像">
@@ -26,13 +26,24 @@
                         </div>
                         <div class="interaction-content">
                             <span>向你发送了搭子邀请</span>
+{#                            <span>{{ request_state }}</span>#}
                             {# <div class="msg-count">!</div> #}
                         </div>
                     </div>
+                    {% if request_state == 0 %}
                     <div class="button-container">
-                        <button type="button" class="button" onclick="acceptInvitation('{{ user.id }}')">同意</button>
-                        <button type="button" class="button" onclick="rejectInvitation('{{ user.id }}')">拒绝</button>
+                        <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '1')">同意</button>
+                        <button type="button" class="button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '2')">拒绝</button>
                     </div>
+                    {% elif request_state == 1 %}
+                        <div class="interaction-content">
+                            <span>已接受</span>
+                        </div>
+                    {% elif request_state == 2 %}
+                        <div class="interaction-content">
+                            <span>已拒绝</span>
+                        </div>
+                    {% endif %}
                 </div>
             </li>
             {% endfor %}
@@ -40,13 +51,38 @@
     </div>
     
     <script>
-        // 处理按钮点击的JavaScript函数
         function acceptInvitation(userId) {
-            alert('已同意用户 ID: ' + userId);
+            answerRequest(userId, 'accept');
         }
 
         function rejectInvitation(userId) {
-            alert('已拒绝用户 ID: ' + userId);
+            answerRequest(userId, 'reject');
+        }
+
+        function answerRequest(user_id, post_id, action) {
+            fetch('/answer_request/', {  // 使用定义的路径
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'  // 确保包含 CSRF token
+                },
+                body: new URLSearchParams({
+                    'user_id': user_id,
+                    'post_id': post_id,
+                    'action': action
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();  // 刷新页面
+                } else {
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('发生错误，请重试');
+            });
         }
     </script>
 </body>
