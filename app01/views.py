@@ -230,7 +230,7 @@ def main(request, post_id):
     }
     return render(request, "mainpage/main.html", context)
 
-def applyList(request, post_id):
+def applylist(request, post_id):
     user_list = check_request_user(post_id)
     user_info_list = []
     if user_list:
