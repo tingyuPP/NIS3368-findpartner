@@ -543,7 +543,11 @@ def request_notice_view(request):
             # user_name = data.get("user_name")
             print(notice_id)
             print(request.session["user_name"])
+            notice = check_notice(notice_id)
 
+            if request.session["user_name"] == id_to_name(notice.owner_id):
+                return JsonResponse({"success": -5, "error": "不能请求自己发布的通知"}, status=400)
+            
             result = request_notice(notice_id, request.session["user_name"])
             return JsonResponse({"success": result})
         except json.JSONDecodeError:

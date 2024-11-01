@@ -333,6 +333,8 @@
                         alert("用户不存在");
                     } else if (data.success === -2) {
                         alert("需求不存在");
+                    } else if (data.success === -5) {
+                        alert("不能给自己发送邀请");
                     } else {
                         alert("请求失败");
                     }
