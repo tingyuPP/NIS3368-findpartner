@@ -2,28 +2,31 @@
 
 <!DOCTYPE html>
 <html lang="zh-cn">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'css/message.css' %}" />
+        <title>消息查看</title>
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/message.css' %}">
-    <title>消息查看</title>
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
-</head>
-
-<body>
-
-
-    <div class="background">
-        <ul class="message-container">
-            <div class = "back-button-container">
-                <button class="niceButton5" onclick="goBackAndRefresh()">&times;</button>
-            </div>
-            {% if user_list %}
-                {% for user, request_state, post_id in user_list %}
+    <body>
+        <div class="background">
+            <ul class="message-container">
+                <div class="back-button-container">
+                    <button class="niceButton5" onclick="goBackAndRefresh()">
+                        &times;
+                    </button>
+                </div>
+                {% if user_list %} {% for user, request_state, post_id in
+                user_list %}
                 <li class="message-item">
                     <a class="user-avatar" href="/my/{{ user.id }}/">
-                        <img class="avatar-item" src="{{ user.image }}" alt="用户头像">
+                        <img
+                            class="avatar-item"
+                            src="{{ user.image }}"
+                            alt="用户头像"
+                        />
                     </a>
                     <div class="main">
                         <div class="info">
@@ -36,8 +39,20 @@
                         </div>
                         {% if request_state == 0 %}
                         <div class="button-container">
-                            <button type="button" class="yes-button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '1')">&#10003;</button>
-                            <button type="button" class="no-button" onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '2')">&#10005;</button>
+                            <button
+                                type="button"
+                                class="yes-button"
+                                onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '1')"
+                            >
+                                &#10003;
+                            </button>
+                            <button
+                                type="button"
+                                class="no-button"
+                                onclick="answerRequest('{{ user.id }}', '{{ post_id }}', '2')"
+                            >
+                                &#10005;
+                            </button>
                         </div>
                         {% elif request_state == 1 %}
                         <div class="interaction-content">
@@ -50,55 +65,65 @@
                         {% endif %}
                     </div>
                 </li>
+                {% endfor %} {% else %}
+                <img
+                    src="{% static 'images/暂时没有内容.png' %}"
+                    alt="暂时没有内容"
+                    style="width: 500px; height: auto; margin-left: 11%"
+                />
+                {% endif %}
+            </ul>
+
+            {% if messages %}
+            <script>
+                {% for msg in messages %}
+                    alert('{{ msg.message }}');
                 {% endfor %}
-            {% else %}
-                <img src="{% static 'images/暂时没有内容.png' %}" alt="暂时没有内容" style="width: 500px; height: auto; margin-left: 11%;">
+            </script>
             {% endif %}
-            
-        </ul>
-    </div>
+        </div>
 
-    <script>
-        function acceptInvitation(userId) {
-            answerRequest(userId, 'accept');
-        }
+        <script>
+            function acceptInvitation(userId) {
+                answerRequest(userId, "accept");
+            }
 
-        function rejectInvitation(userId) {
-            answerRequest(userId, 'reject');
-        }
+            function rejectInvitation(userId) {
+                answerRequest(userId, "reject");
+            }
 
-        function answerRequest(user_id, post_id, action) {
-            fetch('/answer_request/', {  // 使用定义的路径
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': '{{ csrf_token }}'  // 确保包含 CSRF token
-                },
-                body: new URLSearchParams({
-                    'user_id': user_id,
-                    'post_id': post_id,
-                    'action': action
+            function answerRequest(user_id, post_id, action) {
+                fetch("/answer_request/", {
+                    // 使用定义的路径
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-CSRFToken": "{{ csrf_token }}", // 确保包含 CSRF token
+                    },
+                    body: new URLSearchParams({
+                        user_id: user_id,
+                        post_id: post_id,
+                        action: action,
+                    }),
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();  // 刷新页面
-                } else {
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('发生错误，请重试');
-            });
-        }
-        function goBackAndRefresh() {
-            window.history.back();
-            setTimeout(function() {
-                window.location.reload();
-            }, 100); // Adjust the delay as needed
-        }
-    </script>
-</body>
-
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            location.reload(); // 刷新页面
+                        } else {
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("发生错误，请重试");
+                    });
+            }
+            function goBackAndRefresh() {
+                window.history.back();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 100); // Adjust the delay as needed
+            }
+        </script>
+    </body>
 </html>

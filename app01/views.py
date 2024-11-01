@@ -77,6 +77,9 @@ def mainpage(request):
     return render(request, "mainpage/mainpage.html", context)
 
 def search(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     search_word = request.GET.get("search_word")
     notice_list = search_notice_content(search_word)
     if notice_list:
@@ -94,6 +97,9 @@ def search(request):
     return render(request, "mainpage/waterfallshowcard/search.html", context)
 
 def get_search_notice(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     search_word = request.GET.get("search_word")
     notice_list = search_notice_content(search_word)
     if not notice_list:
@@ -104,9 +110,15 @@ def get_search_notice(request):
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_recommend(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "mainpage/waterfallshowcard/recommend.html")
 
 def get_recommend_notice(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     notice_list = check_all_notice()
 
     if not notice_list:
@@ -117,10 +129,15 @@ def get_recommend_notice(request):
 
 
 def dashboard_sports(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "mainpage/waterfallshowcard/sports.html")
 
 def get_sports_notice(request):
-
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     sport_notice_list = search_notice_type(1)
 
     if not sport_notice_list:
@@ -131,10 +148,15 @@ def get_sports_notice(request):
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_emotion(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "mainpage/waterfallshowcard/emotion.html")
 
 def get_emotion_notice(request):
-
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     emotion_notice_list = search_notice_type(6)
 
     if not emotion_notice_list:
@@ -145,10 +167,15 @@ def get_emotion_notice(request):
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_food(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "mainpage/waterfallshowcard/food.html")
 
 def get_food_notice(request):
-
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     food_notice_list = search_notice_type(3)
 
     if not food_notice_list:
@@ -159,10 +186,15 @@ def get_food_notice(request):
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_study(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "mainpage/waterfallshowcard/study.html")
 
 def get_study_notice(request):
-
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     study_notice_list = search_notice_type(2)
 
     if not study_notice_list:
@@ -173,10 +205,15 @@ def get_study_notice(request):
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_travel(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "mainpage/waterfallshowcard/travel.html")
 
 def get_travel_notice(request):
-
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     travel_notice_list = search_notice_type(5)
 
     if not travel_notice_list:
@@ -187,10 +224,15 @@ def get_travel_notice(request):
     return JsonResponse({"notice_list": serialize_notice_list}, safe=False)
 
 def dashboard_games(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "mainpage/waterfallshowcard/games.html")
 
 def get_games_notice(request):
-
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     game_notice_list = search_notice_type(4)
 
     if not game_notice_list:
@@ -202,6 +244,9 @@ def get_games_notice(request):
 
 
 def main(request, post_id):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     post = check_notice(post_id)
     author = check_notice_owner(post.id)
     # 还需要当前用户的信息，通过用户名获取用户类
@@ -237,6 +282,9 @@ def main(request, post_id):
     return render(request, "mainpage/main.html", context)
 
 def applylist(request, post_id):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     user_list = check_request_user(post_id)
     user_info_list = []
     if user_list:
@@ -249,6 +297,9 @@ def applylist(request, post_id):
 
 
 def handle_answer_request(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     if request.method == "POST":
         user_id = request.POST.get('user_id')
         post_id = request.POST.get('post_id')
@@ -297,6 +348,9 @@ def my(request, user_id):
 
 
 def change_username(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     if request.method == "POST":
         new_nickname = request.POST.get("username")
         username = request.session["user_name"]
@@ -326,6 +380,9 @@ def change_username(request):
 
 
 def change_desc(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     if request.method == "POST":
         new_desc = request.POST.get("desc")
         username = request.session["user_name"]
@@ -350,6 +407,9 @@ def change_desc(request):
 
 
 def change__password(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     if request.method == "POST":
         old_password = request.POST.get("old_password")
         new_password = request.POST.get("new_password")
@@ -377,6 +437,9 @@ def change__password(request):
 
 
 def change_avatar(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     if request.method == "POST":
         image_url = request.POST.get("image_url")
         username = request.session["user_name"]
@@ -401,9 +464,15 @@ def change_avatar(request):
 
 
 def published(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "user/myoptions/mypublished.html")
 
 def get_my_published_notice(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     notice_list = check_my_notice(request.session.get("user_name", None))
     if not notice_list:
         serialize_notice_list = []
@@ -415,7 +484,7 @@ def get_my_published_notice(request):
 @csrf_exempt
 def publish(request):
     if not request.session.get("is_login", None):
-        return redirect("/dashboard/")  # 如果未登录，重定向到仪表盘
+        return redirect("/login/")  # 如果未登录，重定向到仪表盘
 
     if request.method == "POST":
         try:
@@ -466,9 +535,15 @@ def publish(request):
 
 
 def replied(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "user/myoptions/myreplied.html")
 
 def get_my_replied_notice(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     notice_list = check_request_notice(request.session.get("user_name", None))
     if not notice_list:
         serialize_notice_list = []
@@ -478,10 +553,16 @@ def get_my_replied_notice(request):
 
 
 def info(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "user/myoptions/mychangeinfo.html")
 
 
 def message(request):
+    if not request.session.get("is_login", None):
+        messages.error(request, "请先登录！")
+        return redirect("/login/")
     return render(request, "user/message.html")
 
 
