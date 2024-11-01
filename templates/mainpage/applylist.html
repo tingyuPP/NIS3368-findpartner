@@ -18,8 +18,8 @@
                         &times;
                     </button>
                 </div>
-                {% if user_list %} {% for user, request_state, post_id in
-                user_list %}
+                {% if user_list %} 
+                {% for user, request_state, post_id in user_list %}
                 <li class="message-item">
                     <a class="user-avatar" href="/my/{{ user.id }}/">
                         <img
