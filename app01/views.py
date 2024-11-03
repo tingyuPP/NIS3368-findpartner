@@ -361,20 +361,20 @@ def change_username(request):
 
         if new_nickname == old_nickname:
             messages.error(request, "新昵称不能与旧昵称相同！")
-            return redirect("/my/{user_id}/")
+            return redirect(f"/my/{user_id}/")
 
         if len(new_nickname) > 10:
             messages.error(request, "昵称长度不能超过10个字符！")
-            return redirect("/my/{user_id}/")
+            return redirect(f"/my/{user_id}/")
 
         user_info.nickname = new_nickname
         result = change_user_info(user_info)
         if result == 0:
             messages.success(request, "修改成功！")
-            return redirect("/my/{user_id}/")
+            return redirect(f"/my/{user_id}/")
         else:
             messages.error(request, "修改失败！")
-            return redirect("/my/{user_id}/")
+            return redirect(f"/my/{user_id}/")
 
     return render(request, "user/myoptions/mychangeinfo.html")
 
