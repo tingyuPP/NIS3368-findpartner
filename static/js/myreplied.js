@@ -12,7 +12,13 @@ function initializeReplied() {
 
 function printNotice(data) {
   const messagesContainer = document.getElementById("message-container"); // 假设你有一个容器ID为messages-container
-
+  if (!data || data.length === 0) {
+    const messageItem = document.createElement("li");
+    messageItem.className = "message-item";
+    messageItem.textContent = "尚未发起任何申请";
+    messagesContainer.appendChild(messageItem);
+    return;
+  }
   data.forEach((item) => {
     const messageItem = document.createElement("li");
     messageItem.className = "message-item";
