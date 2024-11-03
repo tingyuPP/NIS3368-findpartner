@@ -23,7 +23,7 @@ class User:
 
         # 用户个人信息
         self.nickname = user_name          # 用户昵称，缺省值为user_name
-        self.image = image                  # 用户头像，为图片url，缺省值为空
+        self.image = "https://burst.cumt.edu.cn/images/zanwqu.png"       # 用户头像，为图片url，缺省值为空
         self.sex = sex                      # 性别，缺省值为“unknown”
         self.hobby = hobby                  # 爱好，缺省值为“unknown”
         self.introduction = introduction    # 签名，缺省值为“unknown”
