@@ -23,7 +23,7 @@ class User:
 
         # 用户个人信息
         self.nickname = user_name          # 用户昵称，缺省值为user_name
-        self.image = "https://pica.zhimg.com/80/v2-36dfd366598ece8c219c9d2d3f24223a_1440w.webp?source=1def8aca"       # 用户头像，为图片url，缺省值为空
+        self.image = "https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portraith/item/tb.1.bead35fc.MtiwdXhDXbnsPJ6EQHv6kg"       # 用户头像，为图片url，缺省值为空
         self.sex = sex                      # 性别，缺省值为“unknown”
         self.hobby = hobby                  # 爱好，缺省值为“unknown”
         self.introduction = introduction    # 签名，缺省值为“unknown”

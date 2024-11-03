@@ -8,8 +8,8 @@ def create_connection():
         host="localhost",  # 根据你的数据库主机设置
         user="root",  # MySQL用户名#
         # password="daerwen",# MySQL密码
-        password="123456",
-        # password = "Cyf20040629",
+        # password="123456",
+        password = "Cyf20040629",
         database="findpartner",  # 数据库名称
     )
     return conn
@@ -37,7 +37,7 @@ def create_user(name):
         INSERT INTO Users (user_name, user_nickname, user_psword, user_sex, user_hobby, user_image, user_introduction)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
-    val_2 = (name, name, "psword", "unknown", "hobby", "https://pica.zhimg.com/80/v2-36dfd366598ece8c219c9d2d3f24223a_1440w.webp?source=1def8aca", "introduction")
+    val_2 = (name, name, "psword", "unknown", "hobby", "https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portraith/item/tb.1.bead35fc.MtiwdXhDXbnsPJ6EQHv6kg", "introduction")
     rtn_2 = cur.execute(sql_2, val_2)
     conn.commit()
     id = cur.lastrowid
