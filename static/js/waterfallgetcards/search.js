@@ -23,10 +23,12 @@ function printNotice(data) {
 
         const author = document.createElement("a");
         author.className = "author";
+        author.href = `/my/${item.owner_id}/`;
 
         const authorAvatar = document.createElement("img");
         authorAvatar.className = "author-avatar";
         authorAvatar.src = item.owner_avatar;
+        
 
         const name = document.createElement("span");
         name.className = "name";
@@ -47,7 +49,7 @@ function printNotice(data) {
         card.appendChild(img);
         card.appendChild(footer);
 
-        card.addEventListener("click", function () {
+        img.addEventListener("click", function () {
             openNoteDetail(item.id);
         });
 

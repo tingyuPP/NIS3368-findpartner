@@ -24,6 +24,13 @@
 .card img {
     width: 100%;
     display: block;
+    transition: filter 0.3s ease;
+    cursor: pointer;
+}
+
+/* 鼠标悬浮时变暗 */
+.card img:hover {
+    filter: brightness(70%);
 }
 
 .footer {
