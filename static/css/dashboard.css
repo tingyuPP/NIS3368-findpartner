@@ -68,3 +68,10 @@
 
 }
 
+.channel:hover {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 999px;
+    color: #333;
+}
+
