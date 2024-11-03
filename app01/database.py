@@ -37,7 +37,7 @@ def create_user(name):
         INSERT INTO Users (user_name, user_nickname, user_psword, user_sex, user_hobby, user_image, user_introduction)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
-    val_2 = (name, name, "psword", "unknown", "hobby", "https://burst.cumt.edu.cn/images/zanwqu.png", "introduction")
+    val_2 = (name, name, "psword", "unknown", "hobby", "https://pica.zhimg.com/80/v2-36dfd366598ece8c219c9d2d3f24223a_1440w.webp?source=1def8aca", "introduction")
     rtn_2 = cur.execute(sql_2, val_2)
     conn.commit()
     id = cur.lastrowid
