@@ -68,7 +68,13 @@
 
 }
 
-.channel:hover {
+#channel-recommend:hover, 
+#channel-emotion:hover, 
+#channel-food:hover, 
+#channel-games:hover, 
+#channel-sports:hover, 
+#channel-study:hover, 
+#channel-travel:hover {
     font-weight: 600;
     background: rgba(0, 0, 0, 0.03);
     border-radius: 999px;
