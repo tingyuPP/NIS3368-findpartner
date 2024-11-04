@@ -19,8 +19,12 @@ from django.contrib import admin
 from django.urls import path
 
 from app01 import views
+from django.conf import settings
+from django.views.static import serve
+from django.urls import re_path
 
 urlpatterns = [
+    re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path("", views.home),
     path("home/", views.home),
     path("login/", views.log),
